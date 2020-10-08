@@ -21,7 +21,7 @@
 
 package com.isblocks.pkcs11.jna;
 
-import com.isblocks.pkcs11.jacknji11.CKA;
+import com.isblocks.pkcs11.CKA;
 import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;

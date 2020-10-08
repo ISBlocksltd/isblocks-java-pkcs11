@@ -21,13 +21,13 @@
 
 package com.isblocks.pkcs11.jna;
 
-import com.isblocks.pkcs11.jacknji11.CK_C_INITIALIZE_ARGS;
-import com.isblocks.pkcs11.jacknji11.NativePointer;
-import com.isblocks.pkcs11.jacknji11.NativePointerByReference;
-import com.isblocks.pkcs11.jacknji11.CK_C_INITIALIZE_ARGS.CK_CREATEMUTEX;
-import com.isblocks.pkcs11.jacknji11.CK_C_INITIALIZE_ARGS.CK_DESTROYMUTEX;
-import com.isblocks.pkcs11.jacknji11.CK_C_INITIALIZE_ARGS.CK_LOCKMUTEX;
-import com.isblocks.pkcs11.jacknji11.CK_C_INITIALIZE_ARGS.CK_UNLOCKMUTEX;
+import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
+import com.isblocks.pkcs11.NativePointer;
+import com.isblocks.pkcs11.NativePointerByReference;
+import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS.CK_CREATEMUTEX;
+import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS.CK_DESTROYMUTEX;
+import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS.CK_LOCKMUTEX;
+import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS.CK_UNLOCKMUTEX;
 import com.sun.jna.Callback;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;

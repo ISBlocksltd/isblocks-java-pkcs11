@@ -24,22 +24,22 @@ package com.isblocks.pkcs11.jacknji11;
 import java.math.BigInteger;
 import java.util.Arrays;
 
-import com.isblocks.pkcs11.jacknji11.Buf;
-import com.isblocks.pkcs11.jacknji11.C;
-import com.isblocks.pkcs11.jacknji11.CE;
-import com.isblocks.pkcs11.jacknji11.CKA;
-import com.isblocks.pkcs11.jacknji11.CKM;
-import com.isblocks.pkcs11.jacknji11.CKO;
-import com.isblocks.pkcs11.jacknji11.CKR;
-import com.isblocks.pkcs11.jacknji11.CKS;
-import com.isblocks.pkcs11.jacknji11.CKU;
-import com.isblocks.pkcs11.jacknji11.CK_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_MECHANISM_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_SESSION_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_SLOT_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_TOKEN_INFO;
-import com.isblocks.pkcs11.jacknji11.Hex;
-import com.isblocks.pkcs11.jacknji11.LongRef;
+import com.isblocks.pkcs11.C;
+import com.isblocks.pkcs11.CE;
+import com.isblocks.pkcs11.CKA;
+import com.isblocks.pkcs11.CKM;
+import com.isblocks.pkcs11.CKO;
+import com.isblocks.pkcs11.CKR;
+import com.isblocks.pkcs11.CKS;
+import com.isblocks.pkcs11.CKU;
+import com.isblocks.pkcs11.CK_INFO;
+import com.isblocks.pkcs11.CK_MECHANISM_INFO;
+import com.isblocks.pkcs11.CK_SESSION_INFO;
+import com.isblocks.pkcs11.CK_SLOT_INFO;
+import com.isblocks.pkcs11.CK_TOKEN_INFO;
+import com.isblocks.pkcs11.Hex;
+import com.isblocks.pkcs11.LongRef;
+import com.isblocks.pkcs11.Buf;
 
 import junit.framework.TestCase;
 

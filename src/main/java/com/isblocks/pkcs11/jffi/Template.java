@@ -21,7 +21,7 @@
 
 package com.isblocks.pkcs11.jffi;
 
-import com.isblocks.pkcs11.jacknji11.CKA;
+import com.isblocks.pkcs11.CKA;
 
 import jnr.ffi.Memory;
 import jnr.ffi.Pointer;

@@ -21,7 +21,7 @@
 
 package com.isblocks.pkcs11.jffi;
 
-import com.isblocks.pkcs11.jacknji11.CK_VERSION;
+import com.isblocks.pkcs11.CK_VERSION;
 
 import jnr.ffi.Struct;
 

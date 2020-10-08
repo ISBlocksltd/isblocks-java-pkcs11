@@ -21,19 +21,19 @@
 
 package com.isblocks.pkcs11.jna;
 
-import com.isblocks.pkcs11.jacknji11.CKA;
-import com.isblocks.pkcs11.jacknji11.CKM;
-import com.isblocks.pkcs11.jacknji11.CK_C_INITIALIZE_ARGS;
-import com.isblocks.pkcs11.jacknji11.CK_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_MECHANISM_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_NOTIFY;
-import com.isblocks.pkcs11.jacknji11.CK_SESSION_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_SLOT_INFO;
-import com.isblocks.pkcs11.jacknji11.CK_TOKEN_INFO;
-import com.isblocks.pkcs11.jacknji11.LongRef;
-import com.isblocks.pkcs11.jacknji11.NativePointer;
-import com.isblocks.pkcs11.jacknji11.NativeProvider;
-import com.isblocks.pkcs11.jacknji11.ULong;
+import com.isblocks.pkcs11.CKA;
+import com.isblocks.pkcs11.CKM;
+import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
+import com.isblocks.pkcs11.CK_INFO;
+import com.isblocks.pkcs11.CK_MECHANISM_INFO;
+import com.isblocks.pkcs11.CK_NOTIFY;
+import com.isblocks.pkcs11.CK_SESSION_INFO;
+import com.isblocks.pkcs11.CK_SLOT_INFO;
+import com.isblocks.pkcs11.CK_TOKEN_INFO;
+import com.isblocks.pkcs11.LongRef;
+import com.isblocks.pkcs11.NativePointer;
+import com.isblocks.pkcs11.NativeProvider;
+import com.isblocks.pkcs11.ULong;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.NativeLongByReference;

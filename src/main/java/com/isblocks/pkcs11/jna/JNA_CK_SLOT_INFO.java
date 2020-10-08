@@ -21,7 +21,7 @@
 
 package com.isblocks.pkcs11.jna;
 
-import com.isblocks.pkcs11.jacknji11.CK_SLOT_INFO;
+import com.isblocks.pkcs11.CK_SLOT_INFO;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 

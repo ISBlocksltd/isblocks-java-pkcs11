@@ -21,7 +21,7 @@
 
 package com.isblocks.pkcs11.jna;
 
-import com.isblocks.pkcs11.jacknji11.CKM;
+import com.isblocks.pkcs11.CKM;
 import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
@@ -32,6 +32,7 @@ import com.sun.jna.Structure;
  * CKM_? constants and CK_MECHANISM struct wrapper.
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
+@Structure.FieldOrder({ "mechanism", "pParameter","ulParameterLen" })
 public class JNA_CKM extends Structure {
     public NativeLong mechanism;
     public Pointer pParameter;
