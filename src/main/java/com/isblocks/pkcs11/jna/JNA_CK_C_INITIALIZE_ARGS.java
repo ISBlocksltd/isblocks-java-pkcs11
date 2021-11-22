@@ -21,6 +21,9 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
 import com.isblocks.pkcs11.NativePointer;
 import com.isblocks.pkcs11.NativePointerByReference;
@@ -46,6 +49,11 @@ public class JNA_CK_C_INITIALIZE_ARGS extends Structure {
     public JNA_CK_UNLOCKMUTEX unlockMutex;
     public NativeLong flags;
     public Pointer pReserved;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return Arrays.asList("createMutex", "destroyMutex", "lockMutex", "unlockMutex", "flags", "pReserved");
+    }
 
     public JNA_CK_C_INITIALIZE_ARGS(final CK_C_INITIALIZE_ARGS args) {
         if (args.createMutex != null) {

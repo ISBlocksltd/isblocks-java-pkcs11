@@ -21,6 +21,9 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.isblocks.pkcs11.CK_SLOT_INFO;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
@@ -35,6 +38,11 @@ public class JNA_CK_SLOT_INFO extends Structure {
     public NativeLong flags;
     public JNA_CK_VERSION hardwareVersion;
     public JNA_CK_VERSION firmwareVersion;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return Arrays.asList("slotDescription", "manufacturerID", "flags", "hardwareVersion", "firmwareVersion");
+    }
 
     public JNA_CK_SLOT_INFO readFrom(CK_SLOT_INFO info) {
         slotDescription = info.slotDescription;

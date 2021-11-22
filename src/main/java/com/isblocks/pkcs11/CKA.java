@@ -22,6 +22,7 @@
 package com.isblocks.pkcs11;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -213,6 +214,7 @@ public class CKA {
     public long ulValueLen;
 
     // disallow zero-arg constructor
+    @SuppressWarnings("unused")
     private CKA() {
     }
 
@@ -259,14 +261,22 @@ public class CKA {
         this(type, null);
     }
 
+    /** When reading values from PKCS#11 you often send a buffer, with a specific length
+     * where the buffer may be lager than the value returned. The actual length of the value returned
+     * is then put by the HSM in ulValueLen. Before returning to Java, therefore make sure 
+     * the returned pValue hodls the actual bytes and not extra (empty) data.
+     */
+    private byte[] getValueInternal() {
+        return ulValueLen == 0 || pValue == null ? null : Buf.substring(pValue, 0, (int)ulValueLen);
+    }
     /** @return value as byte[] */
     public byte[] getValue() {
-        return pValue == null ? null : pValue;
+        return getValueInternal();
     }
 
     /** @return value as String */
     public String getValueStr() {
-        return pValue == null ? null : new String(pValue);
+        return pValue == null ? null : new String(getValueInternal());
     }
 
     /** @return value as Long */
@@ -299,7 +309,7 @@ public class CKA {
 
     /** @return value as BigInteger */
     public BigInteger getValueBigInt() {
-        return ulValueLen == 0 || pValue == null ? null : new BigInteger(getValue());
+        return ulValueLen == 0 || pValue == null ? null : new BigInteger(Buf.substring(pValue, 0, (int)ulValueLen));
     }
 
     /**
@@ -419,9 +429,39 @@ public class CKA {
         Hex.dump(sb, value, 0, (int) ulValueLen, "    ", 32, false);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         dump(sb);
         return sb.toString();
     }
+    
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(pValue);
+        result = prime * result + (int) (type ^ (type >>> 32));
+        result = prime * result + (int) (ulValueLen ^ (ulValueLen >>> 32));
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        CKA other = (CKA) obj;
+        if (!Arrays.equals(pValue, other.pValue))
+            return false;
+        if (type != other.type)
+            return false;
+        if (ulValueLen != other.ulValueLen)
+            return false;
+        return true;
+    }
+
 }

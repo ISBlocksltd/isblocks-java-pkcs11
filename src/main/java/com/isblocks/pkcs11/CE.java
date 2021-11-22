@@ -50,6 +50,12 @@ package com.isblocks.pkcs11;
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
 public class CE {
+	
+	public static boolean isInitialized = false; 
+	
+	public static boolean isInitialized() {
+		return isInitialized;
+	}
 
     /**
      * Initialize cryptoki.
@@ -59,12 +65,13 @@ public class CE {
     public static void Initialize() {
         long rv = C.Initialize();
         if (rv != CKR.OK) throw new CKRException(rv);
+        isInitialized = true;
     }
 
     /**
      * Called to indicate that an application is finished with the Cryptoki library.
      * @see C#Finalize()
-     * @see NativeProvider#C_Finalize(Pointer)
+     * @see NativeProvider#C_Finalize(NativePointer)
      */
     public static void Finalize() {
         long rv = C.Finalize();
@@ -100,7 +107,7 @@ public class CE {
      * @param slotList receives array of slot IDs
      * @param count receives the number of slots
      * @see C#GetSlotList(boolean, long[], LongRef)
-     * @see NativeProvider#C_GetSlotList(byte, long[], LongRef)
+     * @see NativeProvider#C_GetSlotList(boolean, long[], LongRef)
      */
     public static void GetSlotList(boolean tokenPresent, long[] slotList, LongRef count) {
         long rv = C.GetSlotList(tokenPresent, slotList, count);
@@ -112,7 +119,7 @@ public class CE {
      * @param tokenPresent only slots with tokens?
      * @return slot list
      * @see C#GetSlotList(boolean, long[], LongRef)
-     * @see NativeProvider#C_GetSlotList(byte, long[], LongRef)
+     * @see NativeProvider#C_GetSlotList(boolean, long[], LongRef)
      */
     public static long[] GetSlotList(boolean tokenPresent) {
         LongRef count = new LongRef();
@@ -128,7 +135,7 @@ public class CE {
      * @return slot id or CKRException if no slot found
      * @see C#GetSlotList(boolean, long[], LongRef)
      * @see C#GetTokenInfo(long, CK_TOKEN_INFO)
-     * @see NativeProvider#C_GetSlotList(byte, long[], LongRef)
+     * @see NativeProvider#C_GetSlotList(boolean, long[], LongRef)
      * @see NativeProvider#C_GetTokenInfo(long, CK_TOKEN_INFO)
      */
     public static long GetSlot(String label) {
@@ -197,8 +204,8 @@ public class CE {
      * @param flags blocking/nonblocking flag
      * @param slot location that receives the slot ID
      * @param pReserved reserved.  Should be null
-     * @see C#WaitForSlotEvent(long, LongRef, Pointer)
-     * @see NativeProvider#C_WaitForSlotEvent(long, LongRef, Pointer)
+     * @see C#WaitForSlotEvent(long, LongRef, NativePointer)
+     * @see NativeProvider#C_WaitForSlotEvent(long, LongRef, NativePointer)
      */
     public static void WaitForSlotEvent(long flags, LongRef slot, NativePointer pReserved) {
         long rv = C.WaitForSlotEvent(flags, slot, pReserved);
@@ -262,7 +269,7 @@ public class CE {
     /**
      * Initialises a token.  Pad or truncate label if required.
      * @param slotID ID of the token's slot
-     * @param pin the SO's intital PIN
+     * @param pin the SO's initial PIN
      * @param label 32-byte token label (space padded).  If not 32 bytes, then
      * it will be padded or truncated as required
      * @see C#InitToken(long, byte[], byte[])
@@ -305,8 +312,8 @@ public class CE {
      * @param application passed to callback (ok to leave it null)
      * @param notify callback function (ok to leave it null)
      * @param session gets session handle
-     * @see C#OpenSession(long, long, Pointer, CK_NOTIFY, LongRef)
-     * @see NativeProvider#C_OpenSession(long, long, Pointer, CK_NOTIFY, LongRef)
+     * @see C#OpenSession(long, long, NativePointer, CK_NOTIFY, LongRef)
+     * @see NativeProvider#C_OpenSession(long, long, NativePointer, CK_NOTIFY, LongRef)
      */
     public static void OpenSession(long slotID, long flags, NativePointer application, CK_NOTIFY notify, LongRef session) {
         long rv = C.OpenSession(slotID, flags, application, notify, session);
@@ -320,8 +327,8 @@ public class CE {
      * @param application passed to callback (ok to leave it null)
      * @param notify callback function (ok to leave it null)
      * @return session handle
-     * @see C#OpenSession(long, long, Pointer, CK_NOTIFY, LongRef)
-     * @see NativeProvider#C_OpenSession(long, long, Pointer, CK_NOTIFY, LongRef)
+     * @see C#OpenSession(long, long, NativePointer, CK_NOTIFY, LongRef)
+     * @see NativeProvider#C_OpenSession(long, long, NativePointer, CK_NOTIFY, LongRef)
      */
     public static long OpenSession(long slotID, long flags, NativePointer application, CK_NOTIFY notify) {
         LongRef session = new LongRef();
@@ -330,15 +337,15 @@ public class CE {
     }
 
     /**
-     * Opens a session between an application and a token using {@link CKS#RW_PUBLIC_SESSION}
+     * Opens a session between an application and a token using {@link CK_SESSION_INFO#CKF_RW_SESSION and CK_SESSION_INFO#CKF_SERIAL_SESSION}
      * and null application and notify.
      * @param slotID the slot's ID
      * @return session handle
-     * @see C#OpenSession(long, long, Pointer, CK_NOTIFY, LongRef)
-     * @see NativeProvider#C_OpenSession(long, long, Pointer, CK_NOTIFY, LongRef)
+     * @see C#OpenSession(long, long, NativePointer, CK_NOTIFY, LongRef)
+     * @see NativeProvider#C_OpenSession(long, long, NativePointer, CK_NOTIFY, LongRef)
      */
     public static long OpenSession(long slotID) {
-        return OpenSession(slotID, CKS.RW_PUBLIC_SESSION, null, null);
+        return OpenSession(slotID, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
     }
 
     /**
@@ -504,7 +511,7 @@ public class CE {
      * @param templ the objects template
      * @param object gets new object's handle
      * @see C#CreateObject(long, CKA[], LongRef)
-     * @see NativeProvider#C_CreateObject(long, Template, long, LongRef)
+     * @see NativeProvider#C_CreateObject(long, CKA[], long, LongRef)
      */
     public static void CreateObject(long session, CKA[] templ, LongRef object) {
         long rv = C.CreateObject(session, templ, object);
@@ -516,7 +523,7 @@ public class CE {
      * @param session the session's handle
      * @return new object handle
      * @see C#CreateObject(long, CKA[], LongRef)
-     * @see NativeProvider#C_CreateObject(long, Template, long, LongRef)
+     * @see NativeProvider#C_CreateObject(long, CKA[], long, LongRef)
      */
     public static long CreateObject(long session, CKA... templ) {
         LongRef object = new LongRef();
@@ -531,7 +538,7 @@ public class CE {
      * @param templ template for new object
      * @param newObject receives handle of copy
      * @see C#CopyObject(long, long, CKA[], LongRef)
-     * @see NativeProvider#C_CopyObject(long, long, Template, long, LongRef)
+     * @see NativeProvider#C_CopyObject(long, long, CKA[], long, LongRef)
      */
     public static void CopyObject(long session, long object, CKA[] templ, LongRef newObject) {
         long rv = C.CopyObject(session, object, templ, newObject);
@@ -545,7 +552,7 @@ public class CE {
      * @param templ template for new object
      * @return new object handle
      * @see C#CopyObject(long, long, CKA[], LongRef)
-     * @see NativeProvider#C_CopyObject(long, long, Template, long, LongRef)
+     * @see NativeProvider#C_CopyObject(long, long, CKA[], long, LongRef)
      */
     public static long CopyObject(long session, long object, CKA... templ) {
         LongRef newObject = new LongRef();
@@ -598,7 +605,7 @@ public class CE {
      * @param object the objects's handle
      * @param templ specifies attributes, gets values
      * @see C#GetAttributeValue(long, long, CKA[])
-     * @see NativeProvider#C_GetAttributeValue(long, long, Template, long)
+     * @see NativeProvider#C_GetAttributeValue(long, long, CKA[], long)
      */
     public static void GetAttributeValue(long session, long object, CKA... templ) {
         if (templ == null || templ.length == 0) {
@@ -614,7 +621,7 @@ public class CE {
      * @param object the objects's handle
      * @param cka {@link CKA} type
      * @see C#GetAttributeValue(long, long, CKA[])
-     * @see NativeProvider#C_GetAttributeValue(long, long, Template, long)
+     * @see NativeProvider#C_GetAttributeValue(long, long, CKA[], long)
      */
     public static CKA GetAttributeValue(long session, long object, long cka) {
         CKA[] templ = {new CKA(cka)};
@@ -639,7 +646,7 @@ public class CE {
      * @param types {@link CKA} attribute types to get
      * @return attribute values
      * @see C#GetAttributeValue(long, long, CKA[])
-     * @see NativeProvider#C_GetAttributeValue(long, long, Template, long)
+     * @see NativeProvider#C_GetAttributeValue(long, long, CKA[], long)
      */
     public static CKA[] GetAttributeValue(long session, long object, long... types) {
         if (types == null || types.length == 0) {
@@ -678,9 +685,9 @@ public class CE {
      * Modifies the values of one or more object attributes.
      * @param session the session's handle
      * @param object the object's handle
-     * @param templ specifies attriutes and values
+     * @param templ specifies attributes and values
      * @see C#SetAttributeValue(long, long, CKA[])
-     * @see NativeProvider#C_SetAttributeValue(long, long, Template, long)
+     * @see NativeProvider#C_SetAttributeValue(long, long, CKA[], long)
      */
     public static void SetAttributeValue(long session, long object, CKA... templ) {
         long rv = C.SetAttributeValue(session, object, templ);
@@ -688,11 +695,11 @@ public class CE {
     }
 
     /**
-     * Initailses a search for token and sesion objects that match a template.
+     * Initailses a search for token and session objects that match a template.
      * @param session the session's handle
      * @param templ attribute values to match
      * @see C#FindObjectsInit(long, CKA[])
-     * @see NativeProvider#C_FindObjectsInit(long, Template, long)
+     * @see NativeProvider#C_FindObjectsInit(long, CKA[], long)
      */
     public static void FindObjectsInit(long session, CKA... templ) {
         long rv = C.FindObjectsInit(session, templ);
@@ -714,7 +721,7 @@ public class CE {
     }
 
     /**
-     * Continues a searc for token and session objects that match a template,
+     * Continues a search for token and session objects that match a template,
      * obtaining additional object handles.
      * @param session the session's handle
      * @param maxObjects maximum objects to return
@@ -748,12 +755,12 @@ public class CE {
     }
 
     /**
-     * Single-part search for token and sesion objects that match a template.
+     * Single-part search for token and session objects that match a template.
      * @param session the session's handle
      * @param templ attribute values to match
      * @return all objects matching
      * @see C#FindObjectsInit(long, CKA[])
-     * @see NativeProvider#C_FindObjectsInit(long, Template, long)
+     * @see NativeProvider#C_FindObjectsInit(long, CKA[], long)
      */
     public static long[] FindObjects(long session, CKA... templ) {
         FindObjectsInit(session, templ);
@@ -1208,7 +1215,7 @@ public class CE {
 
     /**
      * Signs (encrypts with private key) data in a single part, where the signature is (will be)
-     * an appendix to the data, and plaintext canot be recovered from the signature.
+     * an appendix to the data, and plaintext cannot be recovered from the signature.
      * @param session the session's handle
      * @param data the data to sign
      * @param signature gets the signature
@@ -1223,7 +1230,7 @@ public class CE {
 
     /**
      * Signs (encrypts with private key) data in a single part, where the signature is (will be)
-     * an appendix to the data, and plaintext canot be recovered from the signature.
+     * an appendix to the data, and plaintext cannot be recovered from the signature.
      * @param session the session's handle
      * @param data the data to sign
      * @return signature
@@ -1282,7 +1289,7 @@ public class CE {
 
     /**
      * Signs (encrypts with private key) data in a single part, where the signature is (will be)
-     * an appendix to the data, and plaintext canot be recovered from the signature.
+     * an appendix to the data, and plaintext cannot be recovered from the signature.
      * @param session the session's handle
      * @param mechanism the signature mechanism
      * @param key handle of signature key
@@ -1356,7 +1363,7 @@ public class CE {
 
     /**
      * Initialises a verification operation, where the signature is an appendix to the data,
-     * and plaintet cannot be recovered from the signature (e.g. DSA).
+     * and plaintext cannot be recovered from the signature (e.g. DSA).
      * @param session the session's handle
      * @param mechanism the verification mechanism
      * @param key verification key
@@ -1384,7 +1391,7 @@ public class CE {
 
     /**
      * Continues a multiple-part verification operation where the signature is an appendix to the data,
-     * and plaintet cannot be recovered from the signature.
+     * and plaintext cannot be recovered from the signature.
      * @param session the session's handle
      * @param part signed data
      * @see C#VerifyUpdate(long, byte[])
@@ -1608,7 +1615,7 @@ public class CE {
      * @param templ template for the new key
      * @param key gets handle of new key
      * @see C#GenerateKey(long, CKM, CKA[], LongRef)
-     * @see NativeProvider#C_GenerateKey(long, CKM, Template, long, LongRef)
+     * @see NativeProvider#C_GenerateKey(long, CKM, CKA[], long, LongRef)
      */
     public static void GenerateKey(long session, CKM mechanism, CKA[] templ, LongRef key) {
         long rv = C.GenerateKey(session, mechanism, templ, key);
@@ -1622,7 +1629,7 @@ public class CE {
      * @param templ template for the new key
      * @return key handle
      * @see C#GenerateKey(long, CKM, CKA[], LongRef)
-     * @see NativeProvider#C_GenerateKey(long, CKM, Template, long, LongRef)
+     * @see NativeProvider#C_GenerateKey(long, CKM, CKA[], long, LongRef)
      */
     public static long GenerateKey(long session, CKM mechanism, CKA... templ) {
         LongRef key = new LongRef();
@@ -1633,13 +1640,13 @@ public class CE {
     /**
      * Generates a public-key / private-key pair, create new key objects.
      * @param session the session's handle
-     * @param mechanism key generation mechansim
+     * @param mechanism key generation mechanism
      * @param publicKeyTemplate template for the new public key
      * @param privateKeyTemplate template for the new private key
      * @param publicKey gets handle of new public key
      * @param privateKey gets handle of new private key
      * @see C#GenerateKeyPair(long, CKM, CKA[], CKA[], LongRef, LongRef)
-     * @see NativeProvider#C_GenerateKeyPair(long, CKM, Template, long, Template, long, LongRef, LongRef)
+     * @see NativeProvider#C_GenerateKeyPair(long, CKM, CKA[], long, CKA[], long, LongRef, LongRef)
      */
     public static void GenerateKeyPair(long session, CKM mechanism, CKA[] publicKeyTemplate, CKA[] privateKeyTemplate,
             LongRef publicKey, LongRef privateKey) {
@@ -1690,7 +1697,7 @@ public class CE {
      * @param templ new key template
      * @param key gets new handle
      * @see C#UnwrapKey(long, CKM, long, byte[], CKA[], LongRef)
-     * @see NativeProvider#C_UnwrapKey(long, CKM, long, byte[], long, Template, long, LongRef)
+     * @see NativeProvider#C_UnwrapKey(long, CKM, long, byte[], long, CKA[], long, LongRef)
      */
     public static void UnwrapKey(long session, CKM mechanism, long unwrappingKey, byte[] wrappedKey, CKA[] templ, LongRef key) {
         long rv = C.UnwrapKey(session, mechanism, unwrappingKey, wrappedKey, templ, key);
@@ -1706,7 +1713,7 @@ public class CE {
      * @param templ new key template
      * @return key handle
      * @see C#UnwrapKey(long, CKM, long, byte[], CKA[], LongRef)
-     * @see NativeProvider#C_UnwrapKey(long, CKM, long, byte[], long, Template, long, LongRef)
+     * @see NativeProvider#C_UnwrapKey(long, CKM, long, byte[], long, CKA[], long, LongRef)
      */
     public static long UnwrapKey(long session, CKM mechanism, long unwrappingKey, byte[] wrappedKey, CKA... templ) {
         LongRef result = new LongRef();
@@ -1722,7 +1729,7 @@ public class CE {
      * @param templ new key template
      * @param key ges new handle
      * @see C#DeriveKey(long, CKM, long, CKA[], LongRef)
-     * @see NativeProvider#C_DeriveKey(long, CKM, long, Template, long, LongRef)
+     * @see NativeProvider#C_DeriveKey(long, CKM, long, CKA[], long, LongRef)
      */
     public static void DeriveKey(long session, CKM mechanism, long baseKey, CKA[] templ, LongRef key) {
         long rv = C.DeriveKey(session, mechanism, baseKey, templ, key);
@@ -1737,7 +1744,7 @@ public class CE {
      * @param templ new key template
      * @return new handle
      * @see C#DeriveKey(long, CKM, long, CKA[], LongRef)
-     * @see NativeProvider#C_DeriveKey(long, CKM, long, Template, long, LongRef)
+     * @see NativeProvider#C_DeriveKey(long, CKM, long, CKA[], long, LongRef)
      */
     public static long DeriveKey(long session, CKM mechanism, long baseKey, CKA... templ) {
         LongRef key = new LongRef();

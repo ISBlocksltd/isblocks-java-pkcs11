@@ -21,13 +21,16 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.isblocks.pkcs11.CK_INFO;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
 
 /**
  * JNA wrapper for PKCS#11 CK_INFO struct.  It sets align type to {@link Structure#ALIGN_NONE}
- * since the ULONGS (NativeLongs) dont line up on a 4 byte boundary.  You wouldn't care to know
+ * since the ULONGS (NativeLongs) don't line up on a 4 byte boundary.  You wouldn't care to know
  * how painful that learning experience was.
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
@@ -46,6 +49,11 @@ public class JNA_CK_INFO extends Structure {
      */
     public JNA_CK_INFO() {
         setAlignType(ALIGN_NONE);
+    }
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return Arrays.asList("cryptokiVersion", "manufacturerID", "flags", "libraryDescription", "libraryVersion");
     }
 
     public JNA_CK_INFO readFrom(CK_INFO info) {

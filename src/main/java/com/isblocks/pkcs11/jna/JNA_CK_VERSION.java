@@ -21,6 +21,9 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.isblocks.pkcs11.CK_VERSION;
 import com.sun.jna.Structure;
 
@@ -33,6 +36,11 @@ public class JNA_CK_VERSION extends Structure {
     public byte major;
     public byte minor;
 
+    @Override
+    protected List<String> getFieldOrder() {
+        return Arrays.asList("major", "minor");
+    }
+    
     public JNA_CK_VERSION readFrom(CK_VERSION version) {
         major = version.major;
         minor = version.minor;

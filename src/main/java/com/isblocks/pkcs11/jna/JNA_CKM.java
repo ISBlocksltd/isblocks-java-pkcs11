@@ -21,6 +21,9 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.isblocks.pkcs11.CKM;
 import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
@@ -32,20 +35,20 @@ import com.sun.jna.Structure;
  * CKM_? constants and CK_MECHANISM struct wrapper.
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
-@Structure.FieldOrder({ "mechanism", "pParameter","ulParameterLen" })
 public class JNA_CKM extends Structure {
     public NativeLong mechanism;
     public Pointer pParameter;
     public NativeLong ulParameterLen;
 
+    @Override
+    protected List<String> getFieldOrder() {
+        return Arrays.asList("mechanism", "pParameter", "ulParameterLen");
+    }
+
     public JNA_CKM readFrom(CKM ckm) {
         mechanism = new NativeLong(ckm.mechanism);
-        int len = ckm.pParameter != null ? ckm.pParameter.length : 0;
-        if (len > 0) {
-            pParameter = new Memory(len);
-            pParameter.write(0, ckm.pParameter, 0, len);
-        }
-        ulParameterLen = new NativeLong(len);
+        pParameter = ckm.pParameter;
+        ulParameterLen = new NativeLong(ckm.ulParameterLen);
         return this;
     }
 }

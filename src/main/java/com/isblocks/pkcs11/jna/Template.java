@@ -21,8 +21,12 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.isblocks.pkcs11.CKA;
 import com.sun.jna.Memory;
+import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.PointerType;
@@ -37,6 +41,7 @@ import com.sun.jna.PointerType;
  */
 public class Template extends PointerType {
     private CKA[] list;
+    private List<Memory> pValues;
     private int listLen;
 
     /** Default no-arg constructor required by JNA. */
@@ -54,8 +59,9 @@ public class Template extends PointerType {
         if (listLen == 0) {
             return;
         }
-
-        setPointer(new Memory(listLen * (NativeLong.SIZE + com.sun.jna.Native.POINTER_SIZE + NativeLong.SIZE)));
+        setPointer(new Memory(listLen * (NativeLong.SIZE + Native.POINTER_SIZE + NativeLong.SIZE)));
+        // Keep java references over the life time of this Template to avoid native memory being freed before use
+        pValues = new ArrayList<>();
         int offset = 0;
 
         for (int i = 0; i < listLen; i++) {
@@ -74,7 +80,11 @@ public class Template extends PointerType {
                 pValue.write(0, list[i].pValue, 0, (int) list[i].ulValueLen);
             }
             getPointer().setPointer(offset, pValue);
-            offset += com.sun.jna.Native.POINTER_SIZE;
+            // We saved a "long" pointer to the memory allocated by "new Memory" above, keep the java object 
+            // reference as well to avoid it being garbage collected, which will free the native memory allocated when
+            // Memory.finalize is called
+            pValues.add(pValue);
+            offset += Native.POINTER_SIZE;
 
             // ulValueLen
             if (NativeLong.SIZE == 4) {
@@ -102,7 +112,7 @@ public class Template extends PointerType {
 
             // read pValue
             Pointer ptr = getPointer().getPointer(offset);
-            offset += com.sun.jna.Native.POINTER_SIZE;
+            offset += Native.POINTER_SIZE;
 
             // read ulValueLen
             int ulValueLen = 0;

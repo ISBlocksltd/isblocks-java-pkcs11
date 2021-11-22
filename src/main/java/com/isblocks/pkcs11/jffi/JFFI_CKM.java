@@ -21,10 +21,11 @@
 
 package com.isblocks.pkcs11.jffi;
 
-import com.isblocks.pkcs11.CKM;
-
 import jnr.ffi.Memory;
 import jnr.ffi.Struct;
+
+import com.isblocks.pkcs11.CKM;
+import com.sun.jna.Native;
 
 /**
  * JFFI CK_MECHANISM struct wrapper.
@@ -39,13 +40,24 @@ public class JFFI_CKM extends Struct {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
 
-
     public JFFI_CKM readFrom(CKM ckm) {
         mechanism = ckm.mechanism;
-        int len = ckm.pParameter != null ? ckm.pParameter.length : 0;
+        int len = ckm.bParameter != null ? ckm.bParameter.length : 0;
         if (len > 0) {
             pParameter = Memory.allocate(jnr.ffi.Runtime.getSystemRuntime(), len);
-            pParameter.put(0, ckm.pParameter, 0, len);
+            pParameter.put(0, ckm.bParameter, 0, len);
+        }
+        ulParameterLen = len;
+        return this;
+    }
+
+    public JFFI_CKM readFromPointer(CKM pMechanism) {
+        mechanism = pMechanism.mechanism;
+        int len = pMechanism.pParameter != null ? Native.POINTER_SIZE : 0;
+        if (len > 0) {
+            byte[] ckmParamBytes = pMechanism.pParameter.getByteArray(0, len);
+            pParameter = Memory.allocate(jnr.ffi.Runtime.getSystemRuntime(), len);
+            pParameter.put(0, ckmParamBytes, 0, len);
         }
         ulParameterLen = len;
         return this;

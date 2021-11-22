@@ -21,13 +21,10 @@
 
 package com.isblocks.pkcs11;
 
-import com.sun.jna.Structure;
-
 /**
  * PKCS#11 CK_VERSION wrapper.
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
-@Structure.FieldOrder({ "major","minor" })
 public class CK_VERSION {
     public byte major;
     public byte minor;

@@ -21,6 +21,9 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.isblocks.pkcs11.CK_MECHANISM_INFO;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Structure;
@@ -33,6 +36,11 @@ public class JNA_CK_MECHANISM_INFO extends Structure {
     public NativeLong ulMinKeySize;
     public NativeLong ulMaxKeySize;
     public NativeLong flags;
+
+    @Override
+    protected List<String> getFieldOrder() {
+        return Arrays.asList("ulMinKeySize", "ulMaxKeySize", "flags");
+    }
 
     public JNA_CK_MECHANISM_INFO readFrom(CK_MECHANISM_INFO info) {
         ulMinKeySize = new NativeLong(info.ulMinKeySize);
