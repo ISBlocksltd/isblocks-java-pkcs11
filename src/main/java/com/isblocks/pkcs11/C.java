@@ -1422,6 +1422,7 @@ public class C {
     /**
      * Dump for debug.
      * @param sb write to
+     * @param template template
      */
     private static void dumpTemplate(StringBuilder sb, CKA[] template) {
         int templateLen = templLen(template);

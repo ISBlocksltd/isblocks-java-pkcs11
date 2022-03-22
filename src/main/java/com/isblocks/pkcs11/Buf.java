@@ -1,7 +1,5 @@
 /*
  * Copyright 2008-2011 Joel Hockey (joel.hockey@gmail.com).  All rights reserved.
-
- *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -216,7 +214,7 @@ public class Buf {
         return result;
     }
 
-    /**
+    /**  
      * Convert string to byte array using single byte encoding.
      * Each char is cast to byte.
      * @param s string

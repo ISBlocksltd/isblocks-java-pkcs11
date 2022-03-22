@@ -162,7 +162,7 @@ public class CK_C_INITIALIZE_ARGS {
     public interface CK_LOCKMUTEX {
         /**
          * Lock Mutex.
-         * @param mutex mutex
+         * @param mutex mutex 
          * @return {@link CKR} return code
          */
         long invoke(NativePointer mutex);

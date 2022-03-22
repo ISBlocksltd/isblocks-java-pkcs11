@@ -82,6 +82,8 @@ public class LongArray extends PointerType {
     /**
      * Allocates JNA Memory and writes long values.
      * @param list longs
+     * @return
+     * 
      */
     public LongArray(long[] list) {
         this.list = list;
@@ -104,6 +106,7 @@ public class LongArray extends PointerType {
      * This must be called after native PKCS#11 calls in {@link NativeProvider} that modify
      * ULONG values such as {@link NativeProvider#C_FindObjects(NativeLong, LongArray, NativeLong, LongRef)}.
      * This is automatically done by the {@link C} and {@link CE} interfaces.
+     *  * @return
      */
     public void update() {
         if (listLen == 0) {

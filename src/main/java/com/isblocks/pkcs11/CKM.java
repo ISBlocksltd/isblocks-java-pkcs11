@@ -428,6 +428,8 @@ public class CKM {
      * PKCS#11 CK_MECHANISM struct constructor.
      * @param mechanism CKM_? mechanism.  Use one of the public static final long fields in this class.
      * @param param param for mechanism
+     * @param paramSize for mechanism
+     * @return
      */
     public CKM(long mechanism, Pointer param, int paramSize) {
         this.mechanism = mechanism;
@@ -448,12 +450,14 @@ public class CKM {
     /**
      * PKCS#11 CK_MECHANISM struct constructor using default (possibly no) params.
      * @param mechanism CKM_? mechanism.  Use one of the public static final long fields in this class.
+     * @return
      */
     public CKM(long mechanism) {
         this(mechanism, CKM.DEFAULT_PARAMS.get(mechanism));
     }
 
-    /** @return string */
+    /**To Do:
+     *  @return string */
     public String toString() {
         return String.format("mechanism=0x%08x{%s} paramLen=%d param=%s",
             mechanism, L2S(mechanism), bParameter != null ? bParameter.length : 0, 

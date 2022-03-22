@@ -79,7 +79,7 @@ public class CKO {
     public static final long OTP_KEY             = 0x00000008;
 
     // Vendor defined values
-    // Eracom PTK
+    // Eracom PTK 
     public static final long VENDOR_PTK_CERTIFICATE_REQUEST  = 0x80000201;
     public static final long VENDOR_PTK_CRL                  = 0x80000202;
     public static final long VENDOR_PTK_ADAPTER              = 0x8000020a;

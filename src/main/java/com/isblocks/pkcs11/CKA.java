@@ -240,8 +240,7 @@ public class CKA {
     /**
      * Convert long constant value to name.
      *
-     * @param cka
-     *            value
+     * @param cka value
      * @return name
      */
     public static final String L2S(long cka) {
@@ -259,11 +258,9 @@ public class CKA {
 
     /**
      * PKCS#11 CK_ATTRIBUTE struct constructor.
-     *
-     * @param type
-     *            CKA_? type. Use one of the public static final long fields in this class.
-     * @param value
-     *            supports java types Boolean, byte[], Number (long, long), String
+     * @param type  CKA_? type. Use one of the public static final long fields in this class.
+     * @param value  supports java types Boolean, byte[], Number (long, long), String
+     * @return 
      */
     public CKA(long type, Object value) {
         this.type = type;
@@ -292,9 +289,8 @@ public class CKA {
 
     /**
      * PKCS#11 CK_ATTRIBUTE struct constructor with null value.
-     *
-     * @param type
-     *            CKA_? type. Use one of the public static final long fields in this class.
+     * @param type  CKA_? type. Use one of the public static final long fields in this class.
+  
      */
     public CKA(long type) {
         this(type, null);
@@ -353,9 +349,8 @@ public class CKA {
 
     /**
      * Dump for debug.
-     *
-     * @param sb
-     *            write to
+     * @param sb write to
+     * @return
      */
     public void dump(StringBuilder sb) {
         sb.append(String.format("type=0x%08x{%s} valueLen=%d", type, L2S(type), ulValueLen));

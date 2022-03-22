@@ -73,7 +73,8 @@ public class CKRException extends RuntimeException {
     /**
      * Constructor with CKR value.
      * @param ckr CKR value.
-     */
+    
+     */ 
     public CKRException(long ckr) {
         super(String.format("0x%08x: %s", ckr, CKR.L2S(ckr)));
         this.ckr = ckr;

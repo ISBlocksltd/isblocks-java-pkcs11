@@ -62,7 +62,7 @@ package com.isblocks.pkcs11;
 
 import java.nio.ByteOrder;
 
-/**
+/** 
  * Converts between Java long and 'unsigned long int' catering for size(long) and endianness.
  * @author Joel Hockey (joel.hockey@gmail.com)
  */

@@ -82,3 +82,4 @@ public class CKG {
      */
     public static final String L2S(long ckg) { return C.l2s(L2S, CKG.class.getSimpleName(), ckg); }
 }
+  

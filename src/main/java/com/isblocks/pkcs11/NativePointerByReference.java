@@ -81,3 +81,4 @@ public class NativePointerByReference {
     /** @return pointer */
     public NativePointer getPointer() { return pointer; }
 }
+ 

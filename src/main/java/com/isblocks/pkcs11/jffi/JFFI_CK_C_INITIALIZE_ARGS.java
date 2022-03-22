@@ -151,7 +151,7 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
         long invoke(jnr.ffi.Pointer mutex);
     }
 
-    /**
+    /** 
      * JNA wrapper for PKCS#11 CK_LOCKMUTEX.
      * @author Joel Hockey
      */

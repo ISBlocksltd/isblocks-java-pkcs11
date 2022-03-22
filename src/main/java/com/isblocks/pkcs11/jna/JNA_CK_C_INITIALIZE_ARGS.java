@@ -170,7 +170,7 @@ public class JNA_CK_C_INITIALIZE_ARGS extends Structure {
      * @author Joel Hockey
      */
     public interface JNA_CK_LOCKMUTEX extends CK_LOCKMUTEX, Callback {
-        /**
+        /** 
          * Lock Mutex.
          * @param mutex mutex
          * @return {@link CKR} return code

@@ -1884,5 +1884,5 @@ public class CE {
         byte[] result = new byte[newSize];
         System.arraycopy(buf, 0, result, 0, result.length);
         return result;
-    }
+    }    
 }

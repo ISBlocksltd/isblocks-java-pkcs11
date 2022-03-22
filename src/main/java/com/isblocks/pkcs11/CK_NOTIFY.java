@@ -74,3 +74,4 @@ public interface CK_NOTIFY {
      */
     long invoke(long hSession, long event, NativePointer pApplication);
 }
+  

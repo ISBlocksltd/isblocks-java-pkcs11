@@ -79,3 +79,4 @@ public class LongRef {
     /** @return value as string */
     public String toString() { return Long.toString(value); }
 }
+ 

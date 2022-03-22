@@ -68,3 +68,4 @@ public class CK_VERSION {
     public byte major;
     public byte minor;
 }
+ 

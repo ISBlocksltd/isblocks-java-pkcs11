@@ -78,3 +78,4 @@ public interface JNA_CK_NOTIFY extends Callback {
      */
     NativeLong invoke(NativeLong hSession, NativeLong event, Pointer pApplication);
 }
+ 

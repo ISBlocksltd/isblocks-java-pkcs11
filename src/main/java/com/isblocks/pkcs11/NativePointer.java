@@ -80,3 +80,4 @@ public class NativePointer {
     /** @return memory address */
     public long getAddress() { return address; }
 }
+ 

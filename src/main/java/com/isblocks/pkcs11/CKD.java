@@ -80,4 +80,4 @@ public class CKD {
      * @return name
      */
     public static final String L2S(long ckd) { return C.l2s(L2S, CKD.class.getSimpleName(), ckd); }
-}
+}  

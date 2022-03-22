@@ -78,7 +78,7 @@ public class CK_INFO {
     public static final String L2S(long ckf) { return C.l2s(L2S, "CKF", ckf); }
     /**
      * Convert flags to string.
-     * @param flags flags
+     * @param flags flags  
      * @return string format
      */
     public static String f2s(long flags) { return C.f2s(L2S, flags); }
@@ -89,7 +89,8 @@ public class CK_INFO {
     public byte[] libraryDescription = new byte[32];
     public CK_VERSION libraryVersion = new CK_VERSION();
 
-    /** @return string */
+    /** To DO:
+     *  @return string */
     public String toString() {
         return String.format("(\n  version=%d.%d\n  manufacturerID=%s\n  flags=0x%08x{%s}\n  libraryDescription=%s\n  libraryVersion=%d.%d\n)",
                 cryptokiVersion.major & 0xff, cryptokiVersion.minor & 0xff, Buf.escstr(manufacturerID),

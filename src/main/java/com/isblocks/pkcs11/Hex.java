@@ -273,7 +273,7 @@ public class Hex {
         int fillLen = missingHex * 3 + missingHex / 8 * 2 + 2;
 
         while (fillLen-- > 0) {
-            sb.append(' ');
+            sb.append(' '); 
         }
         sb.append(ascii, 0, lineOffset);
     }

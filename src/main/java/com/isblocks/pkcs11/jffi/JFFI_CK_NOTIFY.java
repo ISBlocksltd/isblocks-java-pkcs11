@@ -78,3 +78,4 @@ public interface JFFI_CK_NOTIFY {
     @Delegate
     long invoke(long hSession, long event, Pointer pApplication);
 }
+ 

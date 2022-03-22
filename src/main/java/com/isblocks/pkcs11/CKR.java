@@ -225,7 +225,7 @@ public class CKR {
     private static final Map<Long, String> L2S = C.createL2SMap(CKR.class);
     /**
      * Convert long constant value to name.
-     * @param ckr value
+     * @param ckr value 
      * @return name
      */
     public static final String L2S(long ckr) { return C.l2s(L2S, CKR.class.getSimpleName(), ckr); }
