@@ -44,20 +44,29 @@ import com.isblocks.pkcs11.Hex;
 import com.isblocks.pkcs11.LongRef;
 import com.isblocks.pkcs11.ULong;
 
-import junit.framework.TestCase;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 /**
  * JUnit tests for jacknji11.
  * Tests all the cryptoki functions that I have ever used and understand.
  * The functions not tested are in commented lines.
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
-public class CryptokiTest extends TestCase {
+
+public class CryptokiTest  {
     private byte[] SO_PIN = "12345678".getBytes();
     private byte[] USER_PIN = "12345678".getBytes();
     private long TESTSLOT = 0;
     private long INITSLOT = 1;
 
+    @BeforeAll
     public void setUp() {
         String testSlotEnv = System.getenv("JACKNJI11_TEST_TESTSLOT");
         if (testSlotEnv != null && testSlotEnv.length() > 0) {
@@ -82,10 +91,12 @@ public class CryptokiTest extends TestCase {
         CE.Initialize();
     }
 
+    @AfterAll
     public void tearDown() {
         CE.Finalize();
     }
 
+    @Test
     public void testGetInfo() {
         CK_INFO info = new CK_INFO();
         CE.GetInfo(info);
@@ -197,7 +208,7 @@ public class CryptokiTest extends TestCase {
         CE.SetAttributeValue(session, o, templ);
         long newsize = CE.GetObjectSize(session, o);
         if (size > -1) {
-            assertTrue("newsize: " + newsize + ", size " + size, newsize > size);
+            assertTrue(newsize > size);
         }
         assertEquals("datalabel", CE.GetAttributeValue(session, o, CKA.LABEL).getValueStr());
         assertNull(CE.GetAttributeValue(session, o, CKA.ID).getValueStr());
@@ -365,7 +376,7 @@ public class CryptokiTest extends TestCase {
             CE.Verify(session, data, new byte[128]);
             fail("CE Verify with no real signature should throw exception");
         } catch (CKRException e) {
-            assertEquals("Failure with invalid signature data should be CKR.SIGNATURE_INVALID", CKR.SIGNATURE_INVALID, e.getCKR());
+            assertEquals(CKR.SIGNATURE_INVALID, e.getCKR());
         }
     }
 
@@ -428,7 +439,7 @@ public class CryptokiTest extends TestCase {
             CE.Verify(session, data, new byte[128]);
             fail("CE Verify with no real signature should throw exception");
         } catch (CKRException e) {
-            assertEquals("Failure with invalid signature data should be CKR.SIGNATURE_INVALID", CKR.SIGNATURE_INVALID, e.getCKR());
+            assertEquals( CKR.SIGNATURE_INVALID, e.getCKR());
         }
     }
 
@@ -483,7 +494,7 @@ public class CryptokiTest extends TestCase {
             CE.Verify(session, data, new byte[64]);
             fail("CE Verify with no real signature should throw exception");
         } catch (CKRException e) {
-            assertEquals("Failure with invalid signature data should be CKR.SIGNATURE_INVALID", CKR.SIGNATURE_INVALID, e.getCKR());
+            assertEquals(CKR.SIGNATURE_INVALID, e.getCKR());
         }
     }
 
@@ -555,7 +566,7 @@ public class CryptokiTest extends TestCase {
             CE.Verify(session, data, new byte[64]);
             fail("CE Verify with no real signature should throw exception");
         } catch (CKRException e) {
-            assertEquals("Failure with invalid signature data should be CKR.SIGNATURE_INVALID", CKR.SIGNATURE_INVALID, e.getCKR());
+            assertEquals(CKR.SIGNATURE_INVALID, e.getCKR());
         }
     }
 

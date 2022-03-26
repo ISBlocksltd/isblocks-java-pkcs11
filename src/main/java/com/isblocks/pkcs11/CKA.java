@@ -24,9 +24,8 @@ package com.isblocks.pkcs11;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * CKA_? constants and wrapper for CK_ATTRIBUTE struct.
@@ -34,7 +33,8 @@ import org.apache.commons.logging.LogFactory;
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
 public class CKA {
-    private static final Log log = LogFactory.getLog(CKA.class);
+
+    private static Logger log = LogManager.getLogger(CKA.class);
     public static final long CKF_ARRAY_ATTRIBUTE = 0x40000000;
 
     public static final long CLASS = 0x00000000;
