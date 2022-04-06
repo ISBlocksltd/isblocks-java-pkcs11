@@ -39,7 +39,11 @@ public class JFFI_CK_SESSION_INFO extends Struct {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
 
-
+  /**
+     * TO DO:
+     * @param info CK_SESSION_INFO  
+     * @return 
+     */
     public JFFI_CK_SESSION_INFO readFrom(CK_SESSION_INFO info) {
         slotID = info.slotID;
         state = info.state;
@@ -47,7 +51,11 @@ public class JFFI_CK_SESSION_INFO extends Struct {
         ulDeviceError = info.ulDeviceError;
         return this;
     }
-
+  /**
+     * TO DO:
+     * @param info CK_SESSION_INFO  
+     * @return info
+     */
     public CK_SESSION_INFO writeTo(CK_SESSION_INFO info) {
         info.slotID = slotID;
         info.state = state;

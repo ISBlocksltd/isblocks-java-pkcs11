@@ -40,7 +40,11 @@ public class JFFI_CK_SLOT_INFO extends Struct {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
 
-
+/**
+     * TO DO:
+     * @param info CK_SLOT_INFO  
+     * @return 
+     */
     public JFFI_CK_SLOT_INFO readFrom(CK_SLOT_INFO info) {
         slotDescription = info.slotDescription;
         manufacturerID = info.manufacturerID;
@@ -49,7 +53,11 @@ public class JFFI_CK_SLOT_INFO extends Struct {
         firmwareVersion = new JFFI_CK_VERSION().readFrom(info.firmwareVersion);
         return this;
     }
-
+  /**
+     * TO DO:
+     * @param info CK_SLOT_INFO  
+     * @return info
+     */
     public CK_SLOT_INFO writeTo(CK_SLOT_INFO info) {
         info.slotDescription = slotDescription;
         info.manufacturerID = manufacturerID;

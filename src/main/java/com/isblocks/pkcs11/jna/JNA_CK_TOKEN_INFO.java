@@ -58,7 +58,11 @@ public class JNA_CK_TOKEN_INFO extends Structure {
                 "ulMaxPinLen", "ulMinPinLen", "ulTotalPublicMemory", "ulFreePublicMemory",
                 "ulTotalPrivateMemory", "ulFreePrivateMemory", "hardwareVersion", "firmwareVersion", "utcTime");
     }
-
+/**
+     * TO DO:
+     * @param info CK_TOKEN_INFO  
+     * @return 
+     */
     public JNA_CK_TOKEN_INFO readFrom(CK_TOKEN_INFO info) {
         label = info.label;
         manufacturerID = info.manufacturerID;
@@ -80,7 +84,11 @@ public class JNA_CK_TOKEN_INFO extends Structure {
         utcTime = info.utcTime;
         return this;
     }
-
+ /**
+     * TO DO:
+     * @param info CK_TOKEN_INFO  
+     * @return info
+     */
     public CK_TOKEN_INFO writeTo(CK_TOKEN_INFO info) {
         info.label = label;
         info.manufacturerID = manufacturerID;

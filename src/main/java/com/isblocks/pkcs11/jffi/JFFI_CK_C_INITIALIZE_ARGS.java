@@ -45,13 +45,22 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
     public JFFI_CK_UNLOCKMUTEX unlockMutex;
     public long flags;
     public jnr.ffi.Pointer pReserved;
-
+  /**
+         * TO DO:
+         * @param args CK_C_INITIALIZE_ARGS
+         * @return 
+         */
     public JFFI_CK_C_INITIALIZE_ARGS(final CK_C_INITIALIZE_ARGS args) {
         super(jnr.ffi.Runtime.getSystemRuntime());
         this.createMutex = new JFFI_CK_CREATEMUTEX() {
             public long invoke(NativePointerByReference mutex) {
                 return args.createMutex.invoke(mutex);
             }
+			  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(PointerByReference mutex) {
                 return invoke(new NativePointerByReference(
                     new NativePointer(mutex.getValue().address())));
@@ -61,6 +70,11 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
             public long invoke(NativePointer mutex) {
                 return args.destroyMutex.invoke(mutex);
             }
+				  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(jnr.ffi.Pointer mutex) {
                 return invoke(new NativePointer(mutex.address()));
             }
@@ -69,6 +83,11 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
             public long invoke(NativePointer mutex) {
                 return args.lockMutex.invoke(mutex);
             }
+				  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(jnr.ffi.Pointer mutex) {
                 return invoke(new NativePointer(mutex.address()));
             }
@@ -77,6 +96,11 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
             public long invoke(NativePointer mutex) {
                 return args.unlockMutex.invoke(mutex);
             }
+				  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(jnr.ffi.Pointer mutex) {
                 return invoke(new NativePointer(mutex.address()));
             }

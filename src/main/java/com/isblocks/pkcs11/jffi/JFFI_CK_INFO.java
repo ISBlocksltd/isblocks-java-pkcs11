@@ -46,7 +46,11 @@ public class JFFI_CK_INFO extends Struct {
         super(jnr.ffi.Runtime.getSystemRuntime());
 //        setAlignType();
     }
-
+  /**
+     * TO DO:
+     * @param info CK_INFO  
+     * @return 
+     */
     public JFFI_CK_INFO readFrom(CK_INFO info) {
         cryptokiVersion = new JFFI_CK_VERSION().readFrom(info.cryptokiVersion);
         manufacturerID = info.manufacturerID;
@@ -55,7 +59,11 @@ public class JFFI_CK_INFO extends Struct {
         libraryVersion = new JFFI_CK_VERSION().readFrom(info.libraryVersion);
         return this;
     }
-
+  /**
+     * TO DO:
+     * @param info CK_INFO  
+     * @return info
+     */
     public CK_INFO writeTo(CK_INFO info) {
         cryptokiVersion.writeTo(info.cryptokiVersion);
         info.manufacturerID = manufacturerID;

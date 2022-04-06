@@ -52,7 +52,11 @@ public class JFFI_CK_TOKEN_INFO extends Struct {
     public JFFI_CK_TOKEN_INFO() {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
-
+/**
+     * TO DO:
+     * @param info CK_TOKEN_INFO  
+     * @return 
+     */
 
     public JFFI_CK_TOKEN_INFO readFrom(CK_TOKEN_INFO info) {
         label = info.label;
@@ -75,7 +79,11 @@ public class JFFI_CK_TOKEN_INFO extends Struct {
         utcTime = info.utcTime;
         return this;
     }
-
+  /**
+     * TO DO:
+     * @param info CK_TOKEN_INFO  
+     * @return info
+     */
     public CK_TOKEN_INFO writeTo(CK_TOKEN_INFO info) {
         info.label = label;
         info.manufacturerID = manufacturerID;

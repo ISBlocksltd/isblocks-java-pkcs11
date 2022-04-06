@@ -41,7 +41,11 @@ public class JNA_CK_SESSION_INFO extends Structure {
     protected List<String> getFieldOrder() {
         return Arrays.asList("slotID", "state", "flags", "ulDeviceError");
     }
-
+  /**
+     * TO DO:
+     * @param info CK_SESSION_INFO  
+     * @return 
+     */
     public JNA_CK_SESSION_INFO readFrom(CK_SESSION_INFO info) {
         slotID = new NativeLong(info.slotID);
         state = new NativeLong(info.state);
@@ -49,7 +53,11 @@ public class JNA_CK_SESSION_INFO extends Structure {
         ulDeviceError = new NativeLong(info.ulDeviceError);
         return this;
     }
-
+ /**
+     * TO DO:
+     * @param info CK_SESSION_INFO  
+     * @return info
+     */
     public CK_SESSION_INFO writeTo(CK_SESSION_INFO info) {
         info.slotID = slotID.intValue();
         info.state = state.intValue();

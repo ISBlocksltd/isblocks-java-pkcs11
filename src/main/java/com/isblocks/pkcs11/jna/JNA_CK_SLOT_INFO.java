@@ -42,7 +42,11 @@ public class JNA_CK_SLOT_INFO extends Structure {
     protected List<String> getFieldOrder() {
         return Arrays.asList("slotDescription", "manufacturerID", "flags", "hardwareVersion", "firmwareVersion");
     }
-
+/**
+     * TO DO:
+     * @param info CK_SLOT_INFO  
+     * @return 
+     */
     public JNA_CK_SLOT_INFO readFrom(CK_SLOT_INFO info) {
         slotDescription = info.slotDescription;
         manufacturerID = info.manufacturerID;
@@ -51,7 +55,11 @@ public class JNA_CK_SLOT_INFO extends Structure {
         firmwareVersion = new JNA_CK_VERSION().readFrom(info.firmwareVersion);
         return this;
     }
-
+ /**
+     * TO DO:
+     * @param info CK_SLOT_INFO  
+     * @return info
+     */
     public CK_SLOT_INFO writeTo(CK_SLOT_INFO info) {
         info.slotDescription = slotDescription;
         info.manufacturerID = manufacturerID;

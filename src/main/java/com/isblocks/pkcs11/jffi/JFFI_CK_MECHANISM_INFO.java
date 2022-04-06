@@ -37,14 +37,22 @@ public class JFFI_CK_MECHANISM_INFO extends Struct {
     public JFFI_CK_MECHANISM_INFO() {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
-
+  /**
+     * TO DO:
+     * @param info CK_MECHANISM_INFO  
+     * @return 
+     */
     public JFFI_CK_MECHANISM_INFO readFrom(CK_MECHANISM_INFO info) {
         ulMinKeySize = info.ulMinKeySize;
         ulMaxKeySize = info.ulMaxKeySize;
         flags = info.flags;
         return this;
     }
-
+/**
+     * TO DO:
+     * @param info CK_INFO  
+     * @return info
+     */
     public CK_MECHANISM_INFO writeTo(CK_MECHANISM_INFO info) {
         info.ulMinKeySize = ulMinKeySize;
         info.ulMaxKeySize = ulMaxKeySize;

@@ -53,7 +53,11 @@ public class JNA_CK_C_INITIALIZE_ARGS extends Structure {
     protected List<String> getFieldOrder() {
         return Arrays.asList("createMutex", "destroyMutex", "lockMutex", "unlockMutex", "flags", "pReserved");
     }
-
+  /**
+         * TO DO:
+         * @param args CK_C_INITIALIZE_ARGS
+         * @return 
+         */
     public JNA_CK_C_INITIALIZE_ARGS(final CK_C_INITIALIZE_ARGS args) {
         if (args.createMutex != null) {
             this.createMutex = new JNA_CK_CREATEMUTEX() {
@@ -145,7 +149,7 @@ public class JNA_CK_C_INITIALIZE_ARGS extends Structure {
     public interface JNA_CK_UNLOCKMUTEX extends CK_UNLOCKMUTEX, Callback {
         /**
          * Unlock Mutex.
-         * @param mutex mutex
+         * @param mutex mutex Pointer
          * @return {@link CKR} return code
          */
         NativeLong invoke(Pointer mutex);

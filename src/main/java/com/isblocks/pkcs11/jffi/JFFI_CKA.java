@@ -38,7 +38,11 @@ public class JFFI_CKA extends Struct {
     public JFFI_CKA() {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
-
+/**
+     * TO DO:
+     * @param cka CKA  
+     * @return 
+     */
     public JFFI_CKA readFrom(CKA cka) {
         type = cka.type;
         int len = cka.pValue != null ? cka.pValue.length : 0;
@@ -49,7 +53,11 @@ public class JFFI_CKA extends Struct {
         ulValueLen = len;
         return this;
     }
-
+	/**
+     * TO DO:
+     * @param cka cka  
+     * @return cka
+     */
     public CKA writeTo(CKA cka) {
         cka.type = (int) type;
         cka.ulValueLen = (int) ulValueLen;

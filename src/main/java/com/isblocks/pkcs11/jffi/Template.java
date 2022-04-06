@@ -33,7 +33,11 @@ import jnr.ffi.Runtime;
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
 public class Template {
-
+/**
+     * TO DO:
+     * @param cka CKA  
+     * @return 
+     */
     public static Pointer templ(CKA[] cka) {
         if (cka == null) {
             return null;
@@ -61,7 +65,12 @@ public class Template {
 
         return result;
     }
-
+/**
+     * TO DO:
+	 * @param templ Pointer  
+     * @param cka CKA  
+     * @return 
+     */
     public static void update(Pointer templ, CKA[] cka) {
         if (cka == null) {
             return;

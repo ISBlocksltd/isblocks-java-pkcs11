@@ -39,7 +39,11 @@ public class JFFI_CKM extends Struct {
     public JFFI_CKM() {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
-
+/**
+     * TO DO:
+     * @param ckm CKM  
+     * @return 
+     */
     public JFFI_CKM readFrom(CKM ckm) {
         mechanism = ckm.mechanism;
         int len = ckm.bParameter != null ? ckm.bParameter.length : 0;
@@ -50,7 +54,11 @@ public class JFFI_CKM extends Struct {
         ulParameterLen = len;
         return this;
     }
-
+/**
+     * TO DO:
+     * @param pMechanism CKM  
+     * @return 
+     */
     public JFFI_CKM readFromPointer(CKM pMechanism) {
         mechanism = pMechanism.mechanism;
         int len = pMechanism.pParameter != null ? Native.POINTER_SIZE : 0;

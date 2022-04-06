@@ -37,12 +37,21 @@ public class JFFI_CK_VERSION extends Struct {
     public JFFI_CK_VERSION() {
         super(jnr.ffi.Runtime.getSystemRuntime());
     }
-
+/**
+     * TO DO:
+     * @param version CK_VERSION  
+     * @return 
+     */
     public JFFI_CK_VERSION readFrom(CK_VERSION version) {
         major = version.major;
         minor = version.minor;
         return this;
     }
+	/**
+     * TO DO:
+     * @param version CK_VERSION  
+     * @return version
+     */
     public CK_VERSION writeTo(CK_VERSION version) {
         version.major = major;
         version.minor = minor;

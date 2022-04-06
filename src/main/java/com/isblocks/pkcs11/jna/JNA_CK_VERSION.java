@@ -39,12 +39,21 @@ public class JNA_CK_VERSION extends Structure {
     protected List<String> getFieldOrder() {
         return Arrays.asList("major", "minor");
     }
-    
+    /**
+     * TO DO:
+     * @param version CK_VERSION  
+     * @return 
+     */
     public JNA_CK_VERSION readFrom(CK_VERSION version) {
         major = version.major;
         minor = version.minor;
         return this;
     }
+		/**
+     * TO DO:
+     * @param version CK_VERSION  
+     * @return version
+     */
     public CK_VERSION writeTo(CK_VERSION version) {
         version.major = major;
         version.minor = minor;

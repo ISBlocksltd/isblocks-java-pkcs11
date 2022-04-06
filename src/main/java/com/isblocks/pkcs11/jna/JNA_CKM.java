@@ -44,7 +44,11 @@ public class JNA_CKM extends Structure {
     protected List<String> getFieldOrder() {
         return Arrays.asList("mechanism", "pParameter", "ulParameterLen");
     }
-
+/**
+     * TO DO:
+     * @param ckm CKM  
+     * @return 
+     */
     public JNA_CKM readFrom(CKM ckm) {
         mechanism = new NativeLong(ckm.mechanism);
         pParameter = ckm.pParameter;

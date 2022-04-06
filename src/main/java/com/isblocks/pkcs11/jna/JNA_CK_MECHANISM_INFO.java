@@ -40,14 +40,22 @@ public class JNA_CK_MECHANISM_INFO extends Structure {
     protected List<String> getFieldOrder() {
         return Arrays.asList("ulMinKeySize", "ulMaxKeySize", "flags");
     }
-
+  /**
+     * TO DO:
+     * @param info CK_MECHANISM_INFO  
+     * @return 
+     */
     public JNA_CK_MECHANISM_INFO readFrom(CK_MECHANISM_INFO info) {
         ulMinKeySize = new NativeLong(info.ulMinKeySize);
         ulMaxKeySize = new NativeLong(info.ulMaxKeySize);
         flags = new NativeLong(info.flags);
         return this;
     }
-
+/**
+     * TO DO:
+     * @param info CK_MECHANISM_INFO  
+     * @return info
+     */
     public CK_MECHANISM_INFO writeTo(CK_MECHANISM_INFO info) {
         info.ulMinKeySize = ulMinKeySize.intValue();
         info.ulMaxKeySize = ulMaxKeySize.intValue();

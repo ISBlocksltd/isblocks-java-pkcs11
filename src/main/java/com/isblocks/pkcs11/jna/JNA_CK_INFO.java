@@ -54,7 +54,11 @@ public class JNA_CK_INFO extends Structure {
     protected List<String> getFieldOrder() {
         return Arrays.asList("cryptokiVersion", "manufacturerID", "flags", "libraryDescription", "libraryVersion");
     }
-
+ /**
+     * TO DO:
+     * @param info CK_INFO  
+     * @return 
+     */
     public JNA_CK_INFO readFrom(CK_INFO info) {
         cryptokiVersion = new JNA_CK_VERSION().readFrom(info.cryptokiVersion);
         manufacturerID = info.manufacturerID;
@@ -63,7 +67,11 @@ public class JNA_CK_INFO extends Structure {
         libraryVersion = new JNA_CK_VERSION().readFrom(info.libraryVersion);
         return this;
     }
-
+  /**
+     * TO DO:
+     * @param info CK_INFO  
+     * @return info
+     */
     public CK_INFO writeTo(CK_INFO info) {
         cryptokiVersion.writeTo(info.cryptokiVersion);
         info.manufacturerID = manufacturerID;
