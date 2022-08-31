@@ -1,19 +1,19 @@
 /*/*************************************************************************
- *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 				 *
+ *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 		 *
  *  and other contributors as indicated by the @author tags.	         *
- *																		 *
- *  All rights reserved													 *
- * 																		 *
+ *									 *
+ *  All rights reserved							 *
+ * 									 *
  *  The use of this Proprietary Software are subject to specific         *
- *  commercial license terms											 *
- * 																		 *
+ *  commercial license terms						 *
+ * 									 *
  *  To purchase a licence agreement for any use of this code please 	 *
- *  contact info@isblocks.com 											 *
- *																		 *
+ *  contact info@isblocks.com 			                         *
+ *								         *
  *  Unless required by applicable law or agreed to in writing, software  *
  *  distributed under the License is distributed on an "AS IS" BASIS,    *
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or      *
- *  implied.															 *
+ *  implied.								 *
  *  See the License for the specific language governing permissions and  *
  *  limitations under the License.                                       *
  *                                                                       *
@@ -45,13 +45,22 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
     public JFFI_CK_UNLOCKMUTEX unlockMutex;
     public long flags;
     public jnr.ffi.Pointer pReserved;
-
+  /**
+         * TO DO:
+         * @param args CK_C_INITIALIZE_ARGS
+         * @return 
+         */
     public JFFI_CK_C_INITIALIZE_ARGS(final CK_C_INITIALIZE_ARGS args) {
         super(jnr.ffi.Runtime.getSystemRuntime());
         this.createMutex = new JFFI_CK_CREATEMUTEX() {
             public long invoke(NativePointerByReference mutex) {
                 return args.createMutex.invoke(mutex);
             }
+			  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(PointerByReference mutex) {
                 return invoke(new NativePointerByReference(
                     new NativePointer(mutex.getValue().address())));
@@ -61,6 +70,11 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
             public long invoke(NativePointer mutex) {
                 return args.destroyMutex.invoke(mutex);
             }
+				  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(jnr.ffi.Pointer mutex) {
                 return invoke(new NativePointer(mutex.address()));
             }
@@ -69,6 +83,11 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
             public long invoke(NativePointer mutex) {
                 return args.lockMutex.invoke(mutex);
             }
+				  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(jnr.ffi.Pointer mutex) {
                 return invoke(new NativePointer(mutex.address()));
             }
@@ -77,6 +96,11 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
             public long invoke(NativePointer mutex) {
                 return args.unlockMutex.invoke(mutex);
             }
+				  /**
+         * TO DO:
+         * @param mutex PointerByReference
+         * @return 
+         */
             public long invoke(jnr.ffi.Pointer mutex) {
                 return invoke(new NativePointer(mutex.address()));
             }
