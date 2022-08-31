@@ -1,4 +1,4 @@
-/*/*************************************************************************
+/*************************************************************************
  *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 				 *
  *  and other contributors as indicated by the @author tags.	         *
  *																		 *

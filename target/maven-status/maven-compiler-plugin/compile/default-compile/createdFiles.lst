@@ -49,6 +49,8 @@ com/isblocks/pkcs11/jna/JNA.class
 com/isblocks/pkcs11/ULong$ULongSize.class
 com/isblocks/pkcs11/NativeProvider.class
 com/isblocks/pkcs11/jffi/JFFI_CK_C_INITIALIZE_ARGS$1.class
+com/isblocks/pkcs11/Cryptoki.class
+com/isblocks/pkcs11/CryptokiE.class
 com/isblocks/pkcs11/jna/JNA_CK_VERSION.class
 com/isblocks/pkcs11/jna/JNA_CK_SESSION_INFO.class
 com/isblocks/pkcs11/jna/LongArray.class

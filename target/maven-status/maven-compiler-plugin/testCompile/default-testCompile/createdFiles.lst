@@ -1,1 +1,2 @@
-com/pkcs11/test/CryptokiTest.class
+com/pkcs11/test/Cryptoki.class
+com/pkcs11/test/CryptokiUtimacoTest.class

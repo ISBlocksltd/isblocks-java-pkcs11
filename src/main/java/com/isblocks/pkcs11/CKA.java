@@ -1,4 +1,4 @@
-/*/*************************************************************************
+/*************************************************************************
  *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 				 *
  *  and other contributors as indicated by the @author tags.	         *
  *																		 *
@@ -24,8 +24,10 @@ package com.isblocks.pkcs11;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Map;
-import org.apache.logging.log4j.Logger;
+
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 /**
  * CKA_? constants and wrapper for CK_ATTRIBUTE struct.
@@ -33,8 +35,7 @@ import org.apache.logging.log4j.LogManager;
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
 public class CKA {
-
-    private static Logger log = LogManager.getLogger(CKA.class);
+    private static final Logger log = LogManager.getLogger(CKA.class);
     public static final long CKF_ARRAY_ATTRIBUTE = 0x40000000;
 
     public static final long CLASS = 0x00000000;
@@ -201,7 +202,8 @@ public class CKA {
     /**
      * Convert long constant value to name.
      *
-     * @param cka value
+     * @param cka
+     *            value
      * @return name
      */
     public static final String L2S(long cka) {
@@ -219,9 +221,11 @@ public class CKA {
 
     /**
      * PKCS#11 CK_ATTRIBUTE struct constructor.
-     * @param type  CKA_? type. Use one of the public static final long fields in this class.
-     * @param value  supports java types Boolean, byte[], Number (long, long), String
-     * @return 
+     *
+     * @param type
+     *            CKA_? type. Use one of the public static final long fields in this class.
+     * @param value
+     *            supports java types Boolean, byte[], Number (long, long), String
      */
     public CKA(long type, Object value) {
         this.type = type;
@@ -250,8 +254,9 @@ public class CKA {
 
     /**
      * PKCS#11 CK_ATTRIBUTE struct constructor with null value.
-     * @param type  CKA_? type. Use one of the public static final long fields in this class.
-  
+     *
+     * @param type
+     *            CKA_? type. Use one of the public static final long fields in this class.
      */
     public CKA(long type) {
         this(type, null);
@@ -310,8 +315,9 @@ public class CKA {
 
     /**
      * Dump for debug.
-     * @param sb write to
-     * @return
+     *
+     * @param sb
+     *            write to
      */
     public void dump(StringBuilder sb) {
         sb.append(String.format("type=0x%08x{%s} valueLen=%d", type, L2S(type), ulValueLen));

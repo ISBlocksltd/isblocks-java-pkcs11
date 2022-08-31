@@ -1,4 +1,4 @@
-/*/*************************************************************************
+/*************************************************************************
  *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 				 *
  *  and other contributors as indicated by the @author tags.	         *
  *																		 *
@@ -60,7 +60,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
 
-public class CryptokiTest  {
+public class Cryptoki  {
     private byte[] SO_PIN = "12345678".getBytes();
     private byte[] USER_PIN = "12345678".getBytes();
     private long TESTSLOT = 0;

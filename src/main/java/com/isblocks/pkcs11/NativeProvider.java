@@ -1,24 +1,4 @@
-/*/*************************************************************************
- *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 				 *
- *  and other contributors as indicated by the @author tags.	         *
- *																		 *
- *  All rights reserved													 *
- * 																		 *
- *  The use of this Proprietary Software are subject to specific         *
- *  commercial license terms											 *
- * 																		 *
- *  To purchase a licence agreement for any use of this code please 	 *
- *  contact info@isblocks.com 											 *
- *																		 *
- *  Unless required by applicable law or agreed to in writing, software  *
- *  distributed under the License is distributed on an "AS IS" BASIS,    *
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or      *
- *  implied.															 *
- *  See the License for the specific language governing permissions and  *
- *  limitations under the License.                                       *
- *                                                                       *
- *************************************************************************/
-/*/*************************************************************************
+/*************************************************************************
  *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 				 *
  *  and other contributors as indicated by the @author tags.	         *
  *																		 *
@@ -41,32 +21,39 @@
 
 package com.isblocks.pkcs11;
 
+
 /**
  * Native interface for PKCS#11 functions.
  * This interface allows for pluggable providers to do any native
  * interface or network protocol conversion.
  *
- * jacknji11 provides 3 interfaces for calling cryptoki functions.
+ * jacknji11 provides 3 interfaces for calling cryptoki functions (plus 2 for
+ * backwards compatibility).
  * <ol>
- * <li>{@link com.isblocks.pkcs11.NativeProvider} provides the lowest level
+ * <li>{@link org.pkcs11.jacknji11.NativeProvider} provides the lowest level
  * direct mapping to the <code>'C_*'</code> functions.  There is little
  * reason why you would ever want to invoke it directly, but you can.
- * <li>{@link com.isblocks.pkcs11.C} provides the exact same functions
- * as {@link com.isblocks.pkcs11.NativeProvider} by calling through to the
+ * <li>{@link org.pkcs11.jacknji11.Cryptoki} provides the exact same functions
+ * as {@link org.pkcs11.jacknji11.NativeProvider} by calling through to the
  * corresponding native method.  The <code>'C_'</code> at the start of the
- * function name is removed since the <code>'C.'</code> when you call the
- * static methods of this class looks similar.  In addition to calling
- * the native methods, {@link com.isblocks.pkcs11.C} provides logging
+ * function name is removed since the <code>'c.'</code> when you call the
+ * methods of this class looks similar (assuming the instance is named
+ * <code>'c'</code>).  In addition to calling
+ * the native methods, {@link org.pkcs11.jacknji11.Cryptoki} provides logging
  * through apache commons logging.  You can use this if you require fine-grain
  * control over something such as checking
- * {@link com.isblocks.pkcs11.CKR} return codes.
- * <li>{@link com.isblocks.pkcs11.CE} (<b>C</b>ryptoki
+ * {@link org.pkcs11.jacknji11.CKR} return codes.
+ * <li>{@link org.pkcs11.jacknji11.CryptokiE} (<b>Cryptoki</b>
  * with <b>E</b>xceptions) provides the most user-friendly interface
  * and is the preferred interface to use.  It calls
- * related function(s) in {@link com.isblocks.pkcs11.C},
+ * related function(s) in {@link org.pkcs11.jacknji11.Cryptoki},
  * and converts any non-zero return values into a
- * {@link com.isblocks.pkcs11.CKRException}.  It automatically resizes
+ * {@link org.pkcs11.jacknji11.CKRException}.  It automatically resizes
  * arrays and other helpful things.
+ * <li>{@link org.pkcs11.jacknji11.C} and {@link org.pkcs11.jacknji11.CE} are
+ * the static predecessors to {@link org.pkcs11.jacknji11.Cryptoki} and
+ * {@link org.pkcs11.jacknji11.CryptokiE}.  They are kept mostly for backwards
+ * compatibility.
  * </ol>
  *
  * Method descriptions taken from
