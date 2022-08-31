@@ -345,6 +345,8 @@ public class CKM {
     public static final long VENDOR_PTK_PKCS12_PBE_EXPORT = 0x800009f2L;
     public static final long VENDOR_PTK_PKCS12_PBE_IMPORT = 0x800009f3L;
     public static final long VENDOR_PTK_ECIES            = 0x80000a00L;
+    
+    public static final long CKM_EC_MONTGOMERY_KEY_PAIR_GEN = 0x80000d01L;
 
     /** Maps from long value to String description (variable name). */
     private static final Map<Long, String> L2S = C.createL2SMap(CKM.class);
