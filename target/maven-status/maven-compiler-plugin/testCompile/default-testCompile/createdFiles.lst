@@ -1,2 +1,3 @@
-com/pkcs11/test/Cryptoki.class
-com/pkcs11/test/CryptokiUtimacoTest.class
+com\pkcs11\test\CryptokiUtimacoTest.class
+com\pkcs11\test\CryptokiThalesDPODTest.class
+com\pkcs11\test\CryptokiSoftHSMTest.class

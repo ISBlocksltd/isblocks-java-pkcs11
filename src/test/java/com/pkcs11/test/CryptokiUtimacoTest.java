@@ -107,31 +107,36 @@ import java.io.ByteArrayOutputStream;
 
 public class CryptokiUtimacoTest {
 
-	long session;
-	long[] slots;
-	int slotId;
-	byte[] password;
-	String library;
+	static long session;
+	static long[] slots;
+	static int slotId;
+	static byte[] password;
+	static String library;
 	
     @BeforeAll
-    public void setUp() {
+    public static void setUp() {
         // Library path can be set with JACKNJI11_PKCS11_LIB_PATH, or done in code such as:
-        // C.NATIVE = new org.pkcs11.jacknji11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
+        // C.NATIVE = new com.isblocks.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
         // Or JFFI can be used rather than JNA:
-        // C.NATIVE = new org.pkcs11.jacknji11.jffi.JFFI();
+        // C.NATIVE = new com.isblocks.jffi.JFFI();
 		if(!CE.isInitialized()) {
 			
 			long[] slots = CE.GetSlotList(true);
 			
-			this.session = CE.OpenSession(slots[this.slotId], (CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION), null, null);        
-			CE.Login(this.session, CKU.USER, "123456".getBytes());
-			CE.GetSessionInfo(this.session);
+			session = CE.OpenSession(slots[slotId], (CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION), null, null);        
+			CE.Login(session, CKU.USER, "123456".getBytes());
+			CE.GetSessionInfo(session);
 			//CE.Login(this.session, CKU.USER, this.password);
 			System.out.println("Logged into the HSM");
 	        CE.Initialize();
 		}
     }
     
+    @AfterAll
+    public static void tearDown() {
+        CE.Finalize();
+    }
+
     @Test
     public void testSetUp1() throws IOException{
     	  // Library path can be set with JACKNJI11_PKCS11_LIB_PATH, or done in code such as:
@@ -140,17 +145,16 @@ public class CryptokiUtimacoTest {
         // C.NATIVE = new org.pkcs11.jacknji11.jffi.JFFI();
 		if(!CE.isInitialized()) {
 			long[] slots = CE.GetSlotList(true);
-			CE.Logout(this.session);
-			this.session = CE.OpenSession(slots[this.slotId], (CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION), null, null);        
-			CE.Login(this.session, CKU.USER, "123456".getBytes());
-			System.out.println(CE.GetSessionInfo(this.session));
+			CE.Logout(session);
+			session = CE.OpenSession(slots[slotId], (CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION), null, null);        
+			CE.Login(session, CKU.USER, "123456".getBytes());
+			System.out.println(CE.GetSessionInfo(session));
 			//CE.Login(this.session, CKU.USER, this.password);
 			System.out.println("Logged into the HSM");
 	        CE.Initialize();
 	        
 		}
 		
-		testGenerateEDDSAonUtimaco();
 			
 		
     }
@@ -175,12 +179,9 @@ public class CryptokiUtimacoTest {
 	        
 		}
 		
-		testGenerateEDDSAonUtimaco();
-			
-		
     }
     
-
+    @Test
     private void testGenerateEDDSAonUtimaco() throws IOException{
 		
     	String keyID = "123456";

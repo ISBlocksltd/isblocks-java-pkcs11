@@ -60,14 +60,21 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Joel Hockey (joel.hockey@gmail.com)
  */
 
-public class Cryptoki  {
+public class CryptokiThalesDPODTest  {
     private byte[] SO_PIN = "12345678".getBytes();
     private byte[] USER_PIN = "12345678".getBytes();
     private long TESTSLOT = 0;
     private long INITSLOT = 1;
 
     @BeforeAll
-    public void setUp() {
+    public static void setUp() {
+
+        C.NATIVE = new com.isblocks.pkcs11.jna.JNA("C:\\Program Files\\SafeNet\\LunaClient\\cryptoki.dll");
+        String testSlotEnv = "3";
+        String soPinEnv = "1234567";
+        String UserPinEnv = "1234567";
+        
+        /* 
         String testSlotEnv = System.getenv("JACKNJI11_TEST_TESTSLOT");
         if (testSlotEnv != null && testSlotEnv.length() > 0) {
             TESTSLOT = Long.parseLong(testSlotEnv);
@@ -83,16 +90,16 @@ public class Cryptoki  {
         String userPinEnv = System.getenv("JACKNJI11_TEST_USER_PIN");
         if (userPinEnv != null && userPinEnv.length() > 0) {
             USER_PIN = userPinEnv.getBytes();
-        }
+        }*/
         // Library path can be set with JACKNJI11_PKCS11_LIB_PATH, or done in code such as:
-        // C.NATIVE = new org.pkcs11.jacknji11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
+        // C.NATIVE = new com.isblocks.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
         // Or JFFI can be used rather than JNA:
-        // C.NATIVE = new org.pkcs11.jacknji11.jffi.JFFI();
+        // C.NATIVE = new com.isblocks.jffi.JFFI();
         CE.Initialize();
     }
 
     @AfterAll
-    public void tearDown() {
+    static public void tearDown() {
         CE.Finalize();
     }
 
@@ -100,7 +107,7 @@ public class Cryptoki  {
     public void testGetInfo() {
         CK_INFO info = new CK_INFO();
         CE.GetInfo(info);
-//        System.out.println(info);
+        System.out.println(info);
     }
 
     public void testGetSlotList() {
@@ -132,6 +139,7 @@ public class Cryptoki  {
 //        System.out.println(info);
     }
 
+    /* 
     public void testInitTokenInitPinSetPin() {
         CE.InitToken(INITSLOT, SO_PIN, "TEST".getBytes());
         long session = CE.OpenSession(INITSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
@@ -142,7 +150,7 @@ public class Cryptoki  {
         byte[] somenewpin = "somenewpin".getBytes();
         CE.SetPIN(session, USER_PIN, somenewpin);
         CE.SetPIN(session, somenewpin, USER_PIN);
-    }
+    }*/
 
     public void testGetSessionInfo() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
@@ -156,7 +164,7 @@ public class Cryptoki  {
         long s2 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CK_SESSION_INFO info = new CK_SESSION_INFO();
         CE.GetSessionInfo(s2, info );
-//        System.out.println(info);
+        //System.out.println(info);
         long s3 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.CloseSession(s1);
         CE.CloseAllSessions(TESTSLOT);
