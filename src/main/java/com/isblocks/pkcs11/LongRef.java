@@ -23,7 +23,7 @@ package com.isblocks.pkcs11;
 
 /**
  * Wrapper for native long that can be modified.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class LongRef {
     public long value;

@@ -24,7 +24,7 @@ package com.isblocks.pkcs11;
 /**
  * Java wrapper for native pointer
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class NativePointer {
     private long address;

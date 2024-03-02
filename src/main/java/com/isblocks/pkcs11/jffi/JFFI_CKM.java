@@ -29,7 +29,7 @@ import com.sun.jna.Native;
 
 /**
  * JFFI CK_MECHANISM struct wrapper.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFI_CKM extends Struct {
     public long mechanism;

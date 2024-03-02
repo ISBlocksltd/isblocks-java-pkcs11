@@ -22,12 +22,8 @@
 
 package com.isblocks.pkcs11;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
+import java.util.Arrays;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import com.isblocks.pkcs11.jna.JNA;
@@ -39,33 +35,33 @@ import com.isblocks.pkcs11.jna.JNA;
  * jacknji11 provides 3 interfaces for calling cryptoki functions (plus 2 for
  * backwards compatibility).
  * <ol>
- * <li>{@link org.pkcs11.jacknji11.NativeProvider} provides the lowest level
+ * <li>{@link com.isblocks.pkcs11.NativeProvider} provides the lowest level
  * direct mapping to the <code>'C_*'</code> functions.  There is little
  * reason why you would ever want to invoke it directly, but you can.
- * <li>{@link org.pkcs11.jacknji11.Cryptoki} provides the exact same functions
- * as {@link org.pkcs11.jacknji11.NativeProvider} by calling through to the
+ * <li>{@link com.isblocks.pkcs11.CryptokiSoftHSMTest} provides the exact same functions
+ * as {@link com.isblocks.pkcs11.NativeProvider} by calling through to the
  * corresponding native method.  The <code>'C_'</code> at the start of the
  * function name is removed since the <code>'c.'</code> when you call the
  * methods of this class looks similar (assuming the instance is named
  * <code>'c'</code>).  In addition to calling
- * the native methods, {@link org.pkcs11.jacknji11.Cryptoki} provides logging
+ * the native methods, {@link com.isblocks.pkcs11} provides logging
  * through apache commons logging.  You can use this if you require fine-grain
  * control over something such as checking
- * {@link org.pkcs11.jacknji11.CKR} return codes.
- * <li>{@link org.pkcs11.jacknji11.CryptokiE} (<b>Cryptoki</b>
+ * {@link com.isblocks.pkcs11.CKR} return codes.
+ * <li>{@link com.isblocks.pkcs11.CryptokiE} (<b>Cryptoki</b>
  * with <b>E</b>xceptions) provides the most user-friendly interface
  * and is the preferred interface to use.  It calls
- * related function(s) in {@link org.pkcs11.jacknji11.Cryptoki},
+ * related function(s) in {@link org.CryptokiSoftHSMTest.jacknji11.Cryptoki},
  * and converts any non-zero return values into a
- * {@link org.pkcs11.jacknji11.CKRException}.  It automatically resizes
+ * {@link com.isblocks.pkcs11.CKRException}.  It automatically resizes
  * arrays and other helpful things.
- * <li>{@link org.pkcs11.jacknji11.C} and {@link org.pkcs11.jacknji11.CE} are
- * the static predecessors to {@link org.pkcs11.jacknji11.Cryptoki} and
- * {@link org.pkcs11.jacknji11.CryptokiE}.  They are kept mostly for backwards
+ * <li>{@link com.isblocks.pkcs11.C} and {@link com.isblocks.pkcs11.CE} are
+ * the static predecessors to {@link com.isblocks.pkcs11.CryptokiSoftHSMTest} and
+ * {@link com.isblocks.pkcs11.CryptokiE}.  They are kept mostly for backwards
  * compatibility.
  * </ol>
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class Cryptoki {
     private static final Logger log = LogManager.getLogger(Cryptoki.class);
@@ -75,15 +71,15 @@ public class Cryptoki {
     private final NativeProvider provider;
 
     /**
-     * Default constructor uses {@link org.pkcs11.jacknji11.jna.JNA}
-     * {@link org.pkcs11.jacknji11.NativeProvider}.
+     * Default constructor uses {@link com.isblocks.pkcs11.jna.JNA}
+     * {@link com.isblocks.pkcs11.NativeProvider}.
      */
     public Cryptoki() {
         this.provider = new JNA();
     }
 
     /**
-     * @param provider cryptoki {@link org.pkcs11.jacknji11.NativeProvider}.
+     * @param provider cryptoki {@link com.isblocks.pkcs11.NativeProvider}.
      */
     public Cryptoki(NativeProvider provider) {
         this.provider = provider != null ? provider : new JNA();

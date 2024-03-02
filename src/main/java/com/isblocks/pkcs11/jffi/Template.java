@@ -30,7 +30,7 @@ import jnr.ffi.Runtime;
 /**
  * JFFI Wrapper for CK_ATTRIBUTE[].
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class Template {
 /**

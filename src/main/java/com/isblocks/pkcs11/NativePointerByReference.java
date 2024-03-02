@@ -24,7 +24,7 @@ package com.isblocks.pkcs11;
 /**
  * Java wrapper for Pointer to NativePointer
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class NativePointerByReference {
     private NativePointer pointer;

@@ -19,7 +19,7 @@
  *                                                                       *
  *************************************************************************/
 
-package com.pkcs11.test;
+ package com.isblocks.pkcs11.test;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -99,10 +99,10 @@ import java.io.ByteArrayOutputStream;
 
 
 /**
- * JUnit tests for jacknji11.
- * Tests all the cryptoki functions that I have ever used and understand.
+ * JUnit tests for isblocks-pkcs11
+ * Tests all the cryptoki functions using the Utimaco Simulator
  * The functions not tested are in commented lines.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 
 public class CryptokiUtimacoTest {
@@ -140,9 +140,9 @@ public class CryptokiUtimacoTest {
     @Test
     public void testSetUp1() throws IOException{
     	  // Library path can be set with JACKNJI11_PKCS11_LIB_PATH, or done in code such as:
-        // C.NATIVE = new org.pkcs11.jacknji11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
+        // C.NATIVE = new com.isblocks.pkcs11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
         // Or JFFI can be used rather than JNA:
-        // C.NATIVE = new org.pkcs11.jacknji11.jffi.JFFI();
+        // C.NATIVE = new com.isblocks.pkcs11.jffi.JFFI();
 		if(!CE.isInitialized()) {
 			long[] slots = CE.GetSlotList(true);
 			CE.Logout(session);
@@ -162,15 +162,19 @@ public class CryptokiUtimacoTest {
     @Test
     public void testSetUp2() throws IOException{
     	  // Library path can be set with JACKNJI11_PKCS11_LIB_PATH, or done in code such as:
-        // C.NATIVE = new org.pkcs11.jacknji11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
+        // C.NATIVE = new com.isblocks.pkcs11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
         // Or JFFI can be used rather than JNA:
-        // C.NATIVE = new org.pkcs11.jacknji11.jffi.JFFI();
+        // C.NATIVE = new com.isblocks.pkcs11.jffi.JFFI();
 		if(!CE.isInitialized()) {
 			long[] slots = CE.GetSlotList(true);
 			CE.Logout(this.session);
 			this.session = CE.OpenSession(slots[this.slotId], (CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION), null, null);        
-			//CE.Login(this.session, CKU.USER, "123456".getBytes());
-			CE.Login(this.session, CKU.USER, "hsmusr1,:cs2:auth:USB0".getBytes());
+			
+            //Option 1 for loggin in using a password; 123456
+            //CE.Login(this.session, CKU.USER, "123456".getBytes());
+			
+            //Option 2 for loggin in using a quorum of 2/3 hsm user cards
+            CE.Login(this.session, CKU.USER, "hsmusr1,:cs2:auth:USB0".getBytes());
 			CE.Login(this.session, CKU.USER, "hsmusr2,:cs2:auth:USB0".getBytes());
 			System.out.println(CE.GetSessionInfo(this.session));
 			//CE.Login(this.session, CKU.USER, this.password);

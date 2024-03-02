@@ -19,10 +19,13 @@
  *                                                                       *
  *************************************************************************/
 
-package com.pkcs11.test;
+ package com.isblocks.pkcs11.test;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import com.isblocks.pkcs11.Buf;
 import com.isblocks.pkcs11.C;
@@ -43,31 +46,40 @@ import com.isblocks.pkcs11.CK_TOKEN_INFO;
 import com.isblocks.pkcs11.Hex;
 import com.isblocks.pkcs11.LongRef;
 import com.isblocks.pkcs11.ULong;
-
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.bouncycastle.asn1.DERNull;
+import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
+import org.bouncycastle.asn1.pkcs.RSAPublicKey;
+import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
+import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
+import java.math.BigInteger;
+import com.nimbusds.jose.jwk.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 /**
- * JUnit tests for jacknji11.
- * Tests all the cryptoki functions that I have ever used and understand.
+ * JUnit tests for isblocks-pkcs11
+ * Tests all the cryptoki functions using Thales DPOD
  * The functions not tested are in commented lines.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 
-public class CryptokiSoftHSMTest  {
-    static private byte[] SO_PIN = "12345678".getBytes();
-    static private byte[] USER_PIN = "12345678".getBytes();
-    static private long TESTSLOT = 0;
-    static private long INITSLOT = 1;
+public class CryptokiThalesDPODTest  {
+    private byte[] SO_PIN = "12345678".getBytes();
+    private byte[] USER_PIN = "1234567".getBytes();
+    private long TESTSLOT = 3;
+    private long INITSLOT = 1;
 
     @BeforeAll
     public static void setUp() {
+
+        C.NATIVE = new com.isblocks.pkcs11.jna.JNA("C:\\Program Files\\SafeNet\\LunaClient\\cryptoki.dll");
+        String testSlotEnv = "3";
+        String soPinEnv = "1234567";
+        String UserPinEnv = "1234567";
+        
+        /* 
         String testSlotEnv = System.getenv("JACKNJI11_TEST_TESTSLOT");
         if (testSlotEnv != null && testSlotEnv.length() > 0) {
             TESTSLOT = Long.parseLong(testSlotEnv);
@@ -83,16 +95,16 @@ public class CryptokiSoftHSMTest  {
         String userPinEnv = System.getenv("JACKNJI11_TEST_USER_PIN");
         if (userPinEnv != null && userPinEnv.length() > 0) {
             USER_PIN = userPinEnv.getBytes();
-        }
+        }*/
         // Library path can be set with JACKNJI11_PKCS11_LIB_PATH, or done in code such as:
-        // C.NATIVE = new org.pkcs11.jacknji11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
+        // C.NATIVE = new com.isblocks.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
         // Or JFFI can be used rather than JNA:
-        // C.NATIVE = new org.pkcs11.jacknji11.jffi.JFFI();
+        // C.NATIVE = new com.isblocks.jffi.JFFI();
         CE.Initialize();
     }
 
     @AfterAll
-    public static void tearDown() {
+    static public void tearDown() {
         CE.Finalize();
     }
 
@@ -100,38 +112,44 @@ public class CryptokiSoftHSMTest  {
     public void testGetInfo() {
         CK_INFO info = new CK_INFO();
         CE.GetInfo(info);
-//        System.out.println(info);
+        System.out.println(info);
     }
 
+    @Test
     public void testGetSlotList() {
         long[] slots = CE.GetSlotList(true);
 //        System.out.println("slots: " + Arrays.toString(slots));
     }
 
+    @Test
     public void testGetSlotInfo() {
         CK_SLOT_INFO info = new CK_SLOT_INFO();
         CE.GetSlotInfo(TESTSLOT, info);
 //        System.out.println(info);
     }
 
+    @Test
     public void testGetTokenInfo() {
         CK_TOKEN_INFO info = new CK_TOKEN_INFO();
         CE.GetTokenInfo(TESTSLOT, info);
 //        System.out.println(info);
     }
 
+    @Test
     public void testGetMechanismList() {
         for (long mech : CE.GetMechanismList(TESTSLOT)) {
 //            System.out.println(String.format("0x%08x : %s", mech, CKM.L2S(mech)));
         }
     }
 
+    @Test
     public void testGetMechanismInfo() {
         CK_MECHANISM_INFO info = new CK_MECHANISM_INFO();
         CE.GetMechanismInfo(TESTSLOT, CKM.AES_CBC, info);
 //        System.out.println(info);
     }
 
+    /* 
     public void testInitTokenInitPinSetPin() {
         CE.InitToken(INITSLOT, SO_PIN, "TEST".getBytes());
         long session = CE.OpenSession(INITSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
@@ -142,8 +160,9 @@ public class CryptokiSoftHSMTest  {
         byte[] somenewpin = "somenewpin".getBytes();
         CE.SetPIN(session, USER_PIN, somenewpin);
         CE.SetPIN(session, somenewpin, USER_PIN);
-    }
+    }*/
 
+    @Test
     public void testGetSessionInfo() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CK_SESSION_INFO sessionInfo = new CK_SESSION_INFO();
@@ -151,24 +170,20 @@ public class CryptokiSoftHSMTest  {
 //        System.out.println(sessionInfo);
     }
 
+    @Test
     public void testGetSessionInfoCloseAllSessions() {
         long s1 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         long s2 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CK_SESSION_INFO info = new CK_SESSION_INFO();
         CE.GetSessionInfo(s2, info );
-//        System.out.println(info);
+        //System.out.println(info);
         long s3 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.CloseSession(s1);
         CE.CloseAllSessions(TESTSLOT);
         assertEquals(CKR.SESSION_HANDLE_INVALID, C.CloseSession(s3));
     }
 
-    public void testGetSetOperationState() {
-        long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
-        byte[] state = CE.GetOperationState(session);
-        CE.SetOperationState(session, state, 0, 0);
-    }
-
+    @Test
     public void testCreateCopyDestroyObject() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.Login(session, CKU.USER, USER_PIN);
@@ -380,6 +395,103 @@ public class CryptokiSoftHSMTest  {
         }
     }
 
+    @Test
+    public void testGenerateRSASubjectPublicKeyInfo(){
+    
+        String label = "testKey";
+        int keyLength = 2048;
+        Map<String, String> attributes = new HashMap<String,String>();
+		 UUID uuid = UUID.randomUUID();
+
+		 attributes.put("keyId", uuid.toString() );
+
+		 byte[] ecCurveParams = null;
+
+         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
+         CE.LoginUser(session, USER_PIN);
+
+
+         CKA[] pubTempl1 = new CKA[] {
+            new CKA(CKA.MODULUS_BITS, keyLength),
+            new CKA(CKA.PUBLIC_EXPONENT, Hex.s2b("010001")),
+            new CKA(CKA.WRAP, true),
+            new CKA(CKA.ENCRYPT, false),
+            new CKA(CKA.VERIFY, true),
+            new CKA(CKA.TOKEN, true),
+            new CKA(CKA.LABEL, label+"-public"),
+            new CKA(CKA.ID, uuid.toString()),
+        };
+        CKA[] privTempl1 = new CKA[] {
+                
+            new CKA(CKA.TOKEN, true),
+            new CKA(CKA.PRIVATE, true),
+            new CKA(CKA.SENSITIVE, true),
+            new CKA(CKA.SIGN, true),
+            new CKA(CKA.DECRYPT, false),
+            new CKA(CKA.UNWRAP, true),
+            new CKA(CKA.EXTRACTABLE, false),
+            new CKA(CKA.LABEL, label + "-private"),
+            new CKA(CKA.ID, uuid.toString()),
+            /*new CKA(CKA.KEY_TYPE, CKK.RSA),
+            new CKA(CKA.PRIVATE, true),
+            new CKA(CKA.DECRYPT, true),
+            new CKA(CKA.SIGN, true),
+            new CKA(CKA.SENSITIVE, true),
+            new CKA(CKA.EXTRACTABLE, true),
+            new CKA(CKA.LABEL, label+ "-private"),
+            new CKA(CKA.ID, uuid.toString()),*/
+        };
+
+         CKA[] pubTempl = new CKA[] {
+            new CKA(CKA.MODULUS_BITS, 2048),
+            new CKA(CKA.PUBLIC_EXPONENT, Hex.s2b("010001")),
+            new CKA(CKA.WRAP, true),
+            new CKA(CKA.ENCRYPT, false),
+            new CKA(CKA.VERIFY, true),
+            new CKA(CKA.TOKEN, true),
+            new CKA(CKA.LABEL, "labelrsa-public"),
+            new CKA(CKA.ID, "labelrsa"),
+        };
+        CKA[] privTempl = new CKA[] {
+            new CKA(CKA.TOKEN, true),
+            new CKA(CKA.PRIVATE, true),
+            new CKA(CKA.SENSITIVE, true),
+            new CKA(CKA.SIGN, true),
+            new CKA(CKA.DECRYPT, false),
+            new CKA(CKA.UNWRAP, true),
+            new CKA(CKA.EXTRACTABLE, false),
+            new CKA(CKA.LABEL, "labelrsa-private"),
+            new CKA(CKA.ID, "labelrsa"),
+        };
+
+	            LongRef pubKey = new LongRef();
+		        LongRef privKey = new LongRef();
+
+		       
+		CE.GenerateKeyPair(session, new CKM(CKM.RSA_PKCS_KEY_PAIR_GEN), pubTempl1, privTempl1, pubKey, privKey);
+		final CKA[] pubExpMod = CE.GetAttributeValue(session, pubKey.value(), new long[] {CKA.PUBLIC_EXPONENT, CKA.MODULUS});    
+    	BigInteger modulus = new BigInteger(1, pubExpMod[1].getValue());
+		BigInteger publicExponent = new BigInteger(1, pubExpMod[0].getValue());
+		//RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(modulus, publicExponent);
+		RSAPublicKey pubSpec = new RSAPublicKey(modulus, publicExponent);
+
+		
+		try {	
+				// Create an algorithm identifier for forming the key pair
+				AlgorithmIdentifier algId = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE);
+				SubjectPublicKeyInfo publicKey = new SubjectPublicKeyInfo(algId, pubSpec);
+                String encoded = Base64.getEncoder().encodeToString(publicKey.getEncoded());
+
+                encoded = "-----BEGIN PUBLIC KEY-----\n" + encoded + "\n-----END PUBLIC KEY-----";
+
+                System.out.println(encoded);
+                JWK jwk = JWK.parseFromPEMEncodedObjects(encoded);
+                System.out.println(jwk.toString());
+            } catch (Exception e) {
+
+                e.printStackTrace();
+        }
+    }
     public void testSignVerifyRSAPSS() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.LoginUser(session, USER_PIN);
@@ -479,7 +591,6 @@ public class CryptokiSoftHSMTest  {
         LongRef pubKey = new LongRef();
         LongRef privKey = new LongRef();
         CE.GenerateKeyPair(session, new CKM(CKM.ECDSA_KEY_PAIR_GEN), pubTempl, privTempl, pubKey, privKey);
-
         // Direct sign, PKCS#11 "2.3.6 ECDSA without hashing"
         byte[] data = new byte[32]; // SHA256 hash is 32 bytes
         CE.SignInit(session, new CKM(CKM.ECDSA), privKey.value());

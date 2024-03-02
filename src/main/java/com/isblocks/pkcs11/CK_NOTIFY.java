@@ -23,7 +23,7 @@ package com.isblocks.pkcs11;
 
 /**
  * PKCS#11 CK_NOTIFY.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public interface CK_NOTIFY {
     /**

@@ -22,7 +22,7 @@
 package com.isblocks.pkcs11.jffi;
 
 import jnr.ffi.Address;
-import jnr.ffi.Library;
+import jnr.ffi.LibraryLoader;
 import jnr.ffi.Pointer;
 import jnr.ffi.annotations.In;
 import jnr.ffi.annotations.Out;
@@ -30,11 +30,12 @@ import jnr.ffi.byref.NativeLongByReference;
 
 /**
  * JFFI Native class.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFINative {
     static {
-        Library.loadLibrary(JFFINative.class, "cryptoki");
+        //Library.loadLibrary(JFFINative.class, "cryptoki");
+        LibraryLoader.create(JFFINative.class).load("cryptoki");
     }
 
     public static native int C_Initialize(@In JFFI_CK_C_INITIALIZE_ARGS pInitArgs);

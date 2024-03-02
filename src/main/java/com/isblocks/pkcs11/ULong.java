@@ -25,7 +25,7 @@ import java.nio.ByteOrder;
 
 /** 
  * Converts between Java long and 'unsigned long int' catering for size(long) and endianness.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class ULong {
     public enum ULongSize { ULONG4(4), ULONG8(8);

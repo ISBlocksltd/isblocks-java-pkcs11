@@ -19,9 +19,8 @@
  *                                                                       *
  *************************************************************************/
 
-package com.pkcs11.test;
+package com.isblocks.pkcs11.test;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import com.isblocks.pkcs11.Buf;
@@ -54,27 +53,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.*;
 /**
- * JUnit tests for jacknji11.
- * Tests all the cryptoki functions that I have ever used and understand.
+ * JUnit tests for isblocks-pkcs11.
+ * Tests all the cryptoki functions using the SoftHSM
  * The functions not tested are in commented lines.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 
-public class CryptokiThalesDPODTest  {
-    private byte[] SO_PIN = "12345678".getBytes();
-    private byte[] USER_PIN = "12345678".getBytes();
-    private long TESTSLOT = 0;
-    private long INITSLOT = 1;
+public class CryptokiSoftHSMTest  {
+    static private byte[] SO_PIN = "12345678".getBytes();
+    static private byte[] USER_PIN = "12345678".getBytes();
+    static private long TESTSLOT = 0;
+    static private long INITSLOT = 1;
 
     @BeforeAll
     public static void setUp() {
-
-        C.NATIVE = new com.isblocks.pkcs11.jna.JNA("C:\\Program Files\\SafeNet\\LunaClient\\cryptoki.dll");
-        String testSlotEnv = "3";
-        String soPinEnv = "1234567";
-        String UserPinEnv = "1234567";
-        
-        /* 
         String testSlotEnv = System.getenv("JACKNJI11_TEST_TESTSLOT");
         if (testSlotEnv != null && testSlotEnv.length() > 0) {
             TESTSLOT = Long.parseLong(testSlotEnv);
@@ -90,16 +82,16 @@ public class CryptokiThalesDPODTest  {
         String userPinEnv = System.getenv("JACKNJI11_TEST_USER_PIN");
         if (userPinEnv != null && userPinEnv.length() > 0) {
             USER_PIN = userPinEnv.getBytes();
-        }*/
+        }
         // Library path can be set with JACKNJI11_PKCS11_LIB_PATH, or done in code such as:
-        // C.NATIVE = new com.isblocks.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
+        // C.NATIVE = new com.isblocks.pkcs11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
         // Or JFFI can be used rather than JNA:
-        // C.NATIVE = new com.isblocks.jffi.JFFI();
+        // C.NATIVE = new com.isblocks.pkcs11.jffi.JFFI();
         CE.Initialize();
     }
 
     @AfterAll
-    static public void tearDown() {
+    public static void tearDown() {
         CE.Finalize();
     }
 
@@ -107,39 +99,44 @@ public class CryptokiThalesDPODTest  {
     public void testGetInfo() {
         CK_INFO info = new CK_INFO();
         CE.GetInfo(info);
-        System.out.println(info);
+//        System.out.println(info);
     }
 
+    @Test
     public void testGetSlotList() {
         long[] slots = CE.GetSlotList(true);
 //        System.out.println("slots: " + Arrays.toString(slots));
     }
 
+    @Test
     public void testGetSlotInfo() {
         CK_SLOT_INFO info = new CK_SLOT_INFO();
         CE.GetSlotInfo(TESTSLOT, info);
 //        System.out.println(info);
     }
 
+    @Test
     public void testGetTokenInfo() {
         CK_TOKEN_INFO info = new CK_TOKEN_INFO();
         CE.GetTokenInfo(TESTSLOT, info);
 //        System.out.println(info);
     }
 
+    @Test
     public void testGetMechanismList() {
         for (long mech : CE.GetMechanismList(TESTSLOT)) {
 //            System.out.println(String.format("0x%08x : %s", mech, CKM.L2S(mech)));
         }
     }
 
+    @Test
     public void testGetMechanismInfo() {
         CK_MECHANISM_INFO info = new CK_MECHANISM_INFO();
         CE.GetMechanismInfo(TESTSLOT, CKM.AES_CBC, info);
 //        System.out.println(info);
     }
 
-    /* 
+    @Test
     public void testInitTokenInitPinSetPin() {
         CE.InitToken(INITSLOT, SO_PIN, "TEST".getBytes());
         long session = CE.OpenSession(INITSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
@@ -150,8 +147,9 @@ public class CryptokiThalesDPODTest  {
         byte[] somenewpin = "somenewpin".getBytes();
         CE.SetPIN(session, USER_PIN, somenewpin);
         CE.SetPIN(session, somenewpin, USER_PIN);
-    }*/
+    }
 
+    @Test
     public void testGetSessionInfo() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CK_SESSION_INFO sessionInfo = new CK_SESSION_INFO();
@@ -159,24 +157,27 @@ public class CryptokiThalesDPODTest  {
 //        System.out.println(sessionInfo);
     }
 
+    @Test
     public void testGetSessionInfoCloseAllSessions() {
         long s1 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         long s2 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CK_SESSION_INFO info = new CK_SESSION_INFO();
         CE.GetSessionInfo(s2, info );
-        //System.out.println(info);
+//        System.out.println(info);
         long s3 = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.CloseSession(s1);
         CE.CloseAllSessions(TESTSLOT);
         assertEquals(CKR.SESSION_HANDLE_INVALID, C.CloseSession(s3));
     }
 
+    @Test
     public void testGetSetOperationState() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         byte[] state = CE.GetOperationState(session);
         CE.SetOperationState(session, state, 0, 0);
     }
 
+    @Test
     public void testCreateCopyDestroyObject() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.Login(session, CKU.USER, USER_PIN);
@@ -193,6 +194,7 @@ public class CryptokiThalesDPODTest  {
         CE.DestroyObject(session, o2);
     }
 
+    @Test
     public void testGetObjectSizeGetSetAtt() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.Login(session, CKU.USER, USER_PIN);
@@ -238,6 +240,7 @@ public class CryptokiThalesDPODTest  {
         assertNull(templ[3].getValueBool());
     }
 
+    @Test
     public void testFindObjects() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.Login(session, CKU.USER, USER_PIN); // Needed depending on HSM policy
@@ -269,6 +272,7 @@ public class CryptokiThalesDPODTest  {
     }
 
 
+    @Test
     public void testEncryptDecrypt() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.LoginUser(session, USER_PIN);
@@ -302,6 +306,7 @@ public class CryptokiThalesDPODTest  {
         assertTrue(Arrays.equals(plaintext, Buf.cat(decrypted2a, decrypted2b, decrypted2c)));
     }
 
+    @Test
     public void testDigest() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.Login(session, CKU.USER, USER_PIN); // Needed depending on HSM policy
@@ -327,6 +332,7 @@ public class CryptokiThalesDPODTest  {
         byte[] digestedKey = CE.DigestFinal(session);
     }
 
+    @Test
     public void testSignVerifyRSAPKCS1() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.LoginUser(session, USER_PIN);
@@ -388,6 +394,7 @@ public class CryptokiThalesDPODTest  {
         }
     }
 
+    @Test
     public void testSignVerifyRSAPSS() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.LoginUser(session, USER_PIN);
@@ -451,6 +458,7 @@ public class CryptokiThalesDPODTest  {
         }
     }
 
+    @Test
     public void testSignVerifyECDSA() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);
         CE.LoginUser(session, USER_PIN);
@@ -632,6 +640,7 @@ public class CryptokiThalesDPODTest  {
 //    public static native long C_DecryptVerifyUpdate(long session, byte[] encrypted_part, long encrypted_part_len, byte[] part, LongRef part_len);
 
 
+    @Test
     public void testGenerateKeyWrapUnwrap() {
         long session = CE.OpenSession(TESTSLOT);
         CE.LoginUser(session, USER_PIN);

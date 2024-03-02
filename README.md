@@ -20,7 +20,7 @@ If you want to build without running the tests, use:
 >mvn install -DskipTests
 
 # Run tests
-The tests, from src/test/java/org/pkcs11/jacknji11/CryptokiTest.java, are run on every call to mvn install.
+The tests, from src/test/java/com/isblocks/pkcs11/CryptokiSoftHSMTest.java, are run on every call to mvn install.
 In order to run the tests on your HSMs (note that not all operations may pass) you can set these environment variables:
 
 ```
@@ -44,3 +44,10 @@ or
 sudo ln -s /usr/lib/softhsm/libsofthsm2.so /usr/lib/softhsm/libcryptoki.so
 export LD_LIBRARY_PATH=/usr/lib/softhsm
 ```
+
+# Tested HSMs
+
+The library has been tested against the following HSMs
+- Thales DPOD
+- Utimaco LAN and PCIe HSM
+- Soft HSM

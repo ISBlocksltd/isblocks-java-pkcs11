@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * PKCS#11 CK_TOKEN_INFO struct.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CK_TOKEN_INFO {
     public static final long CKF_RNG                   = 0x00000001;

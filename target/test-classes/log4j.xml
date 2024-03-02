@@ -9,8 +9,8 @@
     </layout>
   </appender>
 
-  <appender name="jacknji11" class="org.apache.log4j.DailyRollingFileAppender">
-    <param name="File" value="logs/jacknji11.log" />
+  <appender name="com.isblocks.pkcs11" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="logs/com.isblocks.pkcs11.log" />
     <param name="Append" value="false" />
     <param name="DatePattern" value="'.'yyyyMMdd" />
     <layout class="org.apache.log4j.PatternLayout">
@@ -18,9 +18,9 @@
     </layout>
   </appender>
 
-  <logger name="org.pkcs11.jacknji11" additivity="false">
+  <logger name="com.isblocks.pkcs11" additivity="false">
     <level value="debug" />
-    <appender-ref ref="jacknji11" />
+    <appender-ref ref="com.isblocks.pkcs11" />
   </logger>
 
   <root>

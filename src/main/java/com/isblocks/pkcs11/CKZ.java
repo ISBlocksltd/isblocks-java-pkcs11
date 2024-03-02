@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * CKZ_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKZ {
     public static final long DATA_SPECIFIED = 0x00000001;

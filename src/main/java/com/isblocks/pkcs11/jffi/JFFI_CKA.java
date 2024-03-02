@@ -28,7 +28,7 @@ import jnr.ffi.Struct;
 
 /**
  * JFFI CK_ATTRIBUTE wrapper.
- * @author Joel Hockey (joel.hockey@gmail.com)
+* @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFI_CKA extends Struct {
     public long type;

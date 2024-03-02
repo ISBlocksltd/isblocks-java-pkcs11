@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * PKCS#11 CK_MECHANSIM_INFO struct.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CK_MECHANISM_INFO {
     public static final long CKF_HW                  = 0x00000001;

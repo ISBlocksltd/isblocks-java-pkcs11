@@ -22,7 +22,6 @@ package com.isblocks.pkcs11;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,7 +56,7 @@ import com.isblocks.pkcs11.jna.JNA;
  * arrays and other helpful things.
  * </ol>
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class C {
     private static final Logger log = LogManager.getLogger(C.class);
