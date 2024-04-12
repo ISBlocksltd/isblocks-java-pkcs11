@@ -9,7 +9,26 @@
   <version>1.0</version>
   <name>isblocks-pkcs11</name>
   <packaging>jar</packaging>
-  
+
+
+  <name>ossrh-demo</name>
+  <description>ISBlocks PKCS#11 JNI Interface</description>
+  <url>http://github.com/isblocks-java-pkcs11/</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+
+
+  <scm>
+    <connection>scm:git:git://github.com/isblocksltd/isblocks-java-pkcs11.git</connection>
+    <developerConnection>scm:git:ssh://github.com:isblocksltd/isblocks-java-pkcs11.git</developerConnection>
+    <url>http://github.com/isblocksltd/isblocks-java-pkcs11/tree/master</url>
+   </scm>
   <inceptionYear>2010</inceptionYear>
 
   <description>
