@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * CKD_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKD {
     public static final long NULL                    = 0x00000001;

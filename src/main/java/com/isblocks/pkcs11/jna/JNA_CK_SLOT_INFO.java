@@ -29,7 +29,7 @@ import com.sun.jna.Structure;
 
 /**
  * JNA wrapper for PKCS#11 CK_SLOT_INFO struct.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JNA_CK_SLOT_INFO extends Structure {
     public byte[] slotDescription;

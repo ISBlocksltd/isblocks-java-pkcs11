@@ -28,7 +28,7 @@ import jnr.ffi.Struct;
 /**
  * JFFI wrapper for PKCS#11 CK_VERSION.  It hardly seems worthwhile
  * wrapping 2 bytes, but we have.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFI_CK_VERSION extends Struct {
     public byte major;

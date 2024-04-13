@@ -25,7 +25,7 @@ package com.isblocks.pkcs11;
  * Exception for CKR values that are non-zero (CKR.OK).
  * Used in {@link CE} interface as alternative to returning
  * CKR for every function.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKRException extends RuntimeException {
     private static final long serialVersionUID = 0x2841de9d258bab8bL;

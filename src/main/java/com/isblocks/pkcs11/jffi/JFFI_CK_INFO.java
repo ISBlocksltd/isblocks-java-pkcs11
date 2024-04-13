@@ -27,7 +27,7 @@ import jnr.ffi.Struct;
 
 /**
  * JFFI wrapper for PKCS#11 CK_INFO struct.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFI_CK_INFO extends Struct {
 

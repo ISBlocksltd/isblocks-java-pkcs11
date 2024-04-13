@@ -23,10 +23,11 @@ package com.isblocks.pkcs11.jna;
 import com.sun.jna.Callback;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+import com.isblocks.pkcs11.CKR;
 
 /**
  * JNA wrapper for PKCS#11 CK_NOTIFY.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public interface JNA_CK_NOTIFY extends Callback {
     /**

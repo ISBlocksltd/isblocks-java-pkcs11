@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * CKO_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKO {
 

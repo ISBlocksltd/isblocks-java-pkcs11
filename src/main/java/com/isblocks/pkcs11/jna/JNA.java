@@ -23,7 +23,9 @@ package com.isblocks.pkcs11.jna;
 
 import com.isblocks.pkcs11.C;
 import com.isblocks.pkcs11.CKA;
+import com.isblocks.pkcs11.CKR;
 import com.isblocks.pkcs11.CKM;
+import com.isblocks.pkcs11.CKU;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
 import com.isblocks.pkcs11.CK_INFO;
 import com.isblocks.pkcs11.CK_MECHANISM_INFO;
@@ -42,7 +44,7 @@ import com.sun.jna.ptr.NativeLongByReference;
 /**
  * JNA PKCS#11 provider.  Does mapping between jacknji11 structs and
  * JNA structs and calls through to {@link JNANativeI} native methods.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JNA implements NativeProvider {
 
@@ -58,9 +60,9 @@ public class JNA implements NativeProvider {
         this(C.getLibraryName());
     }
       /**
-     * TO do:
+     * JNA Constructor 
      * @param customLibrary
-     * @return 
+
      */
     public JNA(String customLibrary) {
         jnaNative = (JNANativeI) com.sun.jna.Native.load(customLibrary, JNANativeI.class);
@@ -130,7 +132,7 @@ public class JNA implements NativeProvider {
  /**
      * Obtains information about a particular token in the system.
      * @param slotID ID of the token's slot
-     * @param pinfo receives the token information
+     * @param pInfo receives the token information
      * @return {@link CKR} return code
      * @see NativeProvider#C_GetTokenInfo(long, CK_TOKEN_pINFO)
      */
@@ -143,7 +145,7 @@ public class JNA implements NativeProvider {
  /**
      * Waits for a slot event (token insertion, removal, etc.) to occur.
      * @param flags blocking/nonblocking flag
-     * @param pslot location that receives the slot ID
+     * @param pSlot location that receives the slot ID
      * @param pReserved reserved. 
      * @return {@link CKR} return code
      * @see NativeProvider#C_WaitForSlotEvent(long, LongRef, NativePointer)
@@ -325,7 +327,7 @@ public class JNA implements NativeProvider {
     }
     /**
      * Logs a user out from a token.
-     * @param long hSession the session's handle
+     * @param hSession the session's handle
      * @return {@link CKR} return code
      * @see NativeProvider#C_Logout(long)
      */
@@ -407,9 +409,10 @@ public class JNA implements NativeProvider {
         jna_pTemplate.update();
         return rv;
     }
- /**
+
+     /**
      * Modifies the values of one or more object attributes.
-     * @param long hSession, long hObject, CKA[] pTemplate, long ulCount the session's handle
+     * @param hSession, long hObject, CKA[] pTemplate, long ulCount the session's handle
      * @param hObject the object's handle
      * @param pTemplate specifies attributes and values
 	 * @param ulCount

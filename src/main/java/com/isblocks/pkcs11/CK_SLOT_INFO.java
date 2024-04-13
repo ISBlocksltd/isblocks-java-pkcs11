@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * PKCS#11 CK_SLOT_INFO struct.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CK_SLOT_INFO {
 

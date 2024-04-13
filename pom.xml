@@ -5,14 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.isblocks.pkcs11</groupId>
-  <artifactId>isblocks-pkcs11</artifactId>
+  <artifactId>isblocks-java-pkcs11</artifactId>
   <version>1.0</version>
-  <name>isblocks-pkcs11</name>
+  <name>isblocks-java-pkcs11</name>
   <packaging>jar</packaging>
 
 
-  <name>ossrh-demo</name>
-  <description>ISBlocks PKCS#11 JNI Interface</description>
   <url>http://github.com/isblocks-java-pkcs11/</url>
 
   <licenses>
@@ -43,8 +41,31 @@
   </developers>
   <build>
     <plugins>
-    
-     <plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-javadoc-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>attach-javadocs</id>
+					<goals>
+						<goal>jar</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+<plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>

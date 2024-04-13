@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.isblocks.pkcs11.CKA;
+import com.isblocks.pkcs11.NativeProvider;
+import com.isblocks.pkcs11.C;
+import com.isblocks.pkcs11.CE;
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
@@ -37,7 +40,7 @@ import com.sun.jna.PointerType;
  * support struct arrays, so this class is required to map the
  * list of (type, pValue, ulValueLen) into a contiguous block of memory.
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class Template extends PointerType {
     private CKA[] list;
@@ -52,7 +55,6 @@ public class Template extends PointerType {
     /**
      * Allocates JNA Memory and writes CKA[] values.
      * @param list template
-     * @return
      */
     public Template(CKA[] list) {
         this.list = list;
@@ -99,10 +101,7 @@ public class Template extends PointerType {
 
     /**
      * Reads (updated) JNA Memory and modifies values in list.
-     * This must be called after native PKCS#11 calls in {@link NativeProvider} that modify CK_ATTRIBUTE struct such as
-     * {@link NativeProvider#C_GetAttributeValue(NativeLong, NativeLong, Template, NativeLong)}.
-     * This is automatically done by the {@link C} and {@link CE} interfaces.
-     *  @return
+     * This must be called after native PKCS#11 calls in {@link NativeProvider} 
      */
     public void update() {
         if (listLen == 0) {

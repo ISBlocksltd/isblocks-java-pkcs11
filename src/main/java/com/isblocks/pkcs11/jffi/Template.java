@@ -69,7 +69,6 @@ public class Template {
      * TO DO:
 	 * @param templ Pointer  
      * @param cka CKA  
-     * @return 
      */
     public static void update(Pointer templ, CKA[] cka) {
         if (cka == null) {

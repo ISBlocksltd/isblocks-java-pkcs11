@@ -23,12 +23,14 @@ package com.isblocks.pkcs11.jffi;
 
 import jnr.ffi.Pointer;
 import jnr.ffi.annotations.Delegate;
+import com.isblocks.pkcs11.CKR;;
 
 /**
  * JFFI wrapper for PKCS#11 CK_NOTIFY.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public interface JFFI_CK_NOTIFY {
+
     /**
      * CK_NOTIFY is an application callback that processes events.
      * @param hSession the session's handle

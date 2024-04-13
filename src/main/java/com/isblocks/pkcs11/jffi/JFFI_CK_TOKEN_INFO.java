@@ -27,7 +27,7 @@ import jnr.ffi.Struct;
 
 /**
  * JFFI wrapper for PKCS#11 CK_TOKEN_INFO struct.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFI_CK_TOKEN_INFO extends Struct {
     public byte[] label;

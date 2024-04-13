@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
+import com.isblocks.pkcs11.CKR;
 import com.isblocks.pkcs11.NativePointer;
 import com.isblocks.pkcs11.NativePointerByReference;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS.CK_CREATEMUTEX;
@@ -38,7 +39,7 @@ import com.sun.jna.ptr.PointerByReference;
 
 /**
  * JNA wrapper for PKCS#11 CK_C_INITIALIZE_ARGS struct. Also includes JNA mutex interface wrappers.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JNA_CK_C_INITIALIZE_ARGS extends Structure {
 
@@ -54,9 +55,9 @@ public class JNA_CK_C_INITIALIZE_ARGS extends Structure {
         return Arrays.asList("createMutex", "destroyMutex", "lockMutex", "unlockMutex", "flags", "pReserved");
     }
   /**
-         * TO DO:
+         * Constructor for JNA_CK_C_INITIALIZE_ARGS
          * @param args CK_C_INITIALIZE_ARGS
-         * @return 
+
          */
     public JNA_CK_C_INITIALIZE_ARGS(final CK_C_INITIALIZE_ARGS args) {
         if (args.createMutex != null) {

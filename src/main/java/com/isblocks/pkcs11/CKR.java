@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * CKR_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKR {
     public static final long OK                          = 0x00000000;
