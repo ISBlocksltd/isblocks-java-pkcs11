@@ -20,8 +20,6 @@
     </license>
   </licenses>
 
-
-
   <scm>
     <connection>scm:git:git://github.com/isblocksltd/isblocks-java-pkcs11.git</connection>
     <developerConnection>scm:git:ssh://github.com:isblocksltd/isblocks-java-pkcs11.git</developerConnection>
@@ -66,7 +64,7 @@
 			</executions>
 		</plugin>
 <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
+     <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
           <target>21</target>
@@ -103,34 +101,11 @@
 	    <artifactId>log4j-core</artifactId>
 	    <version>2.22.1</version>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 	<dependency>
-	    <groupId>org.apache.logging.log4j</groupId>
-	    <artifactId>log4j-api</artifactId>
-	    <version>2.22.1</version>
-	</dependency>
-		<dependency>
 	    <groupId>org.junit.jupiter</groupId>
 	    <artifactId>junit-jupiter-engine</artifactId>
 	    <version>5.10.2</version>
 	    <scope>test</scope>
-	</dependency>
-
-<!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
-<dependency>
-    <groupId>com.nimbusds</groupId>
-    <artifactId>nimbus-jose-jwt</artifactId>
-    <version>9.37.3</version>
-    <scope>test</scope>
-</dependency>
-
-  <dependency>
-	    <groupId>org.junit.jupiter</groupId>
-	    <artifactId>junit-jupiter-engine</artifactId>
-	    <version>5.10.2</version>
-	    <scope>test</scope>
-	</dependency>
-
-	
+	</dependency>	
   </dependencies>
 </project>
