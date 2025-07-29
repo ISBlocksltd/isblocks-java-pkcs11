@@ -64,7 +64,7 @@ public class JFFI implements NativeProvider {
  /**
      * TO do:
      * @param pReserved
-     * @return 
+     * @return long
      */
     public long C_Finalize(NativePointer pReserved) {
         return JFFINative.C_Finalize(Address.valueOf(pReserved.getAddress()));
@@ -112,7 +112,7 @@ public class JFFI implements NativeProvider {
  /**
      * Obtains information about a particular token in the system.
      * @param slotID ID of the token's slot
-     * @param pinfo receives the token information
+     * @param pInfo receives the token information
      * @return {@link CKR} return code
      * @see NativeProvider#C_GetTokenInfo(long, CK_TOKEN_pINFO)
      */
@@ -122,10 +122,11 @@ public class JFFI implements NativeProvider {
         jffi_pInfo.writeTo(pInfo);
         return rv;
     }
- /**
+
+    /**
      * Waits for a slot event (token insertion, removal, etc.) to occur.
      * @param flags blocking/nonblocking flag
-     * @param pslot location that receives the slot ID
+     * @param pSlot location that receives the slot ID
      * @param pReserved reserved. 
      * @return {@link CKR} return code
      * @see NativeProvider#C_WaitForSlotEvent(long, LongRef, NativePointer)
@@ -302,7 +303,7 @@ long rv = JFFINative.C_OpenSession(slotID, flags, jffi_application, null, jffi_p
 
     /**
      * Logs a user out from a token.
-     * @param long hSession the session's handle
+     * @param hSession the session's handle
      * @return {@link CKR} return code
      * @see NativeProvider#C_Logout(long)
      */
@@ -384,7 +385,7 @@ long rv = JFFINative.C_OpenSession(slotID, flags, jffi_application, null, jffi_p
     }
     /**
      * Modifies the values of one or more object attributes.
-     * @param long hSession, long hObject, CKA[] pTemplate, long ulCount the session's handle
+     * @param hSession, long hObject, CKA[] pTemplate, long ulCount the session's handle
      * @param hObject the object's handle
      * @param pTemplate specifies attributes and values
 	 * @param ulCount

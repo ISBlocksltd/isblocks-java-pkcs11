@@ -24,6 +24,7 @@ import com.isblocks.pkcs11.CKR;
 import com.sun.jna.Callback;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+import com.isblocks.pkcs11.CKR;
 
 /**
  * JNA wrapper for PKCS#11 CK_NOTIFY.

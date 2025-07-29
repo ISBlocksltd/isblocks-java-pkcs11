@@ -49,13 +49,8 @@ import com.isblocks.pkcs11.ULong;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.bouncycastle.asn1.DERNull;
-import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
-import org.bouncycastle.asn1.pkcs.RSAPublicKey;
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier;
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo;
 import java.math.BigInteger;
-import com.nimbusds.jose.jwk.*;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 /**
@@ -473,24 +468,8 @@ public class CryptokiThalesDPODTest  {
     	BigInteger modulus = new BigInteger(1, pubExpMod[1].getValue());
 		BigInteger publicExponent = new BigInteger(1, pubExpMod[0].getValue());
 		//RSAPublicKeySpec rsaPublicKeySpec = new RSAPublicKeySpec(modulus, publicExponent);
-		RSAPublicKey pubSpec = new RSAPublicKey(modulus, publicExponent);
 
-		
-		try {	
-				// Create an algorithm identifier for forming the key pair
-				AlgorithmIdentifier algId = new AlgorithmIdentifier(PKCSObjectIdentifiers.rsaEncryption, DERNull.INSTANCE);
-				SubjectPublicKeyInfo publicKey = new SubjectPublicKeyInfo(algId, pubSpec);
-                String encoded = Base64.getEncoder().encodeToString(publicKey.getEncoded());
 
-                encoded = "-----BEGIN PUBLIC KEY-----\n" + encoded + "\n-----END PUBLIC KEY-----";
-
-                System.out.println(encoded);
-                JWK jwk = JWK.parseFromPEMEncodedObjects(encoded);
-                System.out.println(jwk.toString());
-            } catch (Exception e) {
-
-                e.printStackTrace();
-        }
     }
     public void testSignVerifyRSAPSS() {
         long session = CE.OpenSession(TESTSLOT, CK_SESSION_INFO.CKF_RW_SESSION | CK_SESSION_INFO.CKF_SERIAL_SESSION, null, null);

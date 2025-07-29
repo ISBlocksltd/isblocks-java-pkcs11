@@ -5,11 +5,26 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.isblocks.pkcs11</groupId>
-  <artifactId>isblocks-pkcs11</artifactId>
+  <artifactId>isblocks-java-pkcs11</artifactId>
   <version>1.0</version>
-  <name>isblocks-pkcs11</name>
+  <name>isblocks-java-pkcs11</name>
   <packaging>jar</packaging>
-  
+
+
+  <url>http://github.com/isblocks-java-pkcs11/</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/isblocksltd/isblocks-java-pkcs11.git</connection>
+    <developerConnection>scm:git:ssh://github.com:isblocksltd/isblocks-java-pkcs11.git</developerConnection>
+    <url>http://github.com/isblocksltd/isblocks-java-pkcs11/tree/master</url>
+   </scm>
   <inceptionYear>2010</inceptionYear>
 
   <description>
@@ -24,9 +39,32 @@
   </developers>
   <build>
     <plugins>
-    
-     <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-javadoc-plugin</artifactId>
+			<executions>
+				<execution>
+					<id>attach-javadocs</id>
+					<goals>
+						<goal>jar</goal>
+					</goals>
+				</execution>
+			</executions>
+		</plugin>
+<plugin>
+     <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.0</version>
         <configuration>
           <target>21</target>
@@ -53,7 +91,7 @@
     <dependency>
       <groupId>com.github.jnr</groupId>
       <artifactId>jnr-ffi</artifactId>
-      <version>2.2.16</version>
+      <version>2.2.17</version>
     </dependency>
 
   <!-- provided -->    
@@ -61,44 +99,13 @@
 	<dependency>
 	    <groupId>org.apache.logging.log4j</groupId>
 	    <artifactId>log4j-core</artifactId>
-	    <version>2.22.1</version>
+	    <version>2.24.1</version>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api -->
 	<dependency>
-	    <groupId>org.apache.logging.log4j</groupId>
-	    <artifactId>log4j-api</artifactId>
-	    <version>2.22.1</version>
-	</dependency>
-		<dependency>
 	    <groupId>org.junit.jupiter</groupId>
 	    <artifactId>junit-jupiter-engine</artifactId>
-	    <version>5.11.1</version>
+	    <version>5.12.2</version>
 	    <scope>test</scope>
-	</dependency>
-<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on -->
-<dependency>
-    <groupId>org.bouncycastle</groupId>
-    <artifactId>bcprov-jdk18on</artifactId>
-    <scope>test</scope>
-    <version>1.78.1</version>
-</dependency>
-<!-- https://mvnrepository.com/artifact/org.bouncycastle/bcpkix-jdk18on -->
-<dependency>
-    <groupId>org.bouncycastle</groupId>
-    <artifactId>bcpkix-jdk18on</artifactId>
-    <version>1.78.1</version>
-    <scope>test</scope>
-</dependency>
-<!-- https://mvnrepository.com/artifact/com.nimbusds/nimbus-jose-jwt -->
-<dependency>
-    <groupId>com.nimbusds</groupId>
-    <artifactId>nimbus-jose-jwt</artifactId>
-    <version>9.41.2</version>
-    <scope>test</scope>
-</dependency>
-
-
-
-	
+	</dependency>	
   </dependencies>
 </project>

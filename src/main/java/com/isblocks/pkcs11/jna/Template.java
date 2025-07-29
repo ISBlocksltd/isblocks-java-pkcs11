@@ -55,7 +55,6 @@ public class Template extends PointerType {
     /**
      * Allocates JNA Memory and writes CKA[] values.
      * @param list template
-     * @return
      */
     public Template(CKA[] list) {
         this.list = list;
@@ -102,10 +101,7 @@ public class Template extends PointerType {
 
     /**
      * Reads (updated) JNA Memory and modifies values in list.
-     * This must be called after native PKCS#11 calls in {@link NativeProvider} that modify CK_ATTRIBUTE struct such as
-     * {@link NativeProvider#C_GetAttributeValue(NativeLong, NativeLong, Template, NativeLong)}.
-     * This is automatically done by the {@link C} and {@link CE} interfaces.
-     *  @return
+     * This must be called after native PKCS#11 calls in {@link NativeProvider} 
      */
     public void update() {
         if (listLen == 0) {

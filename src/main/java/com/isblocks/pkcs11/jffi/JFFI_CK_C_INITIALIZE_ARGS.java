@@ -23,6 +23,7 @@ package com.isblocks.pkcs11.jffi;
 
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
 import com.isblocks.pkcs11.NativePointer;
+import com.isblocks.pkcs11.CKR;
 import com.isblocks.pkcs11.NativePointerByReference;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS.CK_CREATEMUTEX;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS.CK_DESTROYMUTEX;
@@ -45,11 +46,12 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
     public JFFI_CK_UNLOCKMUTEX unlockMutex;
     public long flags;
     public jnr.ffi.Pointer pReserved;
-  /**
-         * TO DO:
-         * @param args CK_C_INITIALIZE_ARGS
-         * @return 
-         */
+    
+    /**
+     * Constructor for JFFI_CK_C_INITIALIZE_ARGS
+     * @param args CK_C_INITIALIZE_ARGS
+
+    */
     public JFFI_CK_C_INITIALIZE_ARGS(final CK_C_INITIALIZE_ARGS args) {
         super(jnr.ffi.Runtime.getSystemRuntime());
         this.createMutex = new JFFI_CK_CREATEMUTEX() {
@@ -110,12 +112,12 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
 
     /**
      * JNA wrapper for PKCS#11 CK_CREATEMUTEX.
-     * @author Joel Hockey
+     * @author Raoul da Costa
      */
     public interface JFFI_CK_CREATEMUTEX extends CK_CREATEMUTEX {
         /**
          * Create Mutex.
-         * @param mutex mutex
+         * @param mutex
          * @return {@link CKR} return code
          */
         @Delegate
@@ -124,12 +126,12 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
 
     /**
      * JNA wrapper for PKCS#11 CK_DESTROYMUTEX.
-     * @author Joel Hockey
+     * @author Raoul da Costa
      */
     public interface JFFI_CK_DESTROYMUTEX extends CK_DESTROYMUTEX {
         /**
          * Destroy Mutex.
-         * @param mutex mutex
+         * @param mutex
          * @return {@link CKR} return code
          */
         @Delegate
@@ -138,12 +140,12 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
 
     /** 
      * JNA wrapper for PKCS#11 CK_LOCKMUTEX.
-     * @author Joel Hockey
+     * @author Raoul da Costa
      */
     public interface JFFI_CK_LOCKMUTEX extends CK_LOCKMUTEX {
         /**
          * Lock Mutex.
-         * @param mutex mutex
+         * @param mutex
          * @return {@link CKR} return code
          */
         @Delegate
@@ -152,12 +154,12 @@ public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
 
     /**
      * JNA wrapper for PKCS#11 CK_UNLOCKMUTEX.
-     * @author Joel Hockey
+     * @author Raoul da Costa
      */
     public interface JFFI_CK_UNLOCKMUTEX extends CK_UNLOCKMUTEX {
         /**
          * Unlock Mutex.
-         * @param mutex mutex
+         * @param mutex
          * @return {@link CKR} return code
          */
         @Delegate

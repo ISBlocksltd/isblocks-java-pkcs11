@@ -28,6 +28,7 @@ import com.isblocks.pkcs11.NativeProvider;
 import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.PointerType;
+import com.isblocks.pkcs11.NativeProvider;
 
 /**
  * Implements a CK_ULONG[] type for JNA.  Allows simple conversion with java long[].
@@ -47,7 +48,6 @@ public class LongArray extends PointerType {
     /**
      * Allocates JNA Memory and writes long values.
      * @param list longs
-     * @return
      * 
      */
     public LongArray(long[] list) {
@@ -68,10 +68,7 @@ public class LongArray extends PointerType {
 
     /**
      * Reads (updated) JNA Memory and modifies values in list.
-     * This must be called after native PKCS#11 calls in {@link NativeProvider} that modify
-     * ULONG values such as {@link NativeProvider#C_FindObjects(NativeLong, LongArray, NativeLong, LongRef)}.
-     * This is automatically done by the {@link C} and {@link CE} interfaces.
-     *  * @return
+     * This must be called after native PKCS#11 calls in {@link NativeProvider} 
      */
     public void update() {
         if (listLen == 0) {

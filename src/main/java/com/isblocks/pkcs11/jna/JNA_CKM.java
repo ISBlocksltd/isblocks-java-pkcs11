@@ -32,7 +32,7 @@ import com.sun.jna.Structure;
 
 /**
  * CKM_? constants and CK_MECHANISM struct wrapper.
-  * @author Raoul da Costa (rdacosta@isblocks.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JNA_CKM extends Structure {
     public NativeLong mechanism;

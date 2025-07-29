@@ -1,19 +1,24 @@
 /*************************************************************************
- *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 				 *
- *  and other contributors as indicated by the @author tags.	         *
- *																		 *
- *  All rights reserved													 *
- * 																		 *
+ *  Copyright 2021 IS Blocks, Ltd. and/or its affiliates 			   *
+ *  and other contributors as indicated by the @author tags.	        *
+ *														   *
+ *  All rights reserved										   *
+ * 														   *
  *  The use of this Proprietary Software are subject to specific         *
- *  commercial license terms											 *
- * 																		 *
- *  To purchase a licence agreement for any use of this code please 	 *
- *  contact info@isblocks.com 											 *
- *																		 *
+ *  commercial license terms									   *
+ * 														   *
+ *  To purchase a licence agreement for any use of this code please 	   * 
+ *  contact info@isblocks.com 								   *
+ *														   *
  *  Unless required by applicable law or agreed to in writing, software  *
  *  distributed under the License is distributed on an "AS IS" BASIS,    *
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or      *
- *  implied.															 */
+ *  implied.												   *
+ *  See the License for the specific language governing permissions and  *
+ *  limitations under the License.                                       *
+ *                                                                       *
+ *************************************************************************/
+
 
 
 package com.isblocks.pkcs11;
@@ -28,29 +33,18 @@ package com.isblocks.pkcs11;
  * backwards compatibility).
  * <ol>
  * <li>{@link com.isblocks.pkcs11.NativeProvider} provides the lowest level
- * direct mapping to the <code>'C_*'</code> functions.  There is little
- * reason why you would ever want to invoke it directly, but you can.
- * <li>{@link org.CryptokiSoftHSMTest.jacknji11.Cryptoki} provides the exact same functions
- * as {@link com.isblocks.pkcs11.NativeProvider} by calling through to the
- * corresponding native method.  The <code>'C_'</code> at the start of the
+ * direct mapping to the <code>'C_*'</code> functions.  The <code>'C_'</code> at the start of the
  * function name is removed since the <code>'c.'</code> when you call the
  * methods of this class looks similar (assuming the instance is named
  * <code>'c'</code>).  In addition to calling
- * the native methods, {@link org.CryptokiSoftHSMTest.jacknji11.Cryptoki} provides logging
+ * the native methods, {@link com.isblocks.pkcs11.Cryptoki} provides logging
  * through apache commons logging.  You can use this if you require fine-grain
  * control over something such as checking
  * {@link com.isblocks.pkcs11.CKR} return codes.
  * <li>{@link com.isblocks.pkcs11.CryptokiE} (<b>Cryptoki</b>
  * with <b>E</b>xceptions) provides the most user-friendly interface
- * and is the preferred interface to use.  It calls
- * related function(s) in {@link org.CryptokiSoftHSMTest.jacknji11.Cryptoki},
- * and converts any non-zero return values into a
- * {@link com.isblocks.pkcs11.CKRException}.  It automatically resizes
+ * and is the preferred interface to use.  It automatically resizes
  * arrays and other helpful things.
- * <li>{@link com.isblocks.pkcs11.C} and {@link com.isblocks.pkcs11.CE} are
- * the static predecessors to {@link org.CryptokiSoftHSMTest.jacknji11.Cryptoki} and
- * {@link com.isblocks.pkcs11.CryptokiE}.  They are kept mostly for backwards
- * compatibility.
  * </ol>
  *
  * Method descriptions taken from
