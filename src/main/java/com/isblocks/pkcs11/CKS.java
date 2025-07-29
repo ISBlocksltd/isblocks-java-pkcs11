@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * CKS_? (CK_STATE) constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKS {
     public static final long RO_PUBLIC_SESSION = 0;

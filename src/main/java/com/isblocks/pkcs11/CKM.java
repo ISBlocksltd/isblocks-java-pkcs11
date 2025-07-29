@@ -29,7 +29,7 @@ import com.sun.jna.Pointer;
 
 /**
  * CKM_? constants and CK_MECHANISM struct wrapper.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKM {
 
@@ -290,6 +290,64 @@ public class CKM {
     // From PKCS#11 version 3.0
     public static final long EC_EDWARDS_KEY_PAIR_GEN = 0x00001055;
     public static final long EDDSA                   = 0x00001057;
+  public static final long EC_MONTGOMERY_KEY_PAIR_GEN = 0x00001056;
+
+    public static final long SP800_108_COUNTER_KDF    =  0x000003ac;
+  public static final long SP800_108_FEEDBACK_KDF   =  0x000003ad;
+  public static final long SP800_108_DOUBLE_PIPELINE_KDF = 0x000003ae;
+
+  public static final long IKE2_PRF_PLUS_DERIVE     =  0x0000402e;
+  public static final long IKE_PRF_DERIVE           =  0x0000402f;
+  public static final long IKE1_PRF_DERIVE          =  0x00004030;
+  public static final long IKE1_EXTENDED_DERIVE     =  0x00004031;
+  public static final long HSS_KEY_PAIR_GEN         =  0x00004032;
+  public static final long HSS                      =  0x00004033;
+
+  public static final long XMSS_KEY_PAIR_GEN        =  0x00004034;
+  public static final long XMSSMT_KEY_PAIR_GEN      =  0x00004035;
+  public static final long XMSS                     =  0x00004036;
+  public static final long XMSSMT                   =  0x00004037;
+
+  public static final long ECDH_X_AES_KEY_WRAP      =  0x00004038;
+  public static final long ECDH_COF_AES_KEY_WRAP    =  0x00004039;
+  public static final long PUB_KEY_FROM_PRIV_KEY    =  0x0000403a;
+
+    // From PKCS#11 version 3.1
+
+    // From PKCS#11 version 3.2
+  public static final long ML_KEM_KEY_PAIR_GEN      =  0x0000000f;
+  public static final long ML_KEM                   =  0x00000017;
+
+  public static final long ML_DSA_KEY_PAIR_GEN      =  0x0000001c;
+  public static final long ML_DSA                   =  0x0000001d;
+  public static final long HASH_ML_DSA              =  0x0000001f;
+  public static final long HASH_ML_DSA_SHA224       =  0x00000023;
+  public static final long HASH_ML_DSA_SHA256       =  0x00000024;
+  public static final long HASH_ML_DSA_SHA384       =  0x00000025;
+  public static final long HASH_ML_DSA_SHA512       =  0x00000026;
+  public static final long HASH_ML_DSA_SHA3_224     =  0x00000027;
+  public static final long HASH_ML_DSA_SHA3_256     =  0x00000028;
+  public static final long HASH_ML_DSA_SHA3_384     =  0x00000029;
+  public static final long HASH_ML_DSA_SHA3_512     =  0x0000002a;
+  public static final long HASH_ML_DSA_SHAKE128     =  0x0000002b;
+  public static final long HASH_ML_DSA_SHAKE256     =  0x0000002c;
+
+  public static final long SLH_DSA_KEY_PAIR_GEN     =  0x0000002d;
+  public static final long SLH_DSA                  =  0x0000002e;
+  public static final long HASH_SLH_DSA             =  0x00000034;
+  public static final long HASH_SLH_DSA_SHA224      =  0x00000036;
+  public static final long HASH_SLH_DSA_SHA256      =  0x00000037;
+  public static final long HASH_SLH_DSA_SHA384      =  0x00000038;
+  public static final long HASH_SLH_DSA_SHA512      =  0x00000039;
+  public static final long HASH_SLH_DSA_SHA3_224    =  0x0000003a;
+  public static final long HASH_SLH_DSA_SHA3_256    =  0x0000003b;
+  public static final long HASH_SLH_DSA_SHA3_384    =  0x0000003c;
+  public static final long HASH_SLH_DSA_SHA3_512    =  0x0000003d;
+  public static final long HASH_SLH_DSA_SHAKE128    =  0x0000003e;
+  public static final long HASH_SLH_DSA_SHAKE256    =  0x0000003f;
+
+  public static final long TLS12_EXTENDED_MASTER_KEY_DERIVE  =  0x00000056;
+  public static final long TLS12_EXTENDED_MASTER_KEY_DERIVE_DH = 0x00000057;
 
     // Vendor defined values
     // Eracom PTK
@@ -419,8 +477,9 @@ public class CKM {
         this(mechanism, CKM.DEFAULT_PARAMS.get(mechanism));
     }
 
-    /**To Do:
-     *  @return string */
+    /**
+     * Returns the string version of mechanism
+     * @return string */
     public String toString() {
         return String.format("mechanism=0x%08x{%s} paramLen=%d param=%s",
             mechanism, L2S(mechanism), bParameter != null ? bParameter.length : 0, 

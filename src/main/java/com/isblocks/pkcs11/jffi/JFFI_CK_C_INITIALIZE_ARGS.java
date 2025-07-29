@@ -35,7 +35,7 @@ import jnr.ffi.byref.PointerByReference;
 
 /**
  * JFFI wrapper for PKCS#11 CK_C_INITIALIZE_ARGS struct. Also includes JFFI mutex interface wrappers.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFI_CK_C_INITIALIZE_ARGS extends Struct {
 

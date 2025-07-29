@@ -26,7 +26,7 @@ import com.sun.jna.ptr.NativeLongByReference;
 
 /**
  * JNA Native class with direct mapped methods.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public interface JNANativeI extends com.sun.jna.Library {
 

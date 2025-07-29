@@ -27,7 +27,7 @@ import java.util.Map;
 
 /**
  * CKC_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKC {
 

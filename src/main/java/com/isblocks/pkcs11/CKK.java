@@ -25,7 +25,7 @@ import java.util.Map;
  
 /**
  * CKK_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKK {
 
@@ -68,7 +68,36 @@ public class CKK {
     public static final long GOSTR3410       = 0x00000030;
     public static final long GOSTR3411       = 0x00000031;
     public static final long GOST28147       = 0x00000032;
-    public static final long CKK_EC_EDWARDS  = 0x00000040;
+    public static final long EC_EDWARDS  = 0x00000040;
+
+    public static final long CHACHA20          =  0x00000033;
+    public static final long POLY1305          =  0x00000034;
+    public static final long AES_XTS           =  0x00000035;
+    public static final long SHA3_224_HMAC     =  0x00000036;
+    public static final long SHA3_256_HMAC     =  0x00000037;
+    public static final long SHA3_384_HMAC     =  0x00000038;
+    public static final long SHA3_512_HMAC     =  0x00000039;
+    public static final long BLAKE2B_160_HMAC  =  0x0000003a;
+    public static final long BLAKE2B_256_HMAC  =  0x0000003b;
+    public static final long BLAKE2B_384_HMAC  =  0x0000003c;
+    public static final long BLAKE2B_512_HMAC  =  0x0000003d;
+    public static final long SALSA20           =  0x0000003e;
+    public static final long X2RATCHET         =  0x0000003f;
+
+    public static final long EC_MONTGOMERY     =  0x00000041;
+    public static final long HKDF              =  0x00000042;
+
+    public static final long SHA512_224_HMAC   =  0x00000043;
+    public static final long SHA512_256_HMAC   =  0x00000044;
+    public static final long SHA512_T_HMAC     =  0x00000045;
+    public static final long HSS               =  0x00000046;
+
+    public static final long XMSS              =  0x00000047;
+    public static final long XMSSMT            =  0x00000048;
+    public static final long ML_KEM            =  0x00000049;
+    public static final long ML_DSA            =  0x0000004a;
+    public static final long SLH_DSA           =  0x0000004b;
+
 
     // Vendor defined values
     // Eracom PTK

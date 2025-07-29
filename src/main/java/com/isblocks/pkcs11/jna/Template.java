@@ -24,7 +24,10 @@ package com.isblocks.pkcs11.jna;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isblocks.pkcs11.C;
+import com.isblocks.pkcs11.CE;
 import com.isblocks.pkcs11.CKA;
+import com.isblocks.pkcs11.NativeProvider;
 import com.sun.jna.Memory;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLong;
@@ -37,7 +40,7 @@ import com.sun.jna.PointerType;
  * support struct arrays, so this class is required to map the
  * list of (type, pValue, ulValueLen) into a contiguous block of memory.
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class Template extends PointerType {
     private CKA[] list;

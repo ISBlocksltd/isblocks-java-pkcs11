@@ -21,6 +21,10 @@
 
 package com.isblocks.pkcs11.jna;
 
+import com.isblocks.pkcs11.C;
+import com.isblocks.pkcs11.CE;
+import com.isblocks.pkcs11.LongRef;
+import com.isblocks.pkcs11.NativeProvider;
 import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.PointerType;
@@ -29,7 +33,7 @@ import com.sun.jna.PointerType;
  * Implements a CK_ULONG[] type for JNA.  Allows simple conversion with java long[].
  * JNA direct memory mapping doesn't seem to support struct arrays,
  * so this class is required to map the ints into a contiguous block of memory.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class LongArray extends PointerType {
     private long[] list;

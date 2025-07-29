@@ -26,7 +26,7 @@ package com.isblocks.pkcs11;
 /**
  * This is the preferred java interface for calling cryptoki functions.
  *
- * jacknji11 provides 3 interfaces for calling cryptoki functions.
+ * The interface provides 3 interfaces for calling cryptoki functions.
  * <ol>
  * <li>{@link com.isblocks.pkcs11.NativeProvider} provides the lowest level
  * direct mapping to the <code>'C_*'</code> functions.  There is little

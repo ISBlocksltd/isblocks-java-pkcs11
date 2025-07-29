@@ -29,7 +29,7 @@ import com.sun.jna.Structure;
 /**
  * JNA wrapper for PKCS#11 CK_VERSION.  It hardly seems worthwhile
  * wrapping 2 bytes, but we have.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JNA_CK_VERSION extends Structure {
     public byte major;

@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * CKH_? (CKH_USER_INTERFACE) constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKH {
     public static final long MONOTONIC_COUNTER   = 0x00000001;

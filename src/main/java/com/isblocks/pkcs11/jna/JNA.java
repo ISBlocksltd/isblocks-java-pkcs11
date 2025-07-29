@@ -24,6 +24,8 @@ package com.isblocks.pkcs11.jna;
 import com.isblocks.pkcs11.C;
 import com.isblocks.pkcs11.CKA;
 import com.isblocks.pkcs11.CKM;
+import com.isblocks.pkcs11.CKR;
+import com.isblocks.pkcs11.CKU;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
 import com.isblocks.pkcs11.CK_INFO;
 import com.isblocks.pkcs11.CK_MECHANISM_INFO;
@@ -42,7 +44,7 @@ import com.sun.jna.ptr.NativeLongByReference;
 /**
  * JNA PKCS#11 provider.  Does mapping between jacknji11 structs and
  * JNA structs and calls through to {@link JNANativeI} native methods.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JNA implements NativeProvider {
 

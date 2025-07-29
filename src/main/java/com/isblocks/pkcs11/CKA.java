@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * CKA_? constants and wrapper for CK_ATTRIBUTE struct.
  *
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKA {
     private static final Logger log = LogManager.getLogger(CKA.class);
@@ -138,6 +138,72 @@ public class CKA {
     public static final long DEFAULT_CMS_ATTRIBUTES = 0x00000502;
     public static final long SUPPORTED_CMS_ATTRIBUTES = 0x00000503;
     public static final long ALLOWED_MECHANISMS = (CKF_ARRAY_ATTRIBUTE | 0x00000600);
+
+public static final long GOSTR3410_PARAMS          =  0x00000250;
+public static final long GOSTR3411_PARAMS          =  0x00000251;
+public static final long GOST28147_PARAMS          =  0x00000252;
+
+
+//public static final long ALLOWED_MECHANISMS          (CKF_ARRAY_ATTRIBUTE|0x00000600;)
+public static final long PROFILE_ID                =  0x00000601;
+
+public static final long X2RATCHET_BAG             =  0x00000602;
+public static final long X2RATCHET_BAGSIZE         =  0x00000603;
+public static final long X2RATCHET_BOBS1STMSG      =  0x00000604;
+public static final long X2RATCHET_CKR             =  0x00000605;
+public static final long X2RATCHET_CKS             =  0x00000606;
+public static final long X2RATCHET_DHP             =  0x00000607;
+public static final long X2RATCHET_DHR             =  0x00000608;
+public static final long X2RATCHET_DHS             =  0x00000609;
+public static final long X2RATCHET_HKR             =  0x0000060a;
+public static final long X2RATCHET_HKS             =  0x0000060b;
+public static final long X2RATCHET_ISALICE         =  0x0000060c;
+public static final long X2RATCHET_NHKR            =  0x0000060d;
+public static final long X2RATCHET_NHKS            =  0x0000060e;
+public static final long X2RATCHET_NR              =  0x0000060f;
+public static final long X2RATCHET_NS              =  0x00000610;
+public static final long X2RATCHET_PNS             =  0x00000611;
+public static final long X2RATCHET_RK              =  0x00000612;
+/* HSS */
+public static final long HSS_LEVELS                =  0x00000617;
+public static final long HSS_LMS_TYPE              =  0x00000618;
+public static final long HSS_LMOTS_TYPE            =  0x00000619;
+public static final long HSS_LMS_TYPES             =  0x0000061a;
+public static final long HSS_LMOTS_TYPES           =  0x0000061b;
+public static final long HSS_KEYS_REMAINING        =  0x0000061c;
+/* new post-quantum (general) */
+public static final long PARAMETER_SET             =  0x0000061d;
+/* validation objects */
+public static final long OBJECT_VALIDATION_FLAGS   =  0x0000061e;
+public static final long VALIDATION_TYPE           =  0x0000061f;
+public static final long VALIDATION_VERSION        =  0x00000620;
+public static final long VALIDATION_LEVEL          =  0x00000621;
+public static final long VALIDATION_MODULE_ID      =  0x00000622;
+public static final long VALIDATION_FLAG           =  0x00000623;
+public static final long VALIDATION_AUTHORITY_TYPE =  0x00000624;
+public static final long VALIDATION_COUNTRY        =  0x00000625;
+public static final long VALIDATION_CERTIFICATE_IDENTIFIER = 0x00000626;
+public static final long VALIDATION_CERTIFICATE_URI=  0x00000627;
+public static final long VALIDATION_VENDOR_URI     =  0x00000628;
+public static final long VALIDATION_PROFILE        =  0x00000629;
+/* KEM */
+public static final long ENCAPSULATE_TEMPLATE      =  0x0000062a;
+public static final long DECAPULATE_TEMPLATE      =  0x0000062b;
+/* trust objects */
+public static final long TRUST_SERVER_AUTH         =  0x0000062c;
+public static final long TRUST_CLIENT_AUTH         =  0x0000062d;
+public static final long TRUST_CODE_SIGNING        =  0x0000062e;
+public static final long TRUST_EMAIL_PROTECTION    =  0x0000062f;
+public static final long TRUST_IPSEC_IKE           =  0x00000630;
+public static final long TRUST_TIME_STAMPING       =  0x00000631;
+public static final long TRUST_OCSP_SIGNING        =  0x00000632;
+public static final long ENCAPSULATE               =  0x00000633;
+public static final long DECAPSULATE               =  0x00000634;
+public static final long HASH_OF_CERTIFICATE       =  0x00000635;
+/* linking pubic and private keys */
+public static final long PUBLIC_CRC64_VALUE        =  0x00000636;
+/* new post-quantum (general) */
+public static final long SEED                      =  0x00000637;
 
     // Vendor defined values
     // Eracom PTK

@@ -1,4 +1,4 @@
-<project name="jacknji11" default="jar" basedir=".">
+<project name="isblocks-java-pkcs11" default="jar" basedir=".">
 
   <property name="version" value="1.0" />
 

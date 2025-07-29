@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * CKG_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKG {
     public static final long MGF1_SHA1   = 0x00000001;

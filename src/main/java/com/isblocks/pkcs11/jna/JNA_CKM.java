@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.isblocks.pkcs11.CKM;
-import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
@@ -33,7 +32,7 @@ import com.sun.jna.Structure;
 
 /**
  * CKM_? constants and CK_MECHANISM struct wrapper.
- * @author Joel Hockey (joel.hockey@gmail.com)
+  * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JNA_CKM extends Structure {
     public NativeLong mechanism;

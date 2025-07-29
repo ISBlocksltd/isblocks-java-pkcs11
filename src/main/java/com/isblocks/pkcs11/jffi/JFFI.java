@@ -23,6 +23,8 @@ package com.isblocks.pkcs11.jffi;
 
 import com.isblocks.pkcs11.CKA;
 import com.isblocks.pkcs11.CKM;
+import com.isblocks.pkcs11.CKR;
+import com.isblocks.pkcs11.CKU;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
 import com.isblocks.pkcs11.CK_INFO;
 import com.isblocks.pkcs11.CK_MECHANISM_INFO;
@@ -42,7 +44,7 @@ import jnr.ffi.byref.NativeLongByReference;
 /**
  * JFFI PKCS#11 Provider.  Does mapping between jacknji11 structs and JFFI
  * structs and calls through to {@link JFFINative}.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class JFFI implements NativeProvider {
 

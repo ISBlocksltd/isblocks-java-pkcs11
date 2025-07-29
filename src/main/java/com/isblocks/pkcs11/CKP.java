@@ -25,7 +25,7 @@ import java.util.Map;
 
 /**
  * CKP_? constants.
- * @author Joel Hockey (joel.hockey@gmail.com)
+ * @author Raoul da Costa (rdacosta@isblocks.com)
  */
 public class CKP {
     public static final long CKP_PKCS5_PBKD2_HMAC_SHA1 = 0x00000001;
