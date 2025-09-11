@@ -9,6 +9,10 @@ Uses a provider architecture to allow any implementation of the
 native mapping. Includes JNA < https://github.com/java-native-access/jna > 
 as default provider to bridge between Java and native cryptoki lib.
 
+# Version
+
+This library supports the the PKCS#11 version 3.2. These include the new PQC attributes
+
 # Install
 
 Build and install with:
@@ -49,5 +53,6 @@ export LD_LIBRARY_PATH=/usr/lib/softhsm
 
 The library has been tested against the following HSMs
 - Thales DPOD
+- Thales Luna HSM
 - Utimaco LAN and PCIe HSM
 - Soft HSM

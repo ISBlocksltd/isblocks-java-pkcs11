@@ -143,6 +143,7 @@ public class CryptokiUtimacoTest {
         // C.NATIVE = new com.isblocks.pkcs11.jna.JNA("/usr/lib/softhsm/libsofthsm2.so");
         // Or JFFI can be used rather than JNA:
         // C.NATIVE = new com.isblocks.pkcs11.jffi.JFFI();
+        
 		if(!CE.isInitialized()) {
 			long[] slots = CE.GetSlotList(true);
 			CE.Logout(session);

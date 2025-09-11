@@ -24,7 +24,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.2")
     testImplementation("com.nimbusds:nimbus-jose-jwt:9.37.3")
 }
-
 group = "com.isblocks.pkcs11"
 version = "1.0"
 description = "isblocks-java-pkcs11"
@@ -38,5 +37,12 @@ java {
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
     }
 }

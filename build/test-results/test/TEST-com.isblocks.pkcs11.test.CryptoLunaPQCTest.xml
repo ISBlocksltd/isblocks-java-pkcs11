@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.isblocks.pkcs11.test.CryptoLunaPQCTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-09-11T12:39:43.036Z" hostname="G82YLL3" time="0.457">
+  <properties/>
+  <testcase name="testGenerateMLDSA()" classname="com.isblocks.pkcs11.test.CryptoLunaPQCTest" time="0.261"/>
+  <testcase name="testGetInfo()" classname="com.isblocks.pkcs11.test.CryptoLunaPQCTest" time="0.006"/>
+  <testcase name="testGenerateMLKEMKeyGen()" classname="com.isblocks.pkcs11.test.CryptoLunaPQCTest" time="0.189"/>
+  <system-out><![CDATA[(
+  slotID=0x00000000
+  state=0x00000003{RW_USER_FUNCTIONS}
+  flags=0x00000006{CKF_SERIAL_SESSION|CKF_RW_SESSION}
+  deviceError=0
+)
+Logged into the HSM
+1
+Thales ML-DSA key: Generated Key
+(
+  version=2.20
+  manufacturerID="SafeNet                        \u0000"
+  flags=0x00000000{}
+  libraryDescription="Chrystoki                      \u0000"
+  libraryVersion=10.9
+)
+1
+Thales ML-DSA key: Generated Key
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
