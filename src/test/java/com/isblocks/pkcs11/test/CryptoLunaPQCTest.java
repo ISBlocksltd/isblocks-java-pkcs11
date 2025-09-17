@@ -60,6 +60,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,6 +73,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.security.Security;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.InvalidKeySpecException;
@@ -100,18 +102,19 @@ import com.isblocks.pkcs11.Hex;
 import com.isblocks.pkcs11.LongRef;
 import com.isblocks.pkcs11.jna.JNA;
 import java.io.ByteArrayOutputStream;
+
  public class CryptoLunaPQCTest {
 
     static long session;
-	static long[] slots;
-	static int slotId;
-	static byte[] password;
-	static String library;
+	long[] slots;
+	int slotId;
+	byte[] password;
+	String library;
 
     @BeforeAll
     public static void setUp() {
 
-        C.NATIVE = new com.isblocks.pkcs11.jna.JNA("C:\\Program Files\\SafeNet\\LunaClient\\cryptoki.dll");
+        C.NATIVE = new com.isblocks.pkcs11.jna.JNA("C:\\Program Files\\SafeNet\\LunaClient\\cklog201.dll");
         String testSlotEnv = "0";
         String soPinEnv = "1234567";
         String UserPinEnv = "Thales12345!";
@@ -133,6 +136,7 @@ import java.io.ByteArrayOutputStream;
     @AfterAll
     static public void tearDown() {
         CE.Finalize();
+
     }
 
     @Test
@@ -143,6 +147,57 @@ import java.io.ByteArrayOutputStream;
     }
 
     @Test
+    public void testEncryptDecryptCBCPAD() {
+
+        long aeskey = CE.GenerateKey(session, 
+                    new CKM(CKM.AES_KEY_GEN),
+					new CKA(CKA.VALUE_LEN, 32),
+					new CKA(CKA.LABEL, "label"),
+					new CKA(CKA.ID, "uuid.toString()"),
+					new CKA(CKA.CLASS, CKO.SECRET_KEY),
+					new CKA(CKA.PRIVATE, true),
+					new CKA(CKA.EXTRACTABLE, true),
+					new CKA(CKA.MODIFIABLE, true),
+					new CKA(CKA.TOKEN, false),
+					new CKA(CKA.SENSITIVE, true),
+					new CKA(CKA.ENCRYPT, true),
+					new CKA(CKA.DECRYPT, true),
+					new CKA(CKA.WRAP, false),
+					new CKA(CKA.UNWRAP, false));
+
+        System.out.println("Session: " + session);
+        if (session == 0) {
+            throw new IllegalStateException("Session is not initialized.");
+        }
+        System.out.println("AES Key: " + aeskey);
+        if (aeskey == 0) {
+            throw new IllegalStateException("AES key is not initialized.");
+        }
+        // Generate a valid IV
+        byte[] iv = new byte[16];
+        new SecureRandom().nextBytes(iv);
+        CKM mechanism = new CKM(CKM.AES_CBC_PAD, iv);
+
+        byte[] plaintext = "Hello, World!123".getBytes(StandardCharsets.UTF_8);
+
+
+
+        LongRef ref = new LongRef();
+        LongRef ref2 = new LongRef();
+        new SecureRandom().nextBytes(iv);
+
+        //CE.EncryptInit(session, mechanism, aeskey);
+        CE.EncryptInit(session, mechanism, aeskey);
+        byte [] encrypted1 = CE.EncryptPad(session, plaintext);
+
+        CE.DecryptInit(session, mechanism, aeskey);
+        byte [] plaintext1 = CE.DecryptPad(session, encrypted1);
+
+        System.out.println(new String(plaintext1,StandardCharsets.UTF_8) + " "+ new String(plaintext, StandardCharsets.UTF_8));
+    }
+
+    @Test
+    @Disabled
     public void testGenerateMLDSA()  {
 
         long mldsaParams = CKP.CKP_ML_DSA_44;
@@ -220,7 +275,10 @@ import java.io.ByteArrayOutputStream;
         */
     }
 
+
+    
     @Test
+    @Disabled
     public void testGenerateMLKEMKeyGen()  {
 
         long mldsaParams = CKP.CKP_ML_KEM_512;

@@ -25,33 +25,46 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.isblocks.pkcs11.CKM;
+import com.sun.jna.Memory;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
 
-
 /**
- * CKM_? constants and CK_MECHANISM struct wrapper.
- * @author Raoul da Costa (rdacosta@isblocks.com)
+ * JNA mapping of CK_MECHANISM. Keep allocated Memory referenced so GC
+ * doesn't free the parameter buffer while native call runs.
  */
-public class JNA_CKM extends Structure {
-    public NativeLong mechanism;
-    public Pointer pParameter;
-    public NativeLong ulParameterLen;
+public class JNA_CKM extends com.sun.jna.Structure {
+    public static class ByReference extends JNA_CKM implements com.sun.jna.Structure.ByReference {}
+    public com.sun.jna.NativeLong mechanism;
+    public com.sun.jna.Pointer pParameter;
+    public com.sun.jna.NativeLong ulParameterLen;
+
+    // keep Memory alive while native call runs
+    private com.sun.jna.Memory paramMemory;
+
+    public JNA_CKM readFrom(CKM ckm) {
+        this.mechanism = new com.sun.jna.NativeLong(ckm.mechanism);
+        byte[] param = ckm.getParameterBytes();
+        if (param != null && param.length > 0) {
+            System.out.println("JNA_CKM.readFrom: allocating paramMemory of length " + param.length);
+            System.out.println("JNA_CKM.readFrom: param bytes: " + Arrays.toString(param));
+            System.currentTimeMillis();
+            this.paramMemory = new com.sun.jna.Memory(param.length);
+            this.paramMemory.write(0, param, 0, param.length);
+            this.pParameter = this.paramMemory;
+            this.ulParameterLen = new com.sun.jna.NativeLong(param.length);
+        } else {
+            this.paramMemory = null;
+            this.pParameter = null;
+            this.ulParameterLen = new com.sun.jna.NativeLong(0);
+        }
+        this.write(); // sync Java -> native
+        return this;
+    }
 
     @Override
-    protected List<String> getFieldOrder() {
-        return Arrays.asList("mechanism", "pParameter", "ulParameterLen");
-    }
-/**
-     * TO DO:
-     * @param ckm CKM  
-     * @return 
-     */
-    public JNA_CKM readFrom(CKM ckm) {
-        mechanism = new NativeLong(ckm.mechanism);
-        pParameter = ckm.pParameter;
-        ulParameterLen = new NativeLong(ckm.ulParameterLen);
-        return this;
+    protected java.util.List<String> getFieldOrder() {
+        return java.util.Arrays.asList("mechanism","pParameter","ulParameterLen");
     }
 }

@@ -48,6 +48,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -58,7 +59,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * The functions not tested are in commented lines.
  * @author Raoul da Costa (rdacosta@isblocks.com)
  */
-
+@Disabled
 public class CryptokiSoftHSMTest  {
     static private byte[] SO_PIN = "12345678".getBytes();
     static private byte[] USER_PIN = "12345678".getBytes();

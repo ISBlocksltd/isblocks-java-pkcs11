@@ -46,10 +46,10 @@ public class JFFI_CKM extends Struct {
      */
     public JFFI_CKM readFrom(CKM ckm) {
         mechanism = ckm.mechanism;
-        int len = ckm.bParameter != null ? ckm.bParameter.length : 0;
+        int len = ckm.getParameterBytes() != null ? ckm.getParameterBytes().length : 0;
         if (len > 0) {
             pParameter = Memory.allocate(jnr.ffi.Runtime.getSystemRuntime(), len);
-            pParameter.put(0, ckm.bParameter, 0, len);
+            pParameter.put(0, ckm.getParameterBytes(), 0, len);
         }
         ulParameterLen = len;
         return this;

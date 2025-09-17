@@ -21,6 +21,8 @@
 
 package com.isblocks.pkcs11.jna;
 
+import java.security.SecureRandom;
+
 import com.isblocks.pkcs11.C;
 import com.isblocks.pkcs11.CKA;
 import com.isblocks.pkcs11.CKR;
@@ -28,6 +30,7 @@ import com.isblocks.pkcs11.CKM;
 import com.isblocks.pkcs11.CKU;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
 import com.isblocks.pkcs11.CK_INFO;
+import com.isblocks.pkcs11.CK_MECHANISM;
 import com.isblocks.pkcs11.CK_MECHANISM_INFO;
 import com.isblocks.pkcs11.CK_NOTIFY;
 import com.isblocks.pkcs11.CK_SESSION_INFO;
@@ -39,6 +42,7 @@ import com.isblocks.pkcs11.NativeProvider;
 import com.isblocks.pkcs11.ULong;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
+import com.sun.jna.Memory;
 import com.sun.jna.ptr.NativeLongByReference;
 
 /**
@@ -475,8 +479,23 @@ public class JNA implements NativeProvider {
      * @see NativeProvider#C_EncryptInit(long, CKM, long)
      */
     public long C_EncryptInit(long hSession, CKM pMechanism, long hKey) {
-        JNA_CKM jna_pMechanism = new JNA_CKM().readFrom(pMechanism);
-        return jnaNative.C_EncryptInit(NL(hSession), jna_pMechanism, NL(hKey));
+
+        // If the mechanism has parameters (e.g., IV for CBC), provide them: 
+        Memory ivMem = new Memory(pMechanism.getParameterBytes().length); 
+        ivMem.write(0, pMechanism.getParameterBytes(), 0, pMechanism.getParameterBytes().length); 
+
+    
+        CK_MECHANISM pCKMMechanism = new CK_MECHANISM(  new NativeLong(pMechanism.mechanism), 
+                                                        ivMem ,
+                                                        new NativeLong(pMechanism.getParameterBytes().length));
+        //jnaMech.writeTo(pMechanism); // write() not needed, readFrom
+
+        long rv = jnaNative.C_EncryptInit(new NativeLong(hSession), 
+                                pCKMMechanism, 
+                                new NativeLong(hKey));
+
+
+        return rv;
     }
   /**
      * Encrypts single-part data.
@@ -533,8 +552,23 @@ public class JNA implements NativeProvider {
      * @see NativeProvider#C_DecryptInit(long, CKM, long)
      */
     public long C_DecryptInit(long hSession, CKM pMechanism, long hKey) {
-        JNA_CKM jna_pMechanism = new JNA_CKM().readFrom(pMechanism);
-        return jnaNative.C_DecryptInit(NL(hSession), jna_pMechanism, NL(hKey));
+        
+        // If the mechanism has parameters (e.g., IV for CBC), provide them: 
+        Memory ivMem = new Memory(pMechanism.getParameterBytes().length); 
+        ivMem.write(0, pMechanism.getParameterBytes(), 0, pMechanism.getParameterBytes().length); 
+
+    
+        CK_MECHANISM pCKMMechanism = new CK_MECHANISM(  new NativeLong(pMechanism.mechanism), 
+                                                        ivMem ,
+                                                        new NativeLong(pMechanism.getParameterBytes().length));
+        //jnaMech.writeTo(pMechanism); // write() not needed, readFrom
+
+        long rv = jnaNative.C_DecryptInit(new NativeLong(hSession), 
+                                pCKMMechanism, 
+                                new NativeLong(hKey));
+
+
+        return rv;
     }
     /**
      * Decrypts encrypted data in a single part.

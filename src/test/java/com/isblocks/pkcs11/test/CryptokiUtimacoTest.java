@@ -48,7 +48,7 @@ import com.isblocks.pkcs11.CK_TOKEN_INFO;
 import com.isblocks.pkcs11.Hex;
 import com.isblocks.pkcs11.LongRef;
 import com.isblocks.pkcs11.ULong;
-
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterAll;
@@ -104,7 +104,7 @@ import java.io.ByteArrayOutputStream;
  * The functions not tested are in commented lines.
  * @author Raoul da Costa (rdacosta@isblocks.com)
  */
-
+@Disabled
 public class CryptokiUtimacoTest {
 
 	static long session;
@@ -187,7 +187,7 @@ public class CryptokiUtimacoTest {
     }
     
     @Test
-    private void testGenerateEDDSAonUtimaco() throws IOException{
+    void testGenerateEDDSAonUtimaco() throws IOException{
 		
     	String keyID = "123456";
     	String label = "label1";

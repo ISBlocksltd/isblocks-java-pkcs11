@@ -20,6 +20,7 @@
  *************************************************************************/
 package com.isblocks.pkcs11.jna;
 
+import com.isblocks.pkcs11.CK_MECHANISM;
 import com.sun.jna.NativeLong;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.NativeLongByReference;
@@ -59,6 +60,39 @@ public interface JNANativeI extends com.sun.jna.Library {
     public int C_FindObjectsInit(NativeLong hSession, Template pTemplate, NativeLong ulCount);
     public int C_FindObjects(NativeLong hSession, LongArray phObject, NativeLong ulMaxObjectCount, NativeLongByReference pulObjectCount);
     public int C_FindObjectsFinal(NativeLong hSession);
+
+    long C_EncryptInit(com.sun.jna.NativeLong hSession, Pointer pMechanism, com.sun.jna.NativeLong hKey);
+    long C_EncryptInit(NativeLong hSession, JNA_CKM.ByReference pMechanism, NativeLong hKey);
+
+       /**
+     * C_EncryptInit initializes an encryption operation.
+     *
+     * @param hSession   the session's handle
+     * @param pMechanism the encryption mechanism
+     * @param hKey       handle of encryption key
+     */
+    long C_EncryptInit(NativeLong hSession, CK_MECHANISM pMechanism, NativeLong hKey);
+   
+
+     /**
+     * C_EncryptInit initializes an encryption operation.
+     *
+     * @param hSession   the session's handle
+     * @param pMechanism the encryption mechanism
+     * @param hKey       handle of encryption key
+     */
+    long C_DecryptInit(NativeLong hSession, CK_MECHANISM pMechanism, NativeLong hKey);
+    
+    long C_DecryptInit(com.sun.jna.NativeLong hSession, Pointer pMechanism, com.sun.jna.NativeLong hKey);
+
+    long C_DigestInit(com.sun.jna.NativeLong hSession, Pointer pMechanism);
+
+    long C_SignInit(com.sun.jna.NativeLong hSession, Pointer pMechanism, com.sun.jna.NativeLong hKey);
+
+    long C_VerifyInit(com.sun.jna.NativeLong hSession, Pointer pMechanism, com.sun.jna.NativeLong hKey);
+
+    long C_GenerateKey(com.sun.jna.NativeLong hSession, Pointer pMechanism, Object pTemplate, com.sun.jna.NativeLong ulCount, com.sun.jna.ptr.NativeLongByReference phKey);
+    //long C_EncryptInit(NativeLong hSession, JNA_CKM.ByReference pMechanism, NativeLong hKey);
     public int C_EncryptInit(NativeLong hSession, JNA_CKM pMechanism, NativeLong hKey);
     public int C_Encrypt(NativeLong hSession, byte[] pData, NativeLong ulDataLen, byte[] pEncryptedData, NativeLongByReference pulEncryptedDataLen);
     public int C_EncryptUpdate(NativeLong hSession, byte[] pPart, NativeLong ulPartLen, byte[] pEncryptedPart, NativeLongByReference pulEncryptedPartLen);

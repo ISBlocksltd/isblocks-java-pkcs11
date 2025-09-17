@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2025-09-12T05:59:35.332Z" hostname="G82YLL3" time="2.024">
+  <properties/>
+  <testcase name="testGetSessionInfo()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.129"/>
+  <testcase name="testCreateCopyDestroyObject()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.654"/>
+  <testcase name="testGetInfo()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.015"/>
+  <testcase name="testGenerateRSASubjectPublicKeyInfo()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.569"/>
+  <testcase name="testGetSlotInfo()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.001"/>
+  <testcase name="testGetSlotList()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.067"/>
+  <testcase name="testGetSessionInfoCloseAllSessions()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.414"/>
+  <testcase name="testGetMechanismInfo()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.08"/>
+  <testcase name="testGetMechanismList()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.003"/>
+  <testcase name="testGetTokenInfo()" classname="com.isblocks.pkcs11.test.CryptokiThalesDPODTest" time="0.09"/>
+  <system-out><![CDATA[(
+  version=2.20
+  manufacturerID="SafeNet                        \u0000"
+  flags=0x00000000{}
+  libraryDescription="Chrystoki                      \u0000"
+  libraryVersion=10.9
+)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

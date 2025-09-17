@@ -283,6 +283,26 @@ public class CKM {
     public static final long AES_ECB_ENCRYPT_DATA        = 0x00001104;
     public static final long AES_CBC_ENCRYPT_DATA        = 0x00001105;
 
+    public static final long AES_XTS                    = 0x00001071;
+    public static final long AES_XTS_KEY_GEN            = 0x00001072;
+    public static final long AES_CTR                    = 0x00001086;
+    public static final long AES_GCM                    = 0x00001087;
+    public static final long AES_CCM                    = 0x00001088;
+    public static final long AES_CTS                    = 0x00001089;
+    public static final long AES_CMAC                   = 0x0000108a;
+    public static final long AES_CMAC_GENERAL           = 0x0000108b;
+
+    public static final long AES_XCBC_MAC               = 0x0000108c;
+    public static final long AES_XCBC_MAC_96            = 0x0000108d;
+    public static final long AES_GMAC                   = 0x0000108e;
+
+    public static final long BLOWFISH_KEY_GEN           = 0x00001090;
+    public static final long BLOWFISH_CBC               = 0x00001091;
+    public static final long TWOFISH_KEY_GEN            = 0x00001092;
+    public static final long TWOFISH_CBC                = 0x00001093;
+    public static final long BLOWFISH_CBC_PAD           = 0x00001094;
+    public static final long TWOFISH_CBC_PAD            = 0x00001095;
+
     public static final long DSA_PARAMETER_GEN           = 0x00002000;
     public static final long DH_PKCS_PARAMETER_GEN       = 0x00002001;
     public static final long X9_42_DH_PARAMETER_GEN      = 0x00002002;
@@ -290,10 +310,10 @@ public class CKM {
     // From PKCS#11 version 3.0
     public static final long EC_EDWARDS_KEY_PAIR_GEN = 0x00001055;
     public static final long EDDSA                   = 0x00001057;
-  public static final long EC_MONTGOMERY_KEY_PAIR_GEN = 0x00001056;
+    public static final long EC_MONTGOMERY_KEY_PAIR_GEN = 0x00001056;
 
     public static final long SP800_108_COUNTER_KDF    =  0x000003ac;
-  public static final long SP800_108_FEEDBACK_KDF   =  0x000003ad;
+    public static final long SP800_108_FEEDBACK_KDF   =  0x000003ad;
   public static final long SP800_108_DOUBLE_PIPELINE_KDF = 0x000003ae;
 
   public static final long IKE2_PRF_PLUS_DERIVE     =  0x0000402e;
@@ -441,9 +461,12 @@ public class CKM {
     }
 
     public long mechanism;
-    public byte[] bParameter;
+    private byte[] bParameter;
     public Pointer pParameter;
     public long ulParameterLen;
+
+    // keep Memory reference so native buffer is not GC'd
+    private Memory parameterMemory;
 
     /**
      * PKCS#11 CK_MECHANISM struct constructor.
@@ -454,17 +477,21 @@ public class CKM {
     public CKM(long mechanism, Pointer param, int paramSize) {
         this.mechanism = mechanism;
         this.pParameter = param;
-        ulParameterLen = paramSize;
+        this.ulParameterLen = paramSize;
     }
 
     public CKM(long mechanism, byte[] param) {    
+        System.out.println("CKM mechanism " + Long.toHexString(mechanism) + " param " + Hex.b2s(param));
         this.mechanism = mechanism;
         int len = (param != null) ? param.length : 0;
         if (len > 0) {
-            pParameter = new Memory(len);
-            pParameter.write(0, param, 0, len);
+            System.out.println("CKM mechanism " + Long.toHexString(mechanism) + " param len " + len);
+            this.bParameter = param.clone();
+            this.parameterMemory = new Memory(len);
+            this.parameterMemory.write(0, this.bParameter, 0, len);
+            this.pParameter = this.parameterMemory; // Memory is-a Pointer
         }
-        ulParameterLen = len;
+        this.ulParameterLen = len;
     }
 
     /**
@@ -475,6 +502,12 @@ public class CKM {
         this(mechanism, CKM.DEFAULT_PARAMS.get(mechanism));
     }
 
+    public byte [] getParameterBytes() {
+        if (bParameter == null && pParameter != null && ulParameterLen > 0) {
+            bParameter = pParameter.getByteArray(0, (int)ulParameterLen);
+        }
+        return bParameter;
+    }
     /**
      * Returns the string version of mechanism
      * @return string */
