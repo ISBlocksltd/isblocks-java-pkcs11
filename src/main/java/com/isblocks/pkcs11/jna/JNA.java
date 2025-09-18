@@ -1057,6 +1057,60 @@ public class JNA implements NativeProvider {
         return jnaNative.C_CancelFunction(NL(hSession));
     }
 
+    /**
+     * Performs KEM encapsulation, producing encapsulated key bytes and a derived secret key object.
+     * @param hSession the session's handle
+     * @param pMechanism KEM mechanism
+     * @param hPublicKey handle of recipient public key
+     * @param pTemplate template for derived secret key
+     * @param ulAttributeCount number of template attributes
+     * @param pEncapsulatedKey receives encapsulated key bytes (optional: null for size query)
+     * @param pulEncapsulatedKeyLen in/out length of encapsulated key buffer
+     * @param phKey receives handle of derived secret key
+     * @return CKR
+     */
+    public long C_EncapsulateKey(long hSession, CKM pMechanism, long hPublicKey,
+            CKA[] pTemplate, long ulAttributeCount,
+            byte[] pEncapsulatedKey, LongRef pulEncapsulatedKeyLen,
+            LongRef phKey) {
+        JNA_CKM jna_pMechanism = new JNA_CKM().readFrom(pMechanism);
+        Template jna_pTemplate = new Template(pTemplate);
+        NativeLongByReference jna_pulEncapsulatedKeyLen = NLP(pulEncapsulatedKeyLen.value);
+        NativeLongByReference jna_phKey = NLP(phKey.value);
+        long rv = jnaNative.C_EncapsulateKey(NL(hSession), jna_pMechanism, NL(hPublicKey),
+                jna_pTemplate, NL(ulAttributeCount),
+                pEncapsulatedKey, jna_pulEncapsulatedKeyLen,
+                jna_phKey);
+        pulEncapsulatedKeyLen.value = jna_pulEncapsulatedKeyLen.getValue().longValue();
+        phKey.value = jna_phKey.getValue().longValue();
+        return rv;
+    }
+
+    /**
+     * Performs KEM decapsulation, consuming encapsulated key bytes and producing a derived secret key object.
+     * @param hSession the session's handle
+     * @param pMechanism KEM mechanism
+     * @param hPrivateKey handle of recipient private key
+     * @param pEncapsulatedKey encapsulated key bytes
+     * @param ulEncapsulatedKeyLen length of encapsulated key bytes
+     * @param pTemplate template for derived secret key
+     * @param ulAttributeCount number of template attributes
+     * @param phKey receives handle of derived secret key
+     * @return CKR
+     */
+    public long C_DecapsulateKey(long hSession, CKM pMechanism, long hPrivateKey,
+            byte[] pEncapsulatedKey, long ulEncapsulatedKeyLen,
+            CKA[] pTemplate, long ulAttributeCount, LongRef phKey) {
+        JNA_CKM jna_pMechanism = new JNA_CKM().readFrom(pMechanism);
+        Template jna_pTemplate = new Template(pTemplate);
+        NativeLongByReference jna_phKey = NLP(phKey.value);
+        long rv = jnaNative.C_DecapsulateKey(NL(hSession), jna_pMechanism, NL(hPrivateKey),
+                pEncapsulatedKey, NL(ulEncapsulatedKeyLen),
+                jna_pTemplate, NL(ulAttributeCount), jna_phKey);
+        phKey.value = jna_phKey.getValue().longValue();
+        return rv;
+    }
+
     private static NativeLong NL(long l) { return new NativeLong(l); }
     private static NativeLongByReference NLP(long l) { return new NativeLongByReference(new NativeLong(l)); }
 }

@@ -24,6 +24,7 @@ package com.isblocks.pkcs11.jni;
 import com.isblocks.pkcs11.CKA;
 import com.isblocks.pkcs11.CKM;
 import com.isblocks.pkcs11.CK_C_INITIALIZE_ARGS;
+import com.isblocks.pkcs11.CKR;
 import com.isblocks.pkcs11.CK_INFO;
 import com.isblocks.pkcs11.CK_MECHANISM_INFO;
 import com.isblocks.pkcs11.CK_NOTIFY;
@@ -111,4 +112,18 @@ public class JNI implements NativeProvider {
     public native long C_GenerateRandom(long hSession, byte[] pRandom, long ulRandomLen);
     public native long C_GetFunctionStatus(long hSession);
     public native long C_CancelFunction(long hSession);
+
+    // PKCS#11 v3.2 KEM APIs - not supported in this JNI provider by default
+    public long C_EncapsulateKey(long hSession, CKM pMechanism, long hPublicKey,
+            CKA[] pTemplate, long ulAttributeCount,
+            byte[] pEncapsulatedKey, LongRef pulEncapsulatedKeyLen,
+            LongRef phKey) {
+        return CKR.FUNCTION_NOT_SUPPORTED;
+    }
+
+    public long C_DecapsulateKey(long hSession, CKM pMechanism, long hPrivateKey,
+            byte[] pEncapsulatedKey, long ulEncapsulatedKeyLen,
+            CKA[] pTemplate, long ulAttributeCount, LongRef phKey) {
+        return CKR.FUNCTION_NOT_SUPPORTED;
+    }
 }

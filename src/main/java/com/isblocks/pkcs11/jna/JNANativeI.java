@@ -131,4 +131,35 @@ public interface JNANativeI extends com.sun.jna.Library {
     public int C_GenerateRandom(NativeLong hSession, byte[] pRandom, NativeLong ulRandomLen);
     public int C_GetFunctionStatus(NativeLong hSession);
     public int C_CancelFunction(NativeLong hSession);
+
+    /**
+     * C_EncapsulateKey performs KEM encapsulation, producing an encapsulated key blob and a derived secret key object.
+     * @param hSession the session's handle
+     * @param pMechanism KEM mechanism (e.g., CKM.ML_KEM) with parameters if any
+     * @param hPublicKey handle of recipient public key
+     * @param pTemplate template for the derived secret key
+     * @param ulAttributeCount number of attributes in template
+     * @param pEncapsulatedKey buffer receiving encapsulated key bytes
+     * @param pulEncapsulatedKeyLen in/out length for encapsulated key buffer
+     * @param phKey receives handle of the derived secret key
+     */
+    public int C_EncapsulateKey(NativeLong hSession, JNA_CKM pMechanism, NativeLong hPublicKey,
+            Template pTemplate, NativeLong ulAttributeCount,
+            byte[] pEncapsulatedKey, NativeLongByReference pulEncapsulatedKeyLen,
+            NativeLongByReference phKey);
+
+    /**
+     * C_DecapsulateKey performs KEM decapsulation, consuming an encapsulated key and producing a derived secret key object.
+     * @param hSession the session's handle
+     * @param pMechanism KEM mechanism (e.g., CKM.ML_KEM) with parameters if any
+     * @param hPrivateKey handle of recipient private key
+     * @param pEncapsulatedKey encapsulated key bytes
+     * @param ulEncapsulatedKeyLen length of encapsulated key
+     * @param pTemplate template for the derived secret key
+     * @param ulAttributeCount number of attributes in template
+     * @param phKey receives handle of the derived secret key
+     */
+    public int C_DecapsulateKey(NativeLong hSession, JNA_CKM pMechanism, NativeLong hPrivateKey,
+            byte[] pEncapsulatedKey, NativeLong ulEncapsulatedKeyLen,
+            Template pTemplate, NativeLong ulAttributeCount, NativeLongByReference phKey);
 }

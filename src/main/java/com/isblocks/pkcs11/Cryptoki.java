@@ -1269,6 +1269,40 @@ public class Cryptoki {
     }
 
     /**
+     * Performs KEM encapsulation (PKCS#11 v3.2), creating a derived secret key and returning encapsulated bytes.
+     */
+    public long EncapsulateKey(long session, CKM mechanism, long hPublicKey,
+            CKA[] templ, byte[] encapsulatedKey, LongRef encapsulatedKeyLen, LongRef derivedKey) {
+        if (log.isDebugEnabled()) {
+            StringBuilder sb = new StringBuilder(String.format("> C_EncapsulateKey session=0x%08x publicKey=0x%08x %s\n", session, hPublicKey, mechanism));
+            dumpTemplate(sb, templ);
+            log.debug(sb);
+        }
+        long rv = provider.C_EncapsulateKey(session, mechanism, hPublicKey,
+                templ, templLen(templ), encapsulatedKey, encapsulatedKeyLen, derivedKey);
+        if (log.isDebugEnabled()) log.debug(String.format("< C_EncapsulateKey rv=0x%08x{%s} derivedKey=0x%08x len=%d", rv, CKR.L2S(rv), derivedKey.value(), encapsulatedKeyLen.value()));
+        return rv;
+    }
+
+    /**
+     * Performs KEM decapsulation (PKCS#11 v3.2), consuming encapsulated bytes and creating a derived secret key.
+     */
+    public long DecapsulateKey(long session, CKM mechanism, long hPrivateKey,
+            byte[] encapsulatedKey, CKA[] templ, LongRef derivedKey) {
+        if (log.isDebugEnabled()) {
+            StringBuilder sb = new StringBuilder(String.format("> C_DecapsulateKey session=0x%08x privateKey=0x%08x %s\n  encapsulatedKey (len=%d):\n", session, hPrivateKey, mechanism, encapsulatedKey != null ? encapsulatedKey.length : 0));
+            if (encapsulatedKey != null) Hex.dump(sb, encapsulatedKey, 0, encapsulatedKey.length, "  ", 32, false);
+            sb.append('\n');
+            dumpTemplate(sb, templ);
+            log.debug(sb);
+        }
+        long rv = provider.C_DecapsulateKey(session, mechanism, hPrivateKey,
+                encapsulatedKey, baLen(encapsulatedKey), templ, templLen(templ), derivedKey);
+        if (log.isDebugEnabled()) log.debug(String.format("< C_DecapsulateKey rv=0x%08x{%s} derivedKey=0x%08x", rv, CKR.L2S(rv), derivedKey.value()));
+        return rv;
+    }
+
+    /**
      * Mixes additional seed material into the token's random number generator.
      * @param session the session's handle
      * @param seed the seed material

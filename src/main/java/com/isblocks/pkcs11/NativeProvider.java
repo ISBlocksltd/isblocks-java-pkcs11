@@ -2117,4 +2117,35 @@ which should simply return the value CKR_FUNCTION_NOT_PARALLEL.
 {@link CKR#SESSION_CLOSED}
      */
     long C_CancelFunction(long hSession);
+
+    /**
+     * C_EncapsulateKey performs KEM encapsulation, producing encapsulated key bytes and a derived secret key object.
+     * @param hSession the session's handle
+     * @param pMechanism KEM mechanism
+     * @param hPublicKey handle of recipient public key
+     * @param pTemplate template for derived secret key
+     * @param ulAttributeCount number of attributes in the template
+     * @param pEncapsulatedKey receives encapsulated key bytes (optional: null for size query)
+     * @param pulEncapsulatedKeyLen in/out length of encapsulated key buffer
+     * @param phKey receives handle of derived secret key
+     */
+    long C_EncapsulateKey(long hSession, CKM pMechanism, long hPublicKey,
+            CKA[] pTemplate, long ulAttributeCount,
+            byte[] pEncapsulatedKey, LongRef pulEncapsulatedKeyLen,
+            LongRef phKey);
+
+    /**
+     * C_DecapsulateKey performs KEM decapsulation, consuming encapsulated key bytes and producing a derived secret key object.
+     * @param hSession the session's handle
+     * @param pMechanism KEM mechanism
+     * @param hPrivateKey handle of recipient private key
+     * @param pEncapsulatedKey encapsulated key bytes
+     * @param ulEncapsulatedKeyLen length of encapsulated key bytes
+     * @param pTemplate template for derived secret key
+     * @param ulAttributeCount number of attributes in the template
+     * @param phKey receives handle of derived secret key
+     */
+    long C_DecapsulateKey(long hSession, CKM pMechanism, long hPrivateKey,
+            byte[] pEncapsulatedKey, long ulEncapsulatedKeyLen,
+            CKA[] pTemplate, long ulAttributeCount, LongRef phKey);
 }

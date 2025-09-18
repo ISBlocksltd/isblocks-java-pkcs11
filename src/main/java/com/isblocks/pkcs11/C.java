@@ -877,6 +877,37 @@ public class C {
     }
 
     /**
+     * Performs KEM encapsulation, producing encapsulated key bytes and a derived secret key object.
+     * @param session the session's handle
+     * @param mechanism KEM mechanism
+     * @param publicKey handle of recipient public key
+     * @param templ template for derived secret key
+     * @param encapsulatedKey receives encapsulated key bytes
+     * @param encapsulatedKeyLen in/out length of encapsulated key buffer
+     * @param derivedKey receives handle of derived secret key
+     * @return {@link CKR} return code
+     */
+    public static long EncapsulateKey(long session, CKM mechanism, long publicKey,
+            CKA[] templ, byte[] encapsulatedKey, LongRef encapsulatedKeyLen, LongRef derivedKey) {
+        return CRYPTOKI.EncapsulateKey(session, mechanism, publicKey, templ, encapsulatedKey, encapsulatedKeyLen, derivedKey);
+    }
+
+    /**
+     * Performs KEM decapsulation, consuming encapsulated key bytes and producing a derived secret key object.
+     * @param session the session's handle
+     * @param mechanism KEM mechanism
+     * @param privateKey handle of recipient private key
+     * @param encapsulatedKey encapsulated key bytes
+     * @param templ template for derived secret key
+     * @param derivedKey receives handle of derived secret key
+     * @return {@link CKR} return code
+     */
+    public static long DecapsulateKey(long session, CKM mechanism, long privateKey,
+            byte[] encapsulatedKey, CKA[] templ, LongRef derivedKey) {
+        return CRYPTOKI.DecapsulateKey(session, mechanism, privateKey, encapsulatedKey, templ, derivedKey);
+    }
+
+    /**
      * Mixes additional seed material into the token's random number generator.
      * @param session the session's handle
      * @param seed the seed material

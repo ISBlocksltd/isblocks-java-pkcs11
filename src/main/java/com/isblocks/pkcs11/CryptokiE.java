@@ -1748,6 +1748,41 @@ public class CryptokiE {
     }
 
     /**
+     * CE helper for KEM encapsulation: returns encapsulated bytes and derived secret key handle.
+     * Size-safe: does a size query first, then actual call.
+     */
+    public EncapsulationResult EncapsulateKey(long session, CKM mechanism, long publicKey, CKA... templ) {
+        LongRef len = new LongRef();
+        LongRef derivedKey = new LongRef();
+        long rv = c.EncapsulateKey(session, mechanism, publicKey, templ, null, len, derivedKey);
+        if (rv != CKR.OK) throw new CKRException(rv);
+        byte[] encapsulated = new byte[(int) len.value()];
+        rv = c.EncapsulateKey(session, mechanism, publicKey, templ, encapsulated, len, derivedKey);
+        if (rv != CKR.OK) throw new CKRException(rv);
+        return new EncapsulationResult(resize(encapsulated, (int) len.value()), derivedKey.value());
+    }
+
+    /**
+     * CE helper for KEM decapsulation: consumes encapsulated bytes and returns derived secret key handle.
+     */
+    public long DecapsulateKey(long session, CKM mechanism, long privateKey, byte[] encapsulatedKey, CKA... templ) {
+        LongRef derivedKey = new LongRef();
+        long rv = c.DecapsulateKey(session, mechanism, privateKey, encapsulatedKey, templ, derivedKey);
+        if (rv != CKR.OK) throw new CKRException(rv);
+        return derivedKey.value();
+    }
+
+    /** Simple holder for encapsulation output. */
+    public static final class EncapsulationResult {
+        public final byte[] encapsulatedKey;
+        public final long derivedKeyHandle;
+        public EncapsulationResult(byte[] encapsulatedKey, long derivedKeyHandle) {
+            this.encapsulatedKey = encapsulatedKey;
+            this.derivedKeyHandle = derivedKeyHandle;
+        }
+    }
+
+    /**
      * Mixes additional seed material into the token's random number generator.
      * @param session the session's handle
      * @param seed the seed material

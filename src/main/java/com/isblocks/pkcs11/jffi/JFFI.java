@@ -36,6 +36,7 @@ import com.isblocks.pkcs11.LongRef;
 import com.isblocks.pkcs11.NativePointer;
 import com.isblocks.pkcs11.NativeProvider;
 import com.isblocks.pkcs11.ULong;
+import com.isblocks.pkcs11.CKR;
 
 import jnr.ffi.Address;
 import jnr.ffi.Pointer;
@@ -996,6 +997,20 @@ long rv = JFFINative.C_OpenSession(slotID, flags, jffi_application, null, jffi_p
      */
     public long C_CancelFunction(long hSession) {
         return JFFINative.C_CancelFunction(hSession);
+    }
+
+    // PKCS#11 v3.2 KEM APIs - provide stubs returning NOT_SUPPORTED unless implemented in JFFINative
+    public long C_EncapsulateKey(long hSession, CKM pMechanism, long hPublicKey,
+            CKA[] pTemplate, long ulAttributeCount,
+            byte[] pEncapsulatedKey, LongRef pulEncapsulatedKeyLen,
+            LongRef phKey) {
+        return CKR.FUNCTION_NOT_SUPPORTED;
+    }
+
+    public long C_DecapsulateKey(long hSession, CKM pMechanism, long hPrivateKey,
+            byte[] pEncapsulatedKey, long ulEncapsulatedKeyLen,
+            CKA[] pTemplate, long ulAttributeCount, LongRef phKey) {
+        return CKR.FUNCTION_NOT_SUPPORTED;
     }
   /**
       TO DO:
