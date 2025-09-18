@@ -46,6 +46,7 @@ import com.isblocks.pkcs11.CKP;
 import com.isblocks.pkcs11.CKR;
 import com.isblocks.pkcs11.CKRException;
 import com.isblocks.pkcs11.CKU;
+import com.isblocks.pkcs11.CK_GCM_PARAMS;
 import com.isblocks.pkcs11.CK_INFO;
 import com.isblocks.pkcs11.CK_MECHANISM_INFO;
 import com.isblocks.pkcs11.CK_SESSION_INFO;
@@ -101,6 +102,8 @@ import com.isblocks.pkcs11.CK_SESSION_INFO;
 import com.isblocks.pkcs11.Hex;
 import com.isblocks.pkcs11.LongRef;
 import com.isblocks.pkcs11.jna.JNA;
+
+import java.beans.Transient;
 import java.io.ByteArrayOutputStream;
 
  public class CryptoLunaPQCTest {
@@ -144,6 +147,53 @@ import java.io.ByteArrayOutputStream;
         CK_INFO info = new CK_INFO();
         CE.GetInfo(info);
         System.out.println(info);
+    }
+
+    @Test 
+    public void testSignVerifyEdDSA() {
+        byte[] ecCurveParams = Hex.s2b("06092B06010401DA470F01");
+        CKA[] pubTempl = new CKA[] {
+            new CKA(CKA.EC_PARAMS, ecCurveParams),
+            new CKA(CKA.WRAP, false),
+            new CKA(CKA.ENCRYPT, false),
+            new CKA(CKA.VERIFY, true),
+            new CKA(CKA.VERIFY_RECOVER, false),
+            new CKA(CKA.TOKEN, true),
+            new CKA(CKA.LABEL, "label-public"),
+            new CKA(CKA.ID, "label"),
+        };
+        CKA[] privTempl = new CKA[] {
+            new CKA(CKA.TOKEN, true),
+            new CKA(CKA.PRIVATE, true),
+            new CKA(CKA.SENSITIVE, true),
+            new CKA(CKA.SIGN, true),
+            new CKA(CKA.SIGN_RECOVER, false),
+            new CKA(CKA.DECRYPT, false),
+            new CKA(CKA.UNWRAP, false),
+            new CKA(CKA.EXTRACTABLE, false),
+            new CKA(CKA.LABEL, "label-private"),
+            new CKA(CKA.ID, "label"),
+        };
+        LongRef pubKey = new LongRef();
+        LongRef privKey = new LongRef();
+        CE.GenerateKeyPair(session, new CKM(CKM.EC_EDWARDS_KEY_PAIR_GEN), pubTempl, privTempl, pubKey, privKey);
+
+        // Direct sign, PKCS#11 "2.3.14 EdDSA"
+        byte[] data = new byte[32]; // SHA256 hash is 32 bytes
+        CE.SignInit(session, new CKM(CKM.EDDSA), privKey.value());
+        byte[] sig1 = CE.Sign(session, data);
+        assertEquals(64, sig1.length);
+
+        CE.VerifyInit(session, new CKM(CKM.EDDSA), pubKey.value());
+        CE.Verify(session, data, sig1);
+
+        CE.VerifyInit(session, new CKM(CKM.EDDSA), pubKey.value());
+        try {
+            CE.Verify(session, data, new byte[64]);
+            fail("CE Verify with no real signature should throw exception");
+        } catch (CKRException e) {
+            assertEquals(CKR.SIGNATURE_INVALID, e.getCKR());
+        }
     }
 
     @Test
@@ -193,11 +243,57 @@ import java.io.ByteArrayOutputStream;
         CE.DecryptInit(session, mechanism, aeskey);
         byte [] plaintext1 = CE.DecryptPad(session, encrypted1);
 
-        System.out.println(new String(plaintext1,StandardCharsets.UTF_8) + " "+ new String(plaintext, StandardCharsets.UTF_8));
+        assertArrayEquals(plaintext, plaintext1);
     }
 
     @Test
-    @Disabled
+    public void testEncryptDecryptAESGCM() {
+
+        long aeskey = CE.GenerateKey(session, 
+                    new CKM(CKM.AES_KEY_GEN),
+					new CKA(CKA.VALUE_LEN, 32),
+					new CKA(CKA.LABEL, "label"),
+					new CKA(CKA.ID, "uuid.toString()"),
+					new CKA(CKA.CLASS, CKO.SECRET_KEY),
+					new CKA(CKA.PRIVATE, true),
+					new CKA(CKA.EXTRACTABLE, true),
+					new CKA(CKA.MODIFIABLE, true),
+					new CKA(CKA.TOKEN, false),
+					new CKA(CKA.SENSITIVE, true),
+					new CKA(CKA.ENCRYPT, true),
+					new CKA(CKA.DECRYPT, true),
+					new CKA(CKA.WRAP, false),
+					new CKA(CKA.UNWRAP, false));
+
+        System.out.println("Session: " + session);
+        if (session == 0) {
+            throw new IllegalStateException("Session is not initialized.");
+        }
+        System.out.println("AES Key: " + aeskey);
+        if (aeskey == 0) {
+            throw new IllegalStateException("AES key is not initialized.");
+        }
+        // Generate a valid IV
+        byte[] iv = new byte[16];
+        new SecureRandom().nextBytes(iv);
+        CK_GCM_PARAMS gcmParams = new CK_GCM_PARAMS(iv, "127.0.0.1".getBytes(), 128);
+        CKM mechanism = new CKM(CKM.AES_GCM, gcmParams);
+
+        byte[] plaintext = "Hello, World!123".getBytes(StandardCharsets.UTF_8);
+
+
+
+        //CE.EncryptInit(session, mechanism, aeskey);
+        CE.EncryptInit(session, mechanism, aeskey);
+        byte [] encrypted1 = CE.EncryptPad(session, plaintext);
+
+        CE.DecryptInit(session, mechanism, aeskey);
+        byte [] plaintext1 = CE.DecryptPad(session, encrypted1);
+
+        assertArrayEquals(plaintext, plaintext1);
+    }
+
+    @Test
     public void testGenerateMLDSA()  {
 
         long mldsaParams = CKP.CKP_ML_DSA_44;
@@ -278,7 +374,6 @@ import java.io.ByteArrayOutputStream;
 
     
     @Test
-    @Disabled
     public void testGenerateMLKEMKeyGen()  {
 
         long mldsaParams = CKP.CKP_ML_KEM_512;
@@ -310,11 +405,11 @@ import java.io.ByteArrayOutputStream;
         LongRef pubKey = new LongRef();
         LongRef privKey = new LongRef();
         final byte[] rawPoint;
-        System.out.println(this.session);
-        CE.GenerateKeyPair(this.session, new CKM(CKM.ML_KEM_KEY_PAIR_GEN), pubTempl, privTempl, pubKey, privKey);
-        System.out.println("Thales ML-DSA key: Generated Key");
+        System.out.println(session);
+        CE.GenerateKeyPair(session, new CKM(CKM.ML_KEM_KEY_PAIR_GEN), pubTempl, privTempl, pubKey, privKey);
+        System.out.println("Thales ML-KEM key: Generated Key");
         //CE.GenerateKeyPair(session, new CKM(CKM.CKM, pubTempl, privTempl, pubKey, privKey);
-        final CKA[] pubEDKey = CE.GetAttributeValue(session, pubKey.value(), new long[] {CKA.EC_PARAMS, CKA.EC_POINT });
+        //final CKA[] pubEDKey = CE.GetAttributeValue(session, pubKey.value(), new long[] {CKA.EC_PARAMS, CKA.EC_POINT });
         /* 
         CK_MECHANISM mech = {CKM_ML_DSA_KEY_PAIR_GEN};
         CK_BBOOL yes = CK_TRUE;

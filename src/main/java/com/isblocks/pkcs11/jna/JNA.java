@@ -482,12 +482,12 @@ public class JNA implements NativeProvider {
 
         // If the mechanism has parameters (e.g., IV for CBC), provide them: 
         Memory ivMem = new Memory(pMechanism.getParameterBytes().length); 
-        ivMem.write(0, pMechanism.getParameterBytes(), 0, pMechanism.getParameterBytes().length); 
+        ivMem.write(0, pMechanism.getParameterBytes(), 0, (int)pMechanism.ulParameterLen); 
 
     
         CK_MECHANISM pCKMMechanism = new CK_MECHANISM(  new NativeLong(pMechanism.mechanism), 
                                                         ivMem ,
-                                                        new NativeLong(pMechanism.getParameterBytes().length));
+                                                        new NativeLong(pMechanism.ulParameterLen));
         //jnaMech.writeTo(pMechanism); // write() not needed, readFrom
 
         long rv = jnaNative.C_EncryptInit(new NativeLong(hSession), 
@@ -560,7 +560,7 @@ public class JNA implements NativeProvider {
     
         CK_MECHANISM pCKMMechanism = new CK_MECHANISM(  new NativeLong(pMechanism.mechanism), 
                                                         ivMem ,
-                                                        new NativeLong(pMechanism.getParameterBytes().length));
+                                                        new NativeLong(pMechanism.ulParameterLen));
         //jnaMech.writeTo(pMechanism); // write() not needed, readFrom
 
         long rv = jnaNative.C_DecryptInit(new NativeLong(hSession), 

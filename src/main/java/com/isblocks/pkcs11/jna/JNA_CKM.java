@@ -47,9 +47,6 @@ public class JNA_CKM extends com.sun.jna.Structure {
         this.mechanism = new com.sun.jna.NativeLong(ckm.mechanism);
         byte[] param = ckm.getParameterBytes();
         if (param != null && param.length > 0) {
-            System.out.println("JNA_CKM.readFrom: allocating paramMemory of length " + param.length);
-            System.out.println("JNA_CKM.readFrom: param bytes: " + Arrays.toString(param));
-            System.currentTimeMillis();
             this.paramMemory = new com.sun.jna.Memory(param.length);
             this.paramMemory.write(0, param, 0, param.length);
             this.pParameter = this.paramMemory;
