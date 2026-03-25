@@ -1,1 +1,40 @@
-/target/
+# Gradle operational files and local cache
+.gradle/
+build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Cache of project task names
+.gradletasknamecache
+
+# --- OPTIONAL: Gradle Wrapper ---
+# Most developers recommend KEEPING these to allow others to build without installing Gradle.
+# Only uncomment if you want to force users to use a local Gradle installation.
+# !gradle-wrapper.jar
+# !gradlew
+# !gradlew.bat
+
+# Maven build output
+target/
+
+# Release and backup files created by Maven plugins
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Maven wrapper operational files (often ignored if using wrapper)
+.mvn/timing.properties
+
+# --- OPTIONAL: Maven Wrapper ---
+# Most teams KEEP the wrapper scripts but may ignore the JAR if using the "no-binary" approach.
+# !mvnw
+# !mvnw.cmd
+# !.mvn/wrapper/maven-wrapper.properties
+
+# Uncomment below to ignore the wrapper JAR if your project downloads it automatically
+# .mvn/wrapper/maven-wrapper.jar
