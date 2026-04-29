@@ -27,6 +27,9 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 
+sonatypepublish_1.sh
+sonatypepublish.sh
+
 # Maven wrapper operational files (often ignored if using wrapper)
 .mvn/timing.properties
 
